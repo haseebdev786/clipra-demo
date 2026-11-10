@@ -1,0 +1,2926 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#05070D">
+  <title>Clipra — The Clipboard That Organizes Itself | Mac, iPhone & iPad</title>
+  <meta name="description" content="Clipra is the next-generation clipboard manager for macOS and iOS. Featuring zero-latency Smart Auto-Sort, real-time Text Transformation, and zero-server private iCloud sync.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS RESET & VARIABLES */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-deep: #05070D;
+      --bg-canvas: #080C16;
+      --bg-surface: #0E1526;
+      --bg-surface-elevated: #141E34;
+      --bg-card: rgba(14, 21, 38, 0.72);
+      --bg-card-hover: rgba(20, 30, 52, 0.85);
+      --glass-nav: rgba(8, 12, 22, 0.78);
+      --glass-panel: rgba(16, 25, 45, 0.65);
+      
+      /* Accents: Electric Blue, Vibrant Teal, Electric Neon Green */
+      --accent-blue: #0066FF;
+      --accent-blue-bright: #2E82FF;
+      --accent-blue-glow: rgba(0, 102, 255, 0.35);
+      --accent-teal: #00E5BE;
+      --accent-teal-bright: #38F8D4;
+      --accent-teal-glow: rgba(0, 229, 190, 0.35);
+      --accent-green: #10F296;
+      --accent-green-bright: #44FBB0;
+      --accent-green-glow: rgba(16, 242, 150, 0.35);
+
+      /* Gradients */
+      --grad-primary: linear-gradient(135deg, #0066FF 0%, #00E5BE 50%, #10F296 100%);
+      --grad-blue-teal: linear-gradient(135deg, #0066FF 0%, #00E5BE 100%);
+      --grad-dark-card: linear-gradient(180deg, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.01) 100%);
+      --grad-border: linear-gradient(135deg, rgba(255,255,255,0.18) 0%, rgba(0,229,190,0.3) 50%, rgba(0,102,255,0.2) 100%);
+
+      /* Text Colors */
+      --text-white: #FFFFFF;
+      --text-primary: #F1F5F9;
+      --text-secondary: #94A3B8;
+      --text-muted: #64748B;
+      --text-dim: #475569;
+
+      /* Borders */
+      --border-glass: rgba(255, 255, 255, 0.08);
+      --border-highlight: rgba(255, 255, 255, 0.16);
+      --border-glow: rgba(0, 229, 190, 0.4);
+
+      /* Typography */
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+      --font-mono: 'JetBrains Mono', SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+      
+      --max-w: 1240px;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-xl: 32px;
+      --radius-pill: 9999px;
+    }
+
+    html {
+      font-family: var(--font-sans);
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
+      scroll-behavior: smooth;
+      scroll-padding-top: 100px;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      overflow-x: hidden;
+      background-color: var(--bg-deep);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 102, 255, 0.16) 0%, transparent 60%),
+        radial-gradient(circle at 90% 25%, rgba(0, 229, 190, 0.09) 0%, transparent 45%),
+        radial-gradient(circle at 10% 45%, rgba(16, 242, 150, 0.07) 0%, transparent 50%),
+        radial-gradient(circle at 75% 75%, rgba(0, 102, 255, 0.1) 0%, transparent 55%),
+        radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 100% 100%, 100% 100%, 36px 36px;
+      background-attachment: fixed;
+      line-height: 1.6;
+    }
+
+    ::selection {
+      background: var(--accent-teal);
+      color: #040810;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    button {
+      background: none;
+      border: none;
+      font: inherit;
+      cursor: pointer;
+      color: inherit;
+    }
+
+    .container {
+      width: min(var(--max-w), calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    @media (max-width: 640px) {
+      .container {
+        width: calc(100% - 32px);
+      }
+    }
+
+    /* GLASSMORPHISM UTILITIES */
+    .glass-nav {
+      background: var(--glass-nav);
+      backdrop-filter: blur(24px) saturate(180%);
+      -webkit-backdrop-filter: blur(24px) saturate(180%);
+      border-bottom: 1px solid var(--border-glass);
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.06);
+    }
+
+    .glass-card {
+      background: var(--bg-card);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      position: relative;
+      overflow: hidden;
+      transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.08), 0 15px 35px -10px rgba(0, 0, 0, 0.6);
+    }
+
+    .glass-card:hover {
+      border-color: rgba(0, 229, 190, 0.35);
+      box-shadow: inset 0 1px 0 0 rgba(255, 255, 255, 0.15), 0 20px 45px -10px rgba(0, 102, 255, 0.25);
+    }
+
+    .glass-pill {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(12px);
+      border-radius: var(--radius-pill);
+      padding: 6px 14px;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    /* GRADIENT TEXT */
+    .text-gradient {
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    .text-gradient-teal {
+      background: linear-gradient(135deg, #00E5BE 0%, #10F296 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .text-gradient-blue {
+      background: linear-gradient(135deg, #2E82FF 0%, #00E5BE 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* BUTTONS */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 22px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      position: relative;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #0066FF 0%, #0052CC 100%);
+      color: #FFFFFF;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      box-shadow: 0 0 25px rgba(0, 102, 255, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.35);
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(135deg, #1A75FF 0%, #0066FF 100%);
+      transform: translateY(-2px);
+      box-shadow: 0 0 35px rgba(0, 102, 255, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.45);
+    }
+
+    .btn-electric {
+      background: linear-gradient(135deg, #00E5BE 0%, #10F296 100%);
+      color: #040913;
+      font-weight: 700;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 30px rgba(0, 229, 190, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+    }
+
+    .btn-electric:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 0 45px rgba(16, 242, 150, 0.65), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .btn-glass {
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text-primary);
+      border: 1px solid var(--border-glass);
+      backdrop-filter: blur(12px);
+    }
+
+    .btn-glass:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.2);
+      color: #FFF;
+      transform: translateY(-2px);
+    }
+
+    /* KBD SHORTCUT TAG */
+    .kbd {
+      font-family: var(--font-mono);
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 5px;
+      padding: 2px 6px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      box-shadow: 0 2px 0 rgba(0,0,0,0.4);
+    }
+
+    /* SITE HEADER */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      transition: all 0.3s ease;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 74px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 21px;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-logo-gem {
+      width: 32px;
+      height: 32px;
+      position: relative;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      padding: 3px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 9px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 15px rgba(0, 229, 190, 0.25);
+    }
+
+    .brand-logo-gem span {
+      border-radius: 3px;
+      transition: all 0.3s ease;
+    }
+
+    .brand-logo-gem span:nth-child(1) { background: var(--accent-blue); }
+    .brand-logo-gem span:nth-child(2) { background: var(--accent-teal); }
+    .brand-logo-gem span:nth-child(3) { background: #3B82F6; }
+    .brand-logo-gem span:nth-child(4) { background: var(--accent-green); }
+
+    .brand:hover .brand-logo-gem {
+      box-shadow: 0 0 22px rgba(16, 242, 150, 0.5);
+    }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color 0.2s ease;
+      position: relative;
+    }
+
+    .nav-link:hover {
+      color: #FFFFFF;
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0%;
+      height: 2px;
+      background: var(--grad-primary);
+      transition: width 0.25s ease;
+      border-radius: 2px;
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta-group {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      padding: 8px;
+      color: var(--text-secondary);
+    }
+
+    @media (max-width: 900px) {
+      .nav-menu {
+        display: none;
+      }
+      .mobile-menu-btn {
+        display: block;
+      }
+    }
+
+    /* HERO SECTION */
+    .hero {
+      position: relative;
+      padding: 65px 0 100px;
+      overflow: hidden;
+    }
+
+    .hero-badge-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 24px;
+    }
+
+    .pulse-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--accent-green);
+      box-shadow: 0 0 12px var(--accent-green);
+      animation: pulseGlow 2s infinite;
+    }
+
+    @keyframes pulseGlow {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    .hero-title {
+      font-size: clamp(38px, 6vw, 76px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      text-align: center;
+      max-width: 980px;
+      margin-inline: auto;
+      margin-bottom: 24px;
+    }
+
+    .hero-desc {
+      font-size: clamp(16px, 2vw, 20px);
+      color: var(--text-secondary);
+      text-align: center;
+      max-width: 700px;
+      margin-inline: auto;
+      margin-bottom: 38px;
+      line-height: 1.6;
+    }
+
+    .hero-cta-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 28px;
+    }
+
+    .hero-meta-strip {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      color: var(--text-muted);
+      font-size: 13px;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .check-icon {
+      color: var(--accent-teal);
+    }
+
+    /* HERO 3D MOCKUP STAGE */
+    .hero-stage {
+      margin-top: 55px;
+      position: relative;
+      perspective: 1400px;
+    }
+
+    .stage-glow {
+      position: absolute;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 75%;
+      height: 380px;
+      background: radial-gradient(ellipse, rgba(0, 102, 255, 0.28) 0%, rgba(0, 229, 190, 0.16) 40%, transparent 70%);
+      filter: blur(60px);
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    .mac-window-frame {
+      position: relative;
+      z-index: 1;
+      background: #0B101D;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 18px;
+      box-shadow: 
+        0 40px 100px -20px rgba(0, 0, 0, 0.9),
+        0 0 0 1px rgba(255, 255, 255, 0.05),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+      max-width: 1040px;
+      margin-inline: auto;
+      transform: rotateX(4deg);
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .mac-window-frame:hover {
+      transform: rotateX(0deg);
+    }
+
+    .mac-titlebar {
+      height: 44px;
+      background: rgba(18, 25, 42, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+
+    .traffic-lights {
+      display: flex;
+      gap: 8px;
+    }
+
+    .traffic-light {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .tl-red { background: #FF5F56; border: 1px solid #E0443E; }
+    .tl-yellow { background: #FFBD2E; border: 1px solid #DEA123; }
+    .tl-green { background: #27C93F; border: 1px solid #1AAB29; }
+
+    .mac-title-center {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+    }
+
+    .mac-search-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 8px;
+      padding: 4px 10px;
+      width: 220px;
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .mac-body {
+      padding: 22px;
+      background: radial-gradient(circle at 50% 0%, rgba(19, 30, 53, 0.6) 0%, rgba(10, 15, 26, 0.95) 100%);
+    }
+
+    /* MOCKUP PINBOARD TABS */
+    .mock-pinboards {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 18px;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+
+    .mock-tab {
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid transparent;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .mock-tab.active {
+      background: rgba(0, 102, 255, 0.18);
+      color: #FFFFFF;
+      border-color: rgba(0, 102, 255, 0.4);
+      box-shadow: 0 0 15px rgba(0, 102, 255, 0.25);
+    }
+
+    .mock-tab:hover:not(.active) {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-primary);
+    }
+
+    .mock-tab-badge {
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .mock-tab.active .mock-tab-badge {
+      background: var(--accent-blue);
+      color: #FFF;
+    }
+
+    /* MOCKUP SHELF CARDS ROW */
+    .mock-shelf-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+
+    @media (max-width: 900px) {
+      .mock-shelf-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 550px) {
+      .mock-shelf-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .clip-card {
+      background: rgba(20, 29, 49, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 14px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 180px;
+      position: relative;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .clip-card:hover {
+      border-color: rgba(0, 229, 190, 0.4);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 25px -8px rgba(0, 0, 0, 0.6), 0 0 20px rgba(0, 229, 190, 0.15);
+    }
+
+    .clip-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 10px;
+    }
+
+    .clip-source-tag {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .clip-shortcut {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent-teal);
+      background: rgba(0, 229, 190, 0.1);
+      padding: 1px 6px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 229, 190, 0.25);
+    }
+
+    .clip-content-box {
+      font-size: 13px;
+      line-height: 1.5;
+      color: var(--text-primary);
+      margin-bottom: 12px;
+      word-break: break-all;
+    }
+
+    .clip-card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 11px;
+      color: var(--text-muted);
+      border-top: 1px solid rgba(255, 255, 255, 0.05);
+      padding-top: 8px;
+    }
+
+    .auto-sort-pill {
+      font-size: 10px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .pill-blue { background: rgba(0, 102, 255, 0.15); color: #60A5FA; border: 1px solid rgba(0, 102, 255, 0.3); }
+    .pill-teal { background: rgba(0, 229, 190, 0.15); color: #2DD4BF; border: 1px solid rgba(0, 229, 190, 0.3); }
+    .pill-green { background: rgba(16, 242, 150, 0.15); color: #34D399; border: 1px solid rgba(16, 242, 150, 0.3); }
+    .pill-purple { background: rgba(168, 85, 247, 0.15); color: #C084FC; border: 1px solid rgba(168, 85, 247, 0.3); }
+
+    /* STATS STRIP */
+    .stats-strip {
+      padding: 48px 0;
+      border-top: 1px solid var(--border-glass);
+      border-bottom: 1px solid var(--border-glass);
+      background: rgba(10, 15, 26, 0.5);
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 30px;
+      text-align: center;
+    }
+
+    @media (max-width: 768px) {
+      .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 24px;
+      }
+    }
+
+    .stat-number {
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
+
+    .stat-label {
+      font-size: 14px;
+      color: var(--text-secondary);
+      font-weight: 500;
+    }
+
+    /* SECTION HEADINGS */
+    .section-spacing {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .section-eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-teal);
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: clamp(32px, 4.5vw, 54px);
+      font-weight: 800;
+      line-height: 1.12;
+      letter-spacing: -0.03em;
+      margin-bottom: 20px;
+    }
+
+    .section-sub {
+      font-size: clamp(16px, 1.8vw, 19px);
+      color: var(--text-secondary);
+      max-width: 660px;
+      line-height: 1.6;
+    }
+
+    /* FEATURE 1: SMART AUTO-SORT SIMULATOR */
+    .sim-container {
+      margin-top: 48px;
+      background: #090E1A;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-xl);
+      padding: 36px;
+      box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    }
+
+    @media (max-width: 768px) {
+      .sim-container {
+        padding: 20px;
+      }
+    }
+
+    .sim-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 30px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .sim-source-triggers {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .trigger-btn {
+      padding: 8px 16px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+
+    .trigger-btn.active, .trigger-btn:hover {
+      background: rgba(0, 229, 190, 0.15);
+      border-color: var(--accent-teal);
+      color: #FFF;
+      box-shadow: 0 0 15px rgba(0, 229, 190, 0.25);
+    }
+
+    .sim-grid-layout {
+      display: grid;
+      grid-template-columns: 1fr 60px 1.2fr;
+      align-items: center;
+      gap: 20px;
+    }
+
+    @media (max-width: 900px) {
+      .sim-grid-layout {
+        grid-template-columns: 1fr;
+        gap: 24px;
+      }
+    }
+
+    .sim-box {
+      background: rgba(14, 21, 38, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .sim-box-label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .sim-content-preview {
+      font-family: var(--font-mono);
+      font-size: 14px;
+      color: #E2E8F0;
+      background: rgba(0, 0, 0, 0.35);
+      border-radius: 8px;
+      padding: 16px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      transition: opacity 0.2s ease;
+    }
+
+    .sim-connector-arrow {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--accent-teal);
+      font-size: 28px;
+      animation: bounceX 2s infinite;
+    }
+
+    @keyframes bounceX {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(6px); }
+    }
+
+    @media (max-width: 900px) {
+      .sim-connector-arrow {
+        transform: rotate(90deg);
+        animation: bounceY 2s infinite;
+      }
+      @keyframes bounceY {
+        0%, 100% { transform: translateY(0) rotate(90deg); }
+        50% { transform: translateY(6px) rotate(90deg); }
+      }
+    }
+
+    .route-target-card {
+      background: linear-gradient(145deg, rgba(16, 24, 44, 0.95), rgba(10, 16, 30, 0.95));
+      border: 1px solid rgba(0, 229, 190, 0.4);
+      border-radius: var(--radius-md);
+      padding: 22px;
+      box-shadow: 0 0 30px rgba(0, 229, 190, 0.15);
+    }
+
+    .route-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(0, 229, 190, 0.15);
+      color: var(--accent-teal);
+      font-size: 12px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+
+    .route-board-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 8px;
+    }
+
+    .route-reason {
+      font-size: 13px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    /* FEATURE 2: TEXT TRANSFORMER LAB */
+    .transformer-lab {
+      margin-top: 48px;
+      background: #090E1B;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 30px 80px -20px rgba(0, 0, 0, 0.9);
+    }
+
+    .trans-tabs-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 16px 24px;
+      background: rgba(14, 21, 38, 0.6);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      overflow-x: auto;
+    }
+
+    .trans-tab {
+      padding: 8px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid transparent;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+
+    .trans-tab.active {
+      background: rgba(0, 102, 255, 0.2);
+      border-color: var(--accent-blue);
+      color: #FFF;
+      box-shadow: 0 0 15px rgba(0, 102, 255, 0.3);
+    }
+
+    .trans-editor-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      divide-x: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    @media (max-width: 768px) {
+      .trans-editor-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .trans-pane {
+      padding: 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-height: 260px;
+    }
+
+    .trans-pane-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .trans-text-output {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      line-height: 1.6;
+      color: #CBD5E1;
+      white-space: pre-wrap;
+      word-break: break-all;
+    }
+
+    .trans-result-highlight {
+      color: var(--accent-teal);
+      font-weight: 600;
+    }
+
+    .trans-action-bar {
+      padding-top: 18px;
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    /* USE-CASE TABS */
+    .usecase-tabs-nav {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 36px 0 40px;
+    }
+
+    .usecase-pill {
+      padding: 10px 22px;
+      border-radius: var(--radius-pill);
+      font-size: 14px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+
+    .usecase-pill.active {
+      background: linear-gradient(135deg, rgba(0, 102, 255, 0.25), rgba(0, 229, 190, 0.25));
+      border-color: var(--accent-teal);
+      color: #FFF;
+      box-shadow: 0 0 20px rgba(0, 229, 190, 0.25);
+    }
+
+    .usecase-display-box {
+      background: #090E1B;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      align-items: center;
+      box-shadow: 0 25px 60px -20px rgba(0,0,0,0.8);
+    }
+
+    @media (max-width: 850px) {
+      .usecase-display-box {
+        grid-template-columns: 1fr;
+        padding: 24px;
+      }
+    }
+
+    /* ECOSYSTEM / CLOUDKIT SYNC */
+    .ecosystem-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 40px;
+      align-items: center;
+      margin-top: 50px;
+    }
+
+    @media (max-width: 900px) {
+      .ecosystem-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .device-stage-3d {
+      background: radial-gradient(circle at 50% 50%, rgba(0, 102, 255, 0.15) 0%, rgba(8, 12, 22, 0.95) 75%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: var(--radius-xl);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 440px;
+    }
+
+    .iphone-mockup {
+      width: 250px;
+      height: 480px;
+      background: #000000;
+      border: 4px solid #2B3347;
+      border-radius: 44px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), inset 0 0 0 2px rgba(255, 255, 255, 0.1);
+      position: relative;
+      overflow: hidden;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .dynamic-island {
+      width: 86px;
+      height: 24px;
+      background: #000000;
+      border-radius: 14px;
+      margin: 4px auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 8px;
+      font-size: 8px;
+      color: var(--accent-green);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .dynamic-island-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--accent-teal);
+    }
+
+    .ios-card {
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 10px;
+      margin-bottom: 8px;
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .ios-keyboard-banner {
+      margin-top: auto;
+      background: rgba(22, 30, 48, 0.95);
+      border-radius: 14px;
+      padding: 10px;
+      border: 1px solid rgba(0, 229, 190, 0.3);
+      box-shadow: 0 -5px 20px rgba(0, 0, 0, 0.5);
+    }
+
+    /* GRID FEATURES */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      margin-top: 50px;
+    }
+
+    @media (max-width: 960px) {
+      .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 640px) {
+      .bento-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .bento-card {
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .bento-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      margin-bottom: 22px;
+    }
+
+    .icon-blue { background: rgba(0, 102, 255, 0.15); color: var(--accent-blue-bright); border: 1px solid rgba(0, 102, 255, 0.3); }
+    .icon-teal { background: rgba(0, 229, 190, 0.15); color: var(--accent-teal); border: 1px solid rgba(0, 229, 190, 0.3); }
+    .icon-green { background: rgba(16, 242, 150, 0.15); color: var(--accent-green); border: 1px solid rgba(16, 242, 150, 0.3); }
+
+    .bento-title {
+      font-size: 19px;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 10px;
+    }
+
+    .bento-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+    }
+
+    /* COMPARISON TABLE */
+    .comp-wrapper {
+      margin-top: 50px;
+      border-radius: var(--radius-xl);
+      background: #090E1B;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      overflow-x: auto;
+      box-shadow: 0 30px 70px -20px rgba(0, 0, 0, 0.8);
+    }
+
+    .comp-table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+    }
+
+    .comp-table th, .comp-table td {
+      padding: 18px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .comp-table th {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      font-weight: 700;
+      background: rgba(14, 21, 38, 0.5);
+    }
+
+    .comp-table th.col-clipra {
+      color: #FFF;
+      background: rgba(0, 102, 255, 0.12);
+      border-top: 3px solid var(--accent-teal);
+    }
+
+    .comp-table td.col-clipra {
+      background: rgba(0, 102, 255, 0.06);
+      font-weight: 600;
+      color: #FFF;
+    }
+
+    .comp-check {
+      color: var(--accent-teal);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .comp-cross {
+      color: var(--text-dim);
+    }
+
+    /* PRICING */
+    .pricing-toggle-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      margin: 36px 0 48px;
+    }
+
+    .pricing-toggle-box {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 4px;
+      border-radius: var(--radius-pill);
+      display: flex;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .toggle-pill {
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+
+    .toggle-pill.active {
+      background: var(--accent-blue);
+      color: #FFF;
+      box-shadow: 0 0 15px rgba(0, 102, 255, 0.4);
+    }
+
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      align-items: stretch;
+    }
+
+    @media (max-width: 900px) {
+      .pricing-grid {
+        grid-template-columns: 1fr;
+        max-width: 480px;
+        margin-inline: auto;
+      }
+    }
+
+    .price-card {
+      padding: 36px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+    }
+
+    .price-card.featured {
+      border-color: rgba(0, 229, 190, 0.5);
+      background: linear-gradient(180deg, rgba(16, 26, 48, 0.9) 0%, rgba(10, 16, 32, 0.95) 100%);
+      box-shadow: 0 0 40px rgba(0, 229, 190, 0.18), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      transform: scale(1.03);
+    }
+
+    @media (max-width: 900px) {
+      .price-card.featured {
+        transform: none;
+      }
+    }
+
+    .price-featured-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #00E5BE 0%, #10F296 100%);
+      color: #040913;
+      font-size: 11px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 4px 14px;
+      border-radius: var(--radius-pill);
+      box-shadow: 0 4px 15px rgba(0, 229, 190, 0.4);
+    }
+
+    .price-header {
+      margin-bottom: 24px;
+    }
+
+    .price-plan-name {
+      font-size: 18px;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 6px;
+    }
+
+    .price-plan-desc {
+      font-size: 13px;
+      color: var(--text-secondary);
+    }
+
+    .price-amount-wrap {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin: 20px 0;
+    }
+
+    .price-currency {
+      font-size: 24px;
+      font-weight: 700;
+      color: #FFF;
+    }
+
+    .price-num {
+      font-size: 52px;
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      color: #FFF;
+      line-height: 1;
+    }
+
+    .price-period {
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+
+    .price-feature-list {
+      list-style: none;
+      margin: 24px 0 32px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .price-feature-list li {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* FAQ ACCORDION */
+    .faq-list {
+      max-width: 820px;
+      margin: 50px auto 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .faq-item {
+      background: rgba(14, 21, 38, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      transition: all 0.25s ease;
+    }
+
+    .faq-item:hover {
+      border-color: rgba(255, 255, 255, 0.16);
+    }
+
+    .faq-question {
+      padding: 20px 24px;
+      width: 100%;
+      text-align: left;
+      font-size: 16px;
+      font-weight: 700;
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+
+    .faq-icon {
+      font-size: 18px;
+      color: var(--accent-teal);
+      transition: transform 0.25s ease;
+    }
+
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 0 24px;
+      color: var(--text-secondary);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .faq-item.open .faq-answer {
+      padding-bottom: 20px;
+      max-height: 300px;
+    }
+
+    /* FINAL CTA SECTION */
+    .final-cta {
+      padding: 100px 0;
+      position: relative;
+    }
+
+    .cta-card-epic {
+      background: radial-gradient(circle at 50% 0%, rgba(0, 102, 255, 0.35) 0%, rgba(10, 16, 32, 0.95) 70%);
+      border: 1px solid rgba(0, 229, 190, 0.3);
+      border-radius: var(--radius-xl);
+      padding: 70px 40px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+      box-shadow: 0 0 80px rgba(0, 102, 255, 0.25);
+    }
+
+    /* FOOTER */
+    .site-footer {
+      border-top: 1px solid var(--border-glass);
+      padding: 70px 0 40px;
+      background: #04060B;
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 60px;
+    }
+
+    @media (max-width: 900px) {
+      .footer-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (max-width: 550px) {
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .footer-col-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .footer-links-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+
+    .footer-links-list a:hover {
+      color: var(--accent-teal);
+    }
+
+    .footer-bottom-bar {
+      border-top: 1px solid rgba(255, 255, 255, 0.06);
+      padding-top: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: 13px;
+      color: var(--text-muted);
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    /* SHORTCUT MODAL */
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.75);
+      backdrop-filter: blur(16px);
+      z-index: 200;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .modal-overlay.active {
+      display: flex;
+    }
+
+    .modal-content {
+      background: #0E1628;
+      border: 1px solid rgba(0, 229, 190, 0.3);
+      border-radius: var(--radius-lg);
+      max-width: 560px;
+      width: 100%;
+      padding: 30px;
+      box-shadow: 0 25px 60px rgba(0, 0, 0, 0.8), 0 0 35px rgba(0, 229, 190, 0.2);
+    }
+
+    .modal-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .shortcut-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LIQUID GLASS FLOATING HEADER -->
+  <header class="header glass-nav">
+    <div class="container nav-wrapper">
+      <a href="#" class="brand">
+        <div class="brand-logo-gem">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <span>clipra</span>
+      </a>
+
+      <nav class="nav-menu">
+        <a href="#features" class="nav-link">Capabilities</a>
+        <a href="#smart-sort" class="nav-link">Smart Auto-Sort</a>
+        <a href="#transformer" class="nav-link">Text Transformer</a>
+        <a href="#usecases" class="nav-link">Use Cases</a>
+        <a href="#comparison" class="nav-link">vs Paste</a>
+        <a href="#pricing" class="nav-link">Pricing</a>
+        <a href="#faq" class="nav-link">FAQ</a>
+        <a href="updates.html" class="nav-link">Roadmap</a>
+      </nav>
+
+      <div class="nav-cta-group">
+        <button id="openShortcutsBtn" class="btn btn-glass" title="View Keyboard Shortcuts">
+          <span class="kbd">⌘</span><span class="kbd">K</span>
+        </button>
+        <a href="#pricing" class="btn btn-primary">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.63-.77 1.06-1.85.95-2.93-.93.04-2.03.62-2.69 1.39-.58.67-1.1 1.76-.96 2.82 1.04.08 2.07-.52 2.7-1.28z"/></svg>
+          <span>Download Free</span>
+        </a>
+        <button class="mobile-menu-btn" id="mobileToggle" aria-label="Toggle menu">
+          <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 6h16M4 12h16m-7 6h7"></path></svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO SECTION -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge-wrap">
+        <div class="glass-pill">
+          <span class="pulse-dot"></span>
+          <span>Engineered for macOS 26 Liquid Glass &amp; iOS 26</span>
+          <span style="color: var(--accent-teal);">●</span>
+          <span style="color: var(--text-secondary);">Zero Server Footprint</span>
+        </div>
+      </div>
+
+      <h1 class="hero-title">
+        The clipboard that <span class="text-gradient">organizes itself.</span>
+      </h1>
+
+      <p class="hero-desc">
+        Never lose a link, color palette, or code snippet again. Clipra pairs zero-latency Smart Auto-Sort with instant Text Transformation and private iCloud sync — at half the price of Paste.
+      </p>
+
+      <div class="hero-cta-row">
+        <a href="#pricing" class="btn btn-electric" style="padding: 14px 28px; font-size: 15px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.63-.77 1.06-1.85.95-2.93-.93.04-2.03.62-2.69 1.39-.58.67-1.1 1.76-.96 2.82 1.04.08 2.07-.52 2.7-1.28z"/></svg>
+          <span>Get Clipra for Mac Free</span>
+          <span class="kbd">⌘⇧V</span>
+        </a>
+
+        <a href="#smart-sort" class="btn btn-glass" style="padding: 14px 24px; font-size: 15px;">
+          <span>Explore Interactive Demo</span>
+          <span style="color: var(--accent-teal);">↓</span>
+        </a>
+      </div>
+
+      <div class="hero-meta-strip">
+        <div class="hero-meta-item">
+          <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>50 items free forever</span>
+        </div>
+        <div class="hero-meta-item">
+          <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>100% Private iCloud (No AR Swift Servers)</span>
+        </div>
+        <div class="hero-meta-item">
+          <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>$14.99/yr vs Paste's $29.99</span>
+        </div>
+      </div>
+
+      <!-- 3D INTERACTIVE HERO STAGE -->
+      <div class="hero-stage">
+        <div class="stage-glow"></div>
+        
+        <div class="mac-window-frame" id="macStage">
+          <!-- Mac Window Bar -->
+          <div class="mac-titlebar">
+            <div class="traffic-lights">
+              <span class="traffic-light tl-red"></span>
+              <span class="traffic-light tl-yellow"></span>
+              <span class="traffic-light tl-green"></span>
+            </div>
+            
+            <div class="mac-title-center">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+              <span>Clipra Shelf — macOS Liquid Glass</span>
+            </div>
+
+            <div class="mac-search-bar">
+              <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              <span>Search history or OCR...</span>
+              <span class="kbd" style="margin-left: auto; font-size: 9px;">⌘F</span>
+            </div>
+          </div>
+
+          <!-- Mac Shelf Body -->
+          <div class="mac-body">
+            <!-- Interactive Pinboards Row -->
+            <div class="mock-pinboards" id="heroFilterTabs">
+              <button class="mock-tab active" data-filter="all">
+                <span>⚡ All History</span>
+                <span class="mock-tab-badge">142</span>
+              </button>
+              <button class="mock-tab" data-filter="code">
+                <span>{ } Code Snippets</span>
+                <span class="mock-tab-badge">38</span>
+              </button>
+              <button class="mock-tab" data-filter="colors">
+                <span>◈ Brand Colors</span>
+                <span class="mock-tab-badge">12</span>
+              </button>
+              <button class="mock-tab" data-filter="links">
+                <span>↗ Clean URLs</span>
+                <span class="mock-tab-badge">54</span>
+              </button>
+              <button class="mock-tab" data-filter="notes">
+                <span>✎ Meeting Notes</span>
+                <span class="mock-tab-badge">19</span>
+              </button>
+            </div>
+
+            <!-- Shelf Cards Grid (Realistic Mockup) -->
+            <div class="mock-shelf-grid" id="heroCardsGrid">
+              <!-- Card 1: TypeScript snippet -->
+              <div class="clip-card" data-type="code">
+                <div>
+                  <div class="clip-card-header">
+                    <span class="clip-source-tag">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+                      VS Code
+                    </span>
+                    <span class="clip-shortcut">⌘1</span>
+                  </div>
+                  <div class="clip-content-box" style="font-family: var(--font-mono); font-size: 11px; color: #7DD3FC;">
+                    <span style="color:#F472B6;">const</span> dedupe = &lt;T&gt;(arr: T[]): T[] =&gt; [...<span style="color:#38BDF8;">new Set</span>(arr)];
+                  </div>
+                </div>
+                <div class="clip-card-footer">
+                  <span class="auto-sort-pill pill-blue">Rule: Code Language</span>
+                  <span>14s ago</span>
+                </div>
+              </div>
+
+              <!-- Card 2: Hex Color Swatch -->
+              <div class="clip-card" data-type="colors">
+                <div>
+                  <div class="clip-card-header">
+                    <span class="clip-source-tag">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
+                      Figma
+                    </span>
+                    <span class="clip-shortcut">⌘2</span>
+                  </div>
+                  <div class="clip-content-box" style="display: flex; align-items: center; gap: 12px;">
+                    <div style="width: 38px; height: 38px; border-radius: 8px; background: #00E5BE; box-shadow: 0 0 15px rgba(0, 229, 190, 0.5); border: 1px solid rgba(255,255,255,0.4);"></div>
+                    <div>
+                      <div style="font-family: var(--font-mono); font-weight: 700; color: #FFF;">#00E5BE</div>
+                      <div style="font-size: 11px; color: var(--text-muted);">rgba(0, 229, 190, 1.0)</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="clip-card-footer">
+                  <span class="auto-sort-pill pill-teal">Rule: Hex Color</span>
+                  <span>2m ago</span>
+                </div>
+              </div>
+
+              <!-- Card 3: Cleaned Link -->
+              <div class="clip-card" data-type="links">
+                <div>
+                  <div class="clip-card-header">
+                    <span class="clip-source-tag">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>
+                      Safari
+                    </span>
+                    <span class="clip-shortcut">⌘3</span>
+                  </div>
+                  <div class="clip-content-box">
+                    <div style="font-size: 11px; text-decoration: line-through; color: var(--text-dim); margin-bottom: 2px;">linear.app/?utm_source=slack&amp;ref=12</div>
+                    <div style="font-size: 12px; font-weight: 600; color: var(--accent-green);">https://linear.app/projects</div>
+                  </div>
+                </div>
+                <div class="clip-card-footer">
+                  <span class="auto-sort-pill pill-green">Auto-Cleaned UTM</span>
+                  <span>12m ago</span>
+                </div>
+              </div>
+
+              <!-- Card 4: Meeting Notes -->
+              <div class="clip-card" data-type="notes">
+                <div>
+                  <div class="clip-card-header">
+                    <span class="clip-source-tag">
+                      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                      Slack
+                    </span>
+                    <span class="clip-shortcut">⌘4</span>
+                  </div>
+                  <div class="clip-content-box" style="font-size: 12px; color: var(--text-secondary);">
+                    &bull; Review macOS 26 Swift build<br>
+                    &bull; Test StoreKit 2 Lifetime IAP<br>
+                    &bull; Finalize App Store video brief
+                  </div>
+                </div>
+                <div class="clip-card-footer">
+                  <span class="auto-sort-pill pill-purple">Rule: Task List</span>
+                  <span>1h ago</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS & COMPETITIVE ADVANTAGE BAR -->
+  <section class="stats-strip">
+    <div class="container">
+      <div class="stats-grid">
+        <div>
+          <div class="stat-number text-gradient-teal">50%</div>
+          <div class="stat-label">Lower Price than Paste ($14.99 vs $29.99/yr)</div>
+        </div>
+        <div>
+          <div class="stat-number text-gradient-blue">&lt;50ms</div>
+          <div class="stat-label">Smart Auto-Sort Response Time</div>
+        </div>
+        <div>
+          <div class="stat-number text-gradient">100%</div>
+          <div class="stat-label">Private iCloud &bull; Zero Server Storage</div>
+        </div>
+        <div>
+          <div class="stat-number text-gradient-teal">10-in-1</div>
+          <div class="stat-label">Instant Text Transformations</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFFERENTIATOR #1: SMART AUTO-SORT (INTELLECTUAL HIGHLIGHT) -->
+  <section id="smart-sort" class="section-spacing">
+    <div class="container">
+      <div style="text-align: center; max-width: 760px; margin-inline: auto;">
+        <span class="section-eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          Unique Differentiator #1
+        </span>
+        <h2 class="section-title">Paste stores everything.<br><span class="text-gradient">Clipra organizes it automatically.</span></h2>
+        <p class="section-sub" style="margin-inline: auto;">
+          Users requested rule-based auto-sorting on Paste's idea board for years with 125+ votes. Paste never built it. Clipra analyses copied data in under 50ms using Apple NaturalLanguage and regex engines to route items straight into the right pinboard.
+        </p>
+      </div>
+
+      <!-- INTERACTIVE SIMULATOR -->
+      <div class="sim-container">
+        <div class="sim-header">
+          <div>
+            <div style="font-size: 16px; font-weight: 700; color: #FFF; margin-bottom: 4px;">Live Rule Engine Simulator</div>
+            <div style="font-size: 13px; color: var(--text-secondary);">Click any sample copy item to see the real-time routing logic in action:</div>
+          </div>
+
+          <div class="sim-source-triggers" id="ruleTriggers">
+            <button class="trigger-btn active" data-sample="color">🎨 HEX / RGB Color</button>
+            <button class="trigger-btn" data-sample="url">🔗 Tracking URL</button>
+            <button class="trigger-btn" data-sample="code">⚡ Swift / JS Code</button>
+            <button class="trigger-btn" data-sample="email">✉️ Email Contact</button>
+            <button class="trigger-btn" data-sample="json">📦 JSON Payload</button>
+          </div>
+        </div>
+
+        <div class="sim-grid-layout">
+          <!-- Input Box -->
+          <div class="sim-box">
+            <div>
+              <div class="sim-box-label">
+                <span>Step 1: Copied to System Clipboard</span>
+                <span class="kbd">⌘C</span>
+              </div>
+              <div class="sim-content-preview" id="simSourceText">
+                #00E5BE
+              </div>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted); display: flex; align-items: center; gap: 6px;">
+              <span class="pulse-dot" style="width:6px; height:6px;"></span>
+              <span id="simDetectLabel">Detected: Hex Color Code pattern</span>
+            </div>
+          </div>
+
+          <!-- Dynamic Arrow Connector -->
+          <div class="sim-connector-arrow">
+            <span>→</span>
+          </div>
+
+          <!-- Target Auto-Sort Result -->
+          <div class="route-target-card">
+            <div class="route-badge" id="simRouteBadge">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              <span id="simRuleTitle">Rule: Colors &amp; Assets Auto-Route</span>
+            </div>
+            <div class="route-board-title" id="simBoardName">📁 Pinboard: Brand Colors</div>
+            <p class="route-reason" id="simExplanation">
+              Regex pattern <code style="font-family: var(--font-mono); color: var(--accent-teal);">/^#(?:[0-9a-fA-F]{3}){1,2}$/</code> matched. Automatically assigned color tag and swatched preview.
+            </p>
+            <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; font-size: 12px;">
+              <span style="color: var(--text-muted);">Execution Time:</span>
+              <span style="color: var(--accent-green); font-weight: 700; font-family: var(--font-mono);">18ms (Zero Lag)</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DIFFERENTIATOR #2: TEXT TRANSFORMER (POWER TOOL) -->
+  <section id="transformer" class="section-spacing" style="background: rgba(10, 15, 26, 0.4);">
+    <div class="container">
+      <div style="text-align: center; max-width: 760px; margin-inline: auto;">
+        <span class="section-eyebrow">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="4 7 4 4 20 4 20 7"/><line x1="9" y1="20" x2="15" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/></svg>
+          Unique Differentiator #2
+        </span>
+        <h2 class="section-title">Copy once. <span class="text-gradient">Paste anything.</span></h2>
+        <p class="section-sub" style="margin-inline: auto;">
+          Paste stores raw text only. With Clipra, a single shortcut (<span class="kbd">⌥Enter</span>) or long-press transforms your copied text on the fly. Clean tracking params, prettify messy JSON, convert cases, or strip styling without opening another tool.
+        </p>
+      </div>
+
+      <!-- INTERACTIVE TEXT TRANSFORMER LAB -->
+      <div class="transformer-lab">
+        <div class="trans-tabs-bar" id="transTabs">
+          <button class="trans-tab active" data-trans="utm">🧹 Strip UTM &amp; Tracking</button>
+          <button class="trans-tab" data-trans="json">📦 JSON Prettify / Minify</button>
+          <button class="trans-tab" data-trans="case">🔤 Title Case / UPPERCASE</button>
+          <button class="trans-tab" data-trans="plain">📄 Remove Formatting (Plain Text)</button>
+          <button class="trans-tab" data-trans="base64">🔒 Base64 Encode / Decode</button>
+          <button class="trans-tab" data-trans="slug">⚡ URL Slugify</button>
+        </div>
+
+        <div class="trans-editor-grid">
+          <!-- Before Pane -->
+          <div class="trans-pane">
+            <div>
+              <div class="trans-pane-title">
+                <span>Original Copied String</span>
+                <span style="color: #EF4444;">● Dirty Input</span>
+              </div>
+              <div class="trans-text-output" id="transBefore">https://linear.app/features/roadmaps?utm_source=twitter&amp;utm_medium=cpc&amp;utm_campaign=launch2026&amp;fbclid=IwAR098XyZa</div>
+            </div>
+            <div style="font-size: 12px; color: var(--text-muted);">Source: Safari (Browser Copy)</div>
+          </div>
+
+          <!-- After Pane -->
+          <div class="trans-pane" style="background: rgba(0, 102, 255, 0.05);">
+            <div>
+              <div class="trans-pane-title">
+                <span>Clipra Instant Transformation</span>
+                <span style="color: var(--accent-green);">● Clean Output</span>
+              </div>
+              <div class="trans-text-output trans-result-highlight" id="transAfter">https://linear.app/features/roadmaps</div>
+            </div>
+            
+            <div class="trans-action-bar">
+              <span style="font-size: 12px; color: var(--text-muted);" id="transSavings">Stripped 79 tracking characters</span>
+              <button class="btn btn-electric" id="copyTransBtn" style="padding: 8px 16px; font-size: 12px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
+                <span id="copyBtnText">Copy Clean Text</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- USE CASES TABS -->
+  <section id="usecases" class="section-spacing">
+    <div class="container">
+      <div style="text-align: center; max-width: 720px; margin-inline: auto;">
+        <span class="section-eyebrow">Engineered For Your Workflow</span>
+        <h2 class="section-title">Built for high-output <span class="text-gradient">professionals.</span></h2>
+        <p class="section-sub" style="margin-inline: auto;">
+          Whether you ship code, polish interfaces, run growth campaigns, or manage agencies — Clipra cuts repetitive paste friction out of your day.
+        </p>
+
+        <div class="usecase-tabs-nav" id="usecaseTabs">
+          <button class="usecase-pill active" data-case="dev">For Developers</button>
+          <button class="usecase-pill" data-case="design">For UI/UX Designers</button>
+          <button class="usecase-pill" data-case="market">For Growth &amp; Marketers</button>
+          <button class="usecase-pill" data-case="agency">For Agency &amp; Teams</button>
+        </div>
+      </div>
+
+      <div class="usecase-display-box" id="usecaseBox">
+        <div>
+          <div style="display: inline-block; font-size: 12px; font-weight: 700; color: var(--accent-teal); margin-bottom: 8px;" id="ucEyebrow">DEVELOPER WORKFLOW</div>
+          <h3 style="font-size: 28px; font-weight: 800; color: #FFF; margin-bottom: 16px;" id="ucTitle">Syntax-aware code snippets &amp; terminal tokens.</h3>
+          <p style="font-size: 15px; color: var(--text-secondary); line-height: 1.7; margin-bottom: 24px;" id="ucDesc">
+            Never re-type SSH keys, Docker commands, or regex patterns. Clipra auto-routes Swift, JS, Python, and SQL snippets to your Dev pinboard. Prettify nested JSON with a single keystroke.
+          </p>
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;" id="ucBadges">
+            <span class="glass-pill" style="color: var(--accent-teal);">⚡ JSON Prettify/Minify</span>
+            <span class="glass-pill" style="color: var(--accent-blue-bright);">🔒 Base64 Decode</span>
+            <span class="glass-pill" style="color: var(--accent-green);">⌨️ Paste Stack ⌘⌥V</span>
+          </div>
+        </div>
+
+        <div class="glass-card" style="padding: 24px; background: rgba(14, 21, 38, 0.9);" id="ucMockup">
+          <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px;">
+            <span style="font-size: 12px; color: var(--text-muted); font-family: var(--font-mono);">Terminal / Xcode</span>
+            <span class="kbd">⌘1</span>
+          </div>
+          <div style="font-family: var(--font-mono); font-size: 13px; color: #7DD3FC; background: #000; padding: 14px; border-radius: 8px; margin-bottom: 12px;" id="ucSnippet">
+            docker run -d -p 8080:80 --name clipra-api swift:6.0
+          </div>
+          <div style="font-size: 12px; color: var(--accent-green);" id="ucFooterNote">
+            ✓ Auto-tagged: Shell Command &bull; Stripped linebreaks
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ECOSYSTEM CONTINUITY & PRIVACY -->
+  <section class="section-spacing" style="background: rgba(8, 12, 22, 0.7);">
+    <div class="container">
+      <div class="ecosystem-grid">
+        <div>
+          <span class="section-eyebrow">Native Apple Synergy</span>
+          <h2 class="section-title">Your Mac, iPhone &amp; iPad.<br><span class="text-gradient-teal">Synced in lockstep.</span></h2>
+          <p class="section-sub" style="margin-bottom: 24px;">
+            Clipra works natively across the entire Apple ecosystem. Copy on your Mac, paste immediately on your iPhone via our dedicated custom keyboard extension — without switching apps or touching third-party servers.
+          </p>
+
+          <div style="display: flex; flex-direction: column; gap: 18px;">
+            <div class="glass-card" style="padding: 18px;">
+              <div style="font-size: 15px; font-weight: 700; color: #FFF; margin-bottom: 4px;">iOS Custom Keyboard Extension</div>
+              <p style="font-size: 13px; color: var(--text-secondary);">
+                Paste from your entire clipboard history directly while typing in WhatsApp, Slack, Apple Mail, or Safari. Compact 200px drawer designed strictly to Apple HIG.
+              </p>
+            </div>
+
+            <div class="glass-card" style="padding: 18px;">
+              <div style="font-size: 15px; font-weight: 700; color: #FFF; margin-bottom: 4px;">Zero-Server Private iCloud Sync</div>
+              <p style="font-size: 13px; color: var(--text-secondary);">
+                We store nothing. Your clipboard records travel strictly inside your own private Apple CloudKit database. No AR Swift servers, zero risk of data exposure.
+              </p>
+            </div>
+
+            <div class="glass-card" style="padding: 18px;">
+              <div style="font-size: 15px; font-weight: 700; color: #FFF; margin-bottom: 4px;">Dynamic Island &amp; Lock Screen Widgets</div>
+              <p style="font-size: 13px; color: var(--text-secondary);">
+                Instant clipboard status and last 3 copied tokens available right on your iPhone Dynamic Island and Home Screen widgets.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3D Device Art Stage -->
+        <div class="device-stage-3d">
+          <div class="iphone-mockup">
+            <div class="dynamic-island">
+              <div class="dynamic-island-dot"></div>
+              <span>Clipra Synced</span>
+              <span style="font-size: 7px; color: var(--accent-teal);">iCloud</span>
+            </div>
+
+            <!-- iPhone App Screen Preview -->
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 8px; padding-top: 6px;">
+              <div style="font-size: 13px; font-weight: 800; color: #FFF; margin-bottom: 4px;">Clipboard History</div>
+              
+              <div class="ios-card">
+                <div style="font-size: 10px; color: var(--accent-teal); font-weight: 700;">Brand Colors &bull; 1m ago</div>
+                <div style="font-size: 11px; font-family: var(--font-mono); color: #FFF;">#00E5BE</div>
+              </div>
+
+              <div class="ios-card">
+                <div style="font-size: 10px; color: #60A5FA; font-weight: 700;">Safari &bull; Cleaned URL</div>
+                <div style="font-size: 11px; color: #E2E8F0;">linear.app/projects</div>
+              </div>
+
+              <div class="ios-card">
+                <div style="font-size: 10px; color: #34D399; font-weight: 700;">VS Code &bull; Snippet</div>
+                <div style="font-size: 11px; font-family: var(--font-mono); color: #7DD3FC;">const dedupe = ...</div>
+              </div>
+
+              <!-- Keyboard extension preview -->
+              <div class="ios-keyboard-banner">
+                <div style="font-size: 10px; font-weight: 700; color: var(--accent-teal); margin-bottom: 4px; display: flex; align-items: center; justify-content: space-between;">
+                  <span>Clipra iOS Keyboard</span>
+                  <span style="font-size: 9px; color: var(--text-muted);">Tap to paste</span>
+                </div>
+                <div style="display: flex; gap: 6px; overflow-x: auto;">
+                  <span style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 6px; font-size: 9px; white-space: nowrap;">#00E5BE</span>
+                  <span style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 6px; font-size: 9px; white-space: nowrap;">linear.app</span>
+                  <span style="background: rgba(255,255,255,0.1); padding: 4px 8px; border-radius: 6px; font-size: 9px; white-space: nowrap;">Meeting notes</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPLETE FEATURE MATRIX (BENTO GRID) -->
+  <section id="features" class="section-spacing">
+    <div class="container">
+      <div style="text-align: center; max-width: 720px; margin-inline: auto;">
+        <span class="section-eyebrow">v1.0 Launch Architecture</span>
+        <h2 class="section-title">Everything power users need.<br><span class="text-gradient">Nothing they don't.</span></h2>
+        <p class="section-sub" style="margin-inline: auto;">
+          Crafted specifically for developers, designers, and high-velocity teams who copy hundreds of times each day.
+        </p>
+      </div>
+
+      <div class="bento-grid">
+        <!-- Card 1: Paste Stack -->
+        <div class="glass-card bento-card">
+          <div>
+            <div class="bento-icon icon-blue">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+            </div>
+            <h3 class="bento-title">Paste Stack</h3>
+            <p class="bento-desc">
+              Copy multiple items in sequence with <span class="kbd">⌘C</span> <span class="kbd">⌘C</span> <span class="kbd">⌘C</span>, then paste them in exact order one by one with <span class="kbd">⌘V</span>. Zero context switching.
+            </p>
+          </div>
+          <div style="margin-top: 20px; font-size: 12px; color: var(--accent-blue-bright); font-weight: 600;">Available on Mac &bull; Sequential Queue</div>
+        </div>
+
+        <!-- Card 2: Offline JSON Export -->
+        <div class="glass-card bento-card">
+          <div>
+            <div class="bento-icon icon-teal">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            </div>
+            <h3 class="bento-title">Offline Export &amp; Import</h3>
+            <p class="bento-desc">
+              The #1 request on Paste's public board with 161 votes. Export your entire clipboard history to structured JSON for corporate backup, compliance, or local migration.
+            </p>
+          </div>
+          <div style="margin-top: 20px; font-size: 12px; color: var(--accent-teal); font-weight: 600;">Enterprise-Ready &bull; 100% Offline</div>
+        </div>
+
+        <!-- Card 3: Screen Share Stealth -->
+        <div class="glass-card bento-card">
+          <div>
+            <div class="bento-icon icon-green">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>
+            </div>
+            <h3 class="bento-title">Screen Share Stealth</h3>
+            <p class="bento-desc">
+              Present with confidence. Clipra automatically detects screen sharing across Zoom, Google Meet, and Teams to hide sensitive snippets and credentials.
+            </p>
+          </div>
+          <div style="margin-top: 20px; font-size: 12px; color: var(--accent-green); font-weight: 600;">Privacy Protection &bull; Zero Leaks</div>
+        </div>
+
+        <!-- Card 4: OCR Power Search -->
+        <div class="glass-card bento-card">
+          <div>
+            <div class="bento-icon icon-teal">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </div>
+            <h3 class="bento-title">OCR Power Search</h3>
+            <p class="bento-desc">
+              Search text located inside screenshots, filter by source app (Figma, Terminal, Safari), and find copies by exact timestamp or regex query.
+            </p>
+          </div>
+          <div style="margin-top: 20px; font-size: 12px; color: var(--accent-teal); font-weight: 600;">Instant Query Engine</div>
+        </div>
+
+        <!-- Card 5: Biometric Face ID Lock -->
+        <div class="glass-card bento-card">
+          <div>
+            <div class="bento-icon icon-blue">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </div>
+            <h3 class="bento-title">Biometric Protection</h3>
+            <p class="bento-desc">
+              Lock your sensitive pinboards and complete history behind Touch ID on Mac and Face ID on iPhone &amp; iPad.
+            </p>
+          </div>
+          <div style="margin-top: 20px; font-size: 12px; color: var(--accent-blue-bright); font-weight: 600;">Hardware-Level Secure Enclave</div>
+        </div>
+
+        <!-- Card 6: 30-Day Trash & Recovery -->
+        <div class="glass-card bento-card">
+          <div>
+            <div class="bento-icon icon-green">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+            </div>
+            <h3 class="bento-title">30-Day Trash Recovery</h3>
+            <p class="bento-desc">
+              Accidentally removed an important API token or contract address? Clipra keeps deleted items safe for 30 days before permanent purging.
+            </p>
+          </div>
+          <div style="margin-top: 20px; font-size: 12px; color: var(--accent-green); font-weight: 600;">Undo Protection Built-in</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HONEST COMPARISON TABLE (CLIPRA VS PASTE VS MACOS SPOTLIGHT) -->
+  <section id="comparison" class="section-spacing" style="background: rgba(10, 15, 26, 0.4);">
+    <div class="container">
+      <div style="text-align: center; max-width: 760px; margin-inline: auto;">
+        <span class="section-eyebrow">The Honest Breakdown</span>
+        <h2 class="section-title">How Clipra compares to <span class="text-gradient">Paste &amp; macOS</span></h2>
+        <p class="section-sub" style="margin-inline: auto;">
+          Apple added a 7-day clipboard to macOS Tahoe Spotlight. Paste charges $29.99/year. Here is why Clipra is the clear winner for professionals.
+        </p>
+      </div>
+
+      <div class="comp-wrapper">
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th style="width: 32%;">Feature / Capability</th>
+              <th class="col-clipra" style="width: 26%; font-size: 16px;">✦ Clipra (Ours)</th>
+              <th style="width: 21%;">Paste (Competitor)</th>
+              <th style="width: 21%;">macOS Tahoe Spotlight</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>Annual Subscription Price</strong></td>
+              <td class="col-clipra"><span style="color: var(--accent-teal); font-size: 16px;">$14.99 / year</span> (50% Off)</td>
+              <td>$29.99 / year</td>
+              <td>Included in macOS</td>
+            </tr>
+            <tr>
+              <td><strong>Lifetime License Option</strong></td>
+              <td class="col-clipra"><span class="comp-check">✓ $49.99 Once</span></td>
+              <td><span class="comp-cross">$99.99 Once</span></td>
+              <td><span class="comp-cross">—</span></td>
+            </tr>
+            <tr>
+              <td><strong>Smart Auto-Sort Rules</strong></td>
+              <td class="col-clipra"><span class="comp-check">✓ Built-in (Unique)</span></td>
+              <td><span class="comp-cross">✕ Not Built (125 requests)</span></td>
+              <td><span class="comp-cross">✕ None</span></td>
+            </tr>
+            <tr>
+              <td><strong>Text Transformer (10 tools)</strong></td>
+              <td class="col-clipra"><span class="comp-check">✓ Built-in (Unique)</span></td>
+              <td><span class="comp-cross">✕ Raw text only</span></td>
+              <td><span class="comp-cross">✕ None</span></td>
+            </tr>
+            <tr>
+              <td><strong>Clipboard History Limit</strong></td>
+              <td class="col-clipra"><span class="comp-check">✓ Unlimited</span></td>
+              <td><span class="comp-check">✓ Unlimited</span></td>
+              <td><span class="comp-cross">✕ 7 days only</span></td>
+            </tr>
+            <tr>
+              <td><strong>iPhone &amp; iPad Sync</strong></td>
+              <td class="col-clipra"><span class="comp-check">✓ Private iCloud</span></td>
+              <td><span class="comp-check">✓ Private iCloud</span></td>
+              <td><span class="comp-cross">✕ Mac only (No iOS)</span></td>
+            </tr>
+            <tr>
+              <td><strong>iOS Keyboard Extension</strong></td>
+              <td class="col-clipra"><span class="comp-check">✓ Custom Keyboard</span></td>
+              <td><span class="comp-check">✓ Custom Keyboard</span></td>
+              <td><span class="comp-cross">✕ None</span></td>
+            </tr>
+            <tr>
+              <td><strong>Offline JSON Export / Import</strong></td>
+              <td class="col-clipra"><span class="comp-check">✓ Yes (161 requests)</span></td>
+              <td><span class="comp-cross">✕ No Export</span></td>
+              <td><span class="comp-cross">✕ None</span></td>
+            </tr>
+            <tr>
+              <td><strong>Biometric Security</strong></td>
+              <td class="col-clipra"><span class="comp-check">✓ Touch ID &amp; Face ID</span></td>
+              <td><span class="comp-cross">✕ No Face ID lock</span></td>
+              <td><span class="comp-cross">✕ None</span></td>
+            </tr>
+            <tr>
+              <td><strong>Server Privacy</strong></td>
+              <td class="col-clipra"><span class="comp-check">✓ 0 Servers (CloudKit)</span></td>
+              <td><span class="comp-check">✓ User iCloud</span></td>
+              <td><span class="comp-check">✓ Local</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING TIERS -->
+  <section id="pricing" class="section-spacing">
+    <div class="container">
+      <div style="text-align: center; max-width: 720px; margin-inline: auto;">
+        <span class="section-eyebrow">Simple, Fair Monetization</span>
+        <h2 class="section-title">No expiry anxiety.<br><span class="text-gradient">Upgrade when you're ready.</span></h2>
+        <p class="section-sub" style="margin-inline: auto;">
+          Paste cuts you off after 7 days. Clipra gives you 50 items free forever. When you're ready for unlimited power, upgrade at half Paste's price.
+        </p>
+
+        <!-- Billing Switcher -->
+        <div class="pricing-toggle-wrap">
+          <div class="pricing-toggle-box" id="billingToggle">
+            <button class="toggle-pill" data-billing="monthly">Monthly Billing</button>
+            <button class="toggle-pill active" data-billing="annual">Annual (Save 37%)</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="pricing-grid">
+        <!-- Tier 1: Free -->
+        <div class="glass-card price-card">
+          <div>
+            <div class="price-header">
+              <div class="price-plan-name">Free Tier</div>
+              <div class="price-plan-desc">Genuinely usable. Perfect for getting started.</div>
+            </div>
+
+            <div class="price-amount-wrap">
+              <span class="price-currency">$</span>
+              <span class="price-num">0</span>
+              <span class="price-period">forever</span>
+            </div>
+
+            <ul class="price-feature-list">
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Up to 50 clipboard items history</span>
+              </li>
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>2 Custom Pinboards</span>
+              </li>
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>All Keyboard Shortcuts (<span class="kbd">⌘⇧V</span>)</span>
+              </li>
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Basic Text Transformations</span>
+              </li>
+            </ul>
+          </div>
+
+          <a href="#" class="btn btn-glass" style="width: 100%;">Download Free v1.0</a>
+        </div>
+
+        <!-- Tier 2: Pro Annual (Featured) -->
+        <div class="glass-card price-card featured">
+          <div class="price-featured-badge">★ Most Popular &bull; 50% Less than Paste</div>
+          <div>
+            <div class="price-header">
+              <div class="price-plan-name">Clipra Pro</div>
+              <div class="price-plan-desc">Full power across all your Mac, iPhone and iPad devices.</div>
+            </div>
+
+            <div class="price-amount-wrap">
+              <span class="price-currency">$</span>
+              <span class="price-num" id="proPriceDisplay">14.99</span>
+              <span class="price-period" id="proPeriodDisplay">/ year</span>
+            </div>
+
+            <ul class="price-feature-list">
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span><strong>Unlimited clipboard history</strong> (No caps)</span>
+              </li>
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span><strong>Smart Auto-Sort Rules Engine</strong></span>
+              </li>
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span><strong>All 10 Text Transformations</strong></span>
+              </li>
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Private iCloud Sync (Mac + iPhone + iPad)</span>
+              </li>
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>iOS Keyboard Extension &amp; Dynamic Island</span>
+              </li>
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Offline JSON Export &amp; Biometric Lock</span>
+              </li>
+            </ul>
+          </div>
+
+          <a href="#" class="btn btn-electric" style="width: 100%;">Start Pro Free Trial</a>
+        </div>
+
+        <!-- Tier 3: Lifetime -->
+        <div class="glass-card price-card">
+          <div>
+            <div class="price-header">
+              <div class="price-plan-name">Lifetime License</div>
+              <div class="price-plan-desc">Pay once. Own Clipra forever with all future updates.</div>
+            </div>
+
+            <div class="price-amount-wrap">
+              <span class="price-currency">$</span>
+              <span class="price-num">49.99</span>
+              <span class="price-period">one-time</span>
+            </div>
+
+            <ul class="price-feature-list">
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Everything in Pro Unlimited</span>
+              </li>
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>All Future Major Versions Included</span>
+              </li>
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>No recurring subscription fees ever</span>
+              </li>
+              <li>
+                <svg class="check-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>
+                <span>Includes Phase 2 Apple Intelligence tools</span>
+              </li>
+            </ul>
+          </div>
+
+          <a href="#" class="btn btn-glass" style="width: 100%;">Buy Lifetime ($49.99)</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- INTERACTIVE FAQ -->
+  <section id="faq" class="section-spacing" style="background: rgba(8, 12, 22, 0.7);">
+    <div class="container">
+      <div style="text-align: center; max-width: 680px; margin-inline: auto;">
+        <span class="section-eyebrow">Clear Answers</span>
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        <p class="section-sub" style="margin-inline: auto;">
+          Everything you need to know about Clipra's permissions, privacy, and architecture.
+        </p>
+      </div>
+
+      <div class="faq-list" id="faqAccordion">
+        <!-- Question 1 -->
+        <div class="faq-item open">
+          <button class="faq-question">
+            <span>Does Clipra send my clipboard data to any AR Swift servers?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            No. Clipra maintains zero external servers. All clipboard storage and device sync happen strictly inside your private Apple iCloud container using Apple's CloudKit framework. AR Swift has zero access to your copied passwords, links, or documents.
+          </div>
+        </div>
+
+        <!-- Question 2 -->
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How does Smart Auto-Sort determine which pinboard to route items to?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            Clipra runs an ultra-fast (&lt;50ms) classification pipeline on your device combining Apple's NaturalLanguage framework and custom regex rules. It categorizes URLs, hex/rgb colors, code languages (Swift, JavaScript, Python, SQL), emails, and JSON payloads. You can also define custom rules (e.g., &ldquo;route copies from Figma to Design Assets&rdquo;).
+          </div>
+        </div>
+
+        <!-- Question 3 -->
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>How does the iOS app access clipboard history given Apple background limits?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            iOS restricts persistent background clipboard polling for privacy. Clipra solves this elegantly by providing a dedicated iOS Custom Keyboard Extension and Action Share Sheet. You can open Clipra inside any iOS keyboard drawer and paste directly without leaving the app you are in.
+          </div>
+        </div>
+
+        <!-- Question 4 -->
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Why is Clipra priced at $14.99/yr compared to Paste's $29.99/yr?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            Because we use private iCloud sync with zero proprietary server maintenance overhead, our infrastructure operating cost is effectively zero. We pass these savings directly to you with 50% lower annual pricing and a true $49.99 lifetime purchase option that Paste refuses to offer affordably.
+          </div>
+        </div>
+
+        <!-- Question 5 -->
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>Can I export my clipboard history if I change machines or need compliance?</span>
+            <span class="faq-icon">+</span>
+          </button>
+          <div class="faq-answer">
+            Yes! This is one of our key differentiators (161 votes on competitor boards). Clipra allows you to export your entire history to cleanly formatted JSON at any time with a single click, completely offline.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSING DOWNLOAD BANNER -->
+  <section class="final-cta">
+    <div class="container">
+      <div class="cta-card-epic">
+        <span class="section-eyebrow" style="color: var(--accent-green);">Get Started in 10 Seconds</span>
+        <h2 style="font-size: clamp(34px, 5vw, 62px); font-weight: 800; line-height: 1.1; margin-bottom: 20px; color: #FFF;">
+          Upgrade your clipboard to <span class="text-gradient">liquid glass.</span>
+        </h2>
+        <p style="font-size: 18px; color: var(--text-secondary); max-width: 620px; margin: 0 auto 36px;">
+          50 items free forever. No credit card required. Experience why thousand-person engineering and design teams are switching to Clipra.
+        </p>
+
+        <div class="hero-cta-row" style="margin-bottom: 20px;">
+          <a href="#pricing" class="btn btn-electric" style="padding: 16px 32px; font-size: 16px;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.63-.77 1.06-1.85.95-2.93-.93.04-2.03.62-2.69 1.39-.58.67-1.1 1.76-.96 2.82 1.04.08 2.07-.52 2.7-1.28z"/></svg>
+            <span>Download Clipra for Mac</span>
+          </a>
+          <a href="updates.html" class="btn btn-glass" style="padding: 16px 28px; font-size: 16px;">
+            <span>Read Product Roadmap ↗</span>
+          </a>
+        </div>
+
+        <div style="font-size: 13px; color: var(--text-muted);">Requires macOS 26 Tahoe or later &bull; iOS 26 companion app included</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <a href="#" class="brand" style="margin-bottom: 16px;">
+            <div class="brand-logo-gem">
+              <span></span><span></span><span></span><span></span>
+            </div>
+            <span>clipra</span>
+          </a>
+          <p style="font-size: 14px; color: var(--text-muted); max-width: 300px; margin-bottom: 20px;">
+            The clipboard that organizes itself. Engineered with Swift, Apple CloudKit, and macOS Liquid Glass design.
+          </p>
+          <div style="font-size: 12px; color: var(--text-dim);">
+            Concept &amp; Architecture by AR Swift Private Limited.
+          </div>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Product</div>
+          <ul class="footer-links-list">
+            <li><a href="#features">Capabilities</a></li>
+            <li><a href="#smart-sort">Smart Auto-Sort</a></li>
+            <li><a href="#transformer">Text Transformer</a></li>
+            <li><a href="#comparison">vs Paste App</a></li>
+            <li><a href="#pricing">Pricing Tiers</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Resources</div>
+          <ul class="footer-links-list">
+            <li><a href="updates.html">Product Updates &amp; Roadmap</a></li>
+            <li><a href="#faq">Privacy &amp; CloudKit</a></li>
+            <li><a href="#" id="footerShortcutsLink">Keyboard Shortcuts (⌘K)</a></li>
+            <li><a href="updates.html#architecture">Swift Architecture</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <div class="footer-col-title">Platforms</div>
+          <ul class="footer-links-list">
+            <li><a href="#">macOS Menu Bar App</a></li>
+            <li><a href="#">iOS Keyboard Extension</a></li>
+            <li><a href="#">iPadOS Split View</a></li>
+            <li><a href="#">Dynamic Island Widget</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom-bar">
+        <div>&copy; 2026 Clipra &bull; AR Swift Private Limited. All rights reserved.</div>
+        <div style="display: flex; gap: 20px;">
+          <a href="#faq">Privacy Policy</a>
+          <a href="#faq">Terms of Service</a>
+          <a href="updates.html">Changelog</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- KEYBOARD SHORTCUTS MODAL -->
+  <div class="modal-overlay" id="shortcutModal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 18px;">⚡</span>
+          <h3 style="font-size: 18px; font-weight: 700; color: #FFF;">Clipra Shortcuts Reference</h3>
+        </div>
+        <button id="closeModalBtn" style="font-size: 20px; color: var(--text-muted); cursor: pointer;">&times;</button>
+      </div>
+
+      <div>
+        <div class="shortcut-row">
+          <span style="color: var(--text-secondary);">Summon Clipra Shelf</span>
+          <span class="kbd">⌘ + ⇧ + V</span>
+        </div>
+        <div class="shortcut-row">
+          <span style="color: var(--text-secondary);">Paste Item from 1 to 9</span>
+          <span class="kbd">⌘ + 1 ... 9</span>
+        </div>
+        <div class="shortcut-row">
+          <span style="color: var(--text-secondary);">Open Text Transformer</span>
+          <span class="kbd">⌥ + Enter</span>
+        </div>
+        <div class="shortcut-row">
+          <span style="color: var(--text-secondary);">Power Search History</span>
+          <span class="kbd">⌘ + F</span>
+        </div>
+        <div class="shortcut-row">
+          <span style="color: var(--text-secondary);">Sequential Paste Stack</span>
+          <span class="kbd">⌘ + ⌥ + V</span>
+        </div>
+        <div class="shortcut-row">
+          <span style="color: var(--text-secondary);">Pin Item to Board</span>
+          <span class="kbd">⌘ + P</span>
+        </div>
+        <div class="shortcut-row" style="border-bottom: none;">
+          <span style="color: var(--text-secondary);">Close Shelf</span>
+          <span class="kbd">Esc</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INTERACTIVE JS ENGINE -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. HERO 3D TILT EFFECT
+      const stage = document.getElementById('macStage');
+      if (stage && window.innerWidth > 768) {
+        document.addEventListener('mousemove', (e) => {
+          const rect = stage.getBoundingClientRect();
+          const centerX = rect.left + rect.width / 2;
+          const centerY = rect.top + rect.height / 2;
+          const diffX = (e.clientX - centerX) / (window.innerWidth / 2);
+          const diffY = (e.clientY - centerY) / (window.innerHeight / 2);
+          
+          if (rect.top < window.innerHeight && rect.bottom > 0) {
+            stage.style.transform = `perspective(1000px) rotateX(${-diffY * 6}deg) rotateY(${diffX * 6}deg)`;
+          }
+        });
+      }
+
+      // 2. HERO PINBOARD TABS FILTER
+      const filterTabs = document.querySelectorAll('#heroFilterTabs .mock-tab');
+      const cards = document.querySelectorAll('#heroCardsGrid .clip-card');
+      
+      filterTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          filterTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const filter = tab.dataset.filter;
+          
+          cards.forEach(card => {
+            if (filter === 'all' || card.dataset.type === filter) {
+              card.style.display = 'flex';
+              card.style.opacity = '1';
+            } else {
+              card.style.display = 'none';
+              card.style.opacity = '0';
+            }
+          });
+        });
+      });
+
+      // 3. SMART AUTO-SORT SIMULATOR
+      const ruleTriggers = document.querySelectorAll('#ruleTriggers .trigger-btn');
+      const simSource = document.getElementById('simSourceText');
+      const simDetect = document.getElementById('simDetectLabel');
+      const simRuleTitle = document.getElementById('simRuleTitle');
+      const simBoardName = document.getElementById('simBoardName');
+      const simExplanation = document.getElementById('simExplanation');
+
+      const simData = {
+        color: {
+          source: '#00E5BE',
+          detect: 'Detected: Hex 6-digit Color Code',
+          rule: 'Rule: Design Tokens & Palette',
+          board: '📁 Pinboard: Brand Colors',
+          desc: 'Regex matched /#([0-9a-f]{6})/i. Automatically extracted RGB values (0, 229, 190) and generated quick copy swatch.'
+        },
+        url: {
+          source: 'https://linear.app/tasks?utm_source=twitter&utm_medium=cpc',
+          detect: 'Detected: URL with UTM tracking parameters',
+          rule: 'Rule: Clean Links Auto-Strip',
+          board: '📁 Pinboard: Clean URLs',
+          desc: 'URL parser identified tracking parameters (utm_source, utm_medium). Routed to Clean URLs and prepared one-tap clean paste.'
+        },
+        code: {
+          source: 'func syncClipra() async throws -> [ClipItem] { ... }',
+          detect: 'Detected: Swift language snippet (NSSpeech / Syntax)',
+          rule: 'Rule: Code Snippet Auto-Detect',
+          board: '📁 Pinboard: Code & Development',
+          desc: 'NaturalLanguage syntax analyzer detected Swift keywords (`func`, `async`, `throws`). Formatted with syntax tokens.'
+        },
+        email: {
+          source: 'adnan@arswift.com',
+          detect: 'Detected: RFC 5322 Compliant Email Address',
+          rule: 'Rule: Contact & Team Directory',
+          board: '📁 Pinboard: Contacts & People',
+          desc: 'Regex verified valid email address. Prepared Mailto trigger and routed to Contacts pinboard.'
+        },
+        json: {
+          source: '{"app": "Clipra", "version": "1.0", "sync": true}',
+          detect: 'Detected: Valid JSON structured payload',
+          rule: 'Rule: Data & API Payloads',
+          board: '📁 Pinboard: JSON & API Schemas',
+          desc: 'JSON parser validated structured object with 3 keys. Enabled instant prettify / minify action.'
+        }
+      };
+
+      ruleTriggers.forEach(btn => {
+        btn.addEventListener('click', () => {
+          ruleTriggers.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const sample = simData[btn.dataset.sample];
+          if (!sample) return;
+
+          simSource.style.opacity = '0';
+          setTimeout(() => {
+            simSource.textContent = sample.source;
+            simDetect.textContent = sample.detect;
+            simRuleTitle.textContent = sample.rule;
+            simBoardName.textContent = sample.board;
+            simExplanation.textContent = sample.desc;
+            simSource.style.opacity = '1';
+          }, 150);
+        });
+      });
+
+      // 4. TEXT TRANSFORMER LAB
+      const transTabs = document.querySelectorAll('#transTabs .trans-tab');
+      const transBefore = document.getElementById('transBefore');
+      const transAfter = document.getElementById('transAfter');
+      const transSavings = document.getElementById('transSavings');
+      const copyTransBtn = document.getElementById('copyTransBtn');
+      const copyBtnText = document.getElementById('copyBtnText');
+
+      const transData = {
+        utm: {
+          before: 'https://linear.app/features/roadmaps?utm_source=twitter&utm_medium=cpc&utm_campaign=launch2026&fbclid=IwAR098XyZa',
+          after: 'https://linear.app/features/roadmaps',
+          savings: 'Stripped 79 tracking characters & tokens'
+        },
+        json: {
+          before: '{"name":"Clipra","platforms":["Mac","iOS"],"iCloud":true,"price":14.99}',
+          after: '{\n  "name": "Clipra",\n  "platforms": [\n    "Mac",\n    "iOS"\n  ],\n  "iCloud": true,\n  "price": 14.99\n}',
+          savings: 'Formatted into readable indented JSON (2 spaces)'
+        },
+        case: {
+          before: 'the clipboard that organizes itself with zero effort',
+          after: 'The Clipboard That Organizes Itself With Zero Effort',
+          savings: 'Capitalized each word (Title Case format)'
+        },
+        plain: {
+          before: '<b>Clipra</b> is built for <i>maximum</i> power and speed.',
+          after: 'Clipra is built for maximum power and speed.',
+          savings: 'Stripped all rich text & HTML formatting tags'
+        },
+        base64: {
+          before: 'clipra-private-icloud-token-2026',
+          after: 'Y2xpcHJhLXByaXZhdGUtaWNsb3VkLXRva2VuLTIwMjY=',
+          savings: 'Encoded UTF-8 string into RFC 4648 Base64'
+        },
+        slug: {
+          before: '10 Reasons Why Clipra Is Faster Than Paste in 2026!',
+          after: '10-reasons-why-clipra-is-faster-than-paste-in-2026',
+          savings: 'Converted to SEO-friendly lowercase URL slug'
+        }
+      };
+
+      transTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          transTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const data = transData[tab.dataset.trans];
+          if (!data) return;
+
+          transBefore.textContent = data.before;
+          transAfter.textContent = data.after;
+          transSavings.textContent = data.savings;
+        });
+      });
+
+      copyTransBtn.addEventListener('click', async () => {
+        try {
+          await navigator.clipboard.writeText(transAfter.textContent);
+          copyBtnText.textContent = 'Copied to Clipboard! ✓';
+          setTimeout(() => {
+            copyBtnText.textContent = 'Copy Clean Text';
+          }, 2000);
+        } catch (e) {
+          copyBtnText.textContent = 'Selected Text Copied!';
+          setTimeout(() => { copyBtnText.textContent = 'Copy Clean Text'; }, 2000);
+        }
+      });
+
+      // 5. USE CASE TABS SWITCHER
+      const usecaseTabs = document.querySelectorAll('#usecaseTabs .usecase-pill');
+      const ucEyebrow = document.getElementById('ucEyebrow');
+      const ucTitle = document.getElementById('ucTitle');
+      const ucDesc = document.getElementById('ucDesc');
+      const ucBadges = document.getElementById('ucBadges');
+      const ucSnippet = document.getElementById('ucSnippet');
+      const ucFooterNote = document.getElementById('ucFooterNote');
+
+      const usecaseData = {
+        dev: {
+          eyebrow: 'DEVELOPER WORKFLOW',
+          title: 'Syntax-aware code snippets & terminal tokens.',
+          desc: 'Never re-type SSH keys, Docker commands, or regex patterns. Clipra auto-routes Swift, JS, Python, and SQL snippets to your Dev pinboard. Prettify nested JSON with a single keystroke.',
+          badges: '<span class="glass-pill" style="color: var(--accent-teal);">⚡ JSON Prettify/Minify</span><span class="glass-pill" style="color: var(--accent-blue-bright);">🔒 Base64 Decode</span><span class="glass-pill" style="color: var(--accent-green);">⌨️ Paste Stack ⌘⌥V</span>',
+          snippet: 'docker run -d -p 8080:80 --name clipra-api swift:6.0',
+          footer: '✓ Auto-tagged: Shell Command • Stripped linebreaks'
+        },
+        design: {
+          eyebrow: 'DESIGNER WORKFLOW',
+          title: 'Direct Figma token swatches & SVG extractors.',
+          desc: 'Copies of hex codes and RGB strings instantly render live interactive swatches. Copy SVG icons directly from browser inspect into Figma or Illustrator without saving files.',
+          badges: '<span class="glass-pill" style="color: var(--accent-teal);">🎨 Hex & RGB Swatching</span><span class="glass-pill" style="color: var(--accent-blue-bright);">📐 SVG Code Optimizer</span><span class="glass-pill" style="color: var(--accent-green);">🖼️ OCR Image Search</span>',
+          snippet: 'const primaryAccent = "#00E5BE"; // 4.5:1 WCAG AA Verified',
+          footer: '✓ Auto-routed to Design Assets • Figma link attached'
+        },
+        market: {
+          eyebrow: 'GROWTH & MARKETING WORKFLOW',
+          title: 'Zero tracking mess. Clean sharing links everywhere.',
+          desc: 'Stop pasting ugly 200-character links stuffed with UTM tags, fbclid, and referral crumbs into client emails and pitch decks. Clipra strips the clutter silently in milliseconds.',
+          badges: '<span class="glass-pill" style="color: var(--accent-teal);">🧹 Clean UTM Stripper</span><span class="glass-pill" style="color: var(--accent-blue-bright);">🔗 Slug Formatter</span><span class="glass-pill" style="color: var(--accent-green);">📄 Plain Text Mode</span>',
+          snippet: 'https://arswift.com/products/clipra',
+          footer: '✓ Clean URL • 6 query params stripped automatically'
+        },
+        agency: {
+          eyebrow: 'AGENCY & PRODUCT TEAMS',
+          title: 'Paste Stacks & reusable client presentation templates.',
+          desc: 'Collect 10 different bullet points across multiple docs and paste them in sequential sequence into your proposal deck with Paste Stack. Zero back-and-forth.',
+          badges: '<span class="glass-pill" style="color: var(--accent-teal);">📚 Paste Stack Queue</span><span class="glass-pill" style="color: var(--accent-blue-bright);">📁 Custom Pinboards</span><span class="glass-pill" style="color: var(--accent-green);">🛡️ Screen Share Hide</span>',
+          snippet: 'Client: Acme Corp | Deliverable: iOS Target v1.0 | Status: Signed',
+          footer: '✓ Saved to Pinboard: Active Contracts'
+        }
+      };
+
+      usecaseTabs.forEach(tab => {
+        tab.addEventListener('click', () => {
+          usecaseTabs.forEach(t => t.classList.remove('active'));
+          tab.classList.add('active');
+          const data = usecaseData[tab.dataset.case];
+          if (!data) return;
+
+          ucEyebrow.textContent = data.eyebrow;
+          ucTitle.textContent = data.title;
+          ucDesc.textContent = data.desc;
+          ucBadges.innerHTML = data.badges;
+          ucSnippet.textContent = data.snippet;
+          ucFooterNote.textContent = data.footer;
+        });
+      });
+
+      // 6. BILLING TOGGLE SWITCHER
+      const billingButtons = document.querySelectorAll('#billingToggle .toggle-pill');
+      const proPrice = document.getElementById('proPriceDisplay');
+      const proPeriod = document.getElementById('proPeriodDisplay');
+
+      billingButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          billingButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          const billing = btn.dataset.billing;
+          if (billing === 'monthly') {
+            proPrice.textContent = '1.99';
+            proPeriod.textContent = '/ month';
+          } else {
+            proPrice.textContent = '14.99';
+            proPeriod.textContent = '/ year';
+          }
+        });
+      });
+
+      // 7. FAQ ACCORDION
+      const faqItems = document.querySelectorAll('#faqAccordion .faq-item');
+      faqItems.forEach(item => {
+        const questionBtn = item.querySelector('.faq-question');
+        questionBtn.addEventListener('click', () => {
+          const isOpen = item.classList.contains('open');
+          faqItems.forEach(i => i.classList.remove('open'));
+          if (!isOpen) {
+            item.classList.add('open');
+          }
+        });
+      });
+
+      // 8. KEYBOARD SHORTCUTS MODAL
+      const modal = document.getElementById('shortcutModal');
+      const openBtn = document.getElementById('openShortcutsBtn');
+      const footerLink = document.getElementById('footerShortcutsLink');
+      const closeBtn = document.getElementById('closeModalBtn');
+
+      const openModal = () => { modal.classList.add('active'); };
+      const closeModal = () => { modal.classList.remove('active'); };
+
+      openBtn?.addEventListener('click', openModal);
+      footerLink?.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
+      closeBtn?.addEventListener('click', closeModal);
+      modal?.addEventListener('click', (e) => { if (e.target === modal) closeModal(); });
+
+      document.addEventListener('keydown', (e) => {
+        if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === 'k') {
+          e.preventDefault();
+          modal.classList.contains('active') ? closeModal() : openModal();
+        }
+        if (e.key === 'Escape') closeModal();
+      });
+
+      // 9. MOBILE NAV TOGGLE
+      const mobileToggle = document.getElementById('mobileToggle');
+      const navMenu = document.querySelector('.nav-menu');
+      mobileToggle?.addEventListener('click', () => {
+        if (navMenu.style.display === 'flex') {
+          navMenu.style.display = 'none';
+        } else {
+          navMenu.style.display = 'flex';
+          navMenu.style.flexDirection = 'column';
+          navMenu.style.position = 'absolute';
+          navMenu.style.top = '74px';
+          navMenu.style.left = '0';
+          navMenu.style.right = '0';
+          navMenu.style.background = '#080C16';
+          navMenu.style.padding = '24px';
+          navMenu.style.borderBottom = '1px solid rgba(255,255,255,0.1)';
+        }
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,494 @@
+Clipboard App — Full Product & Developer Brief
+AR Swift Private Limited | Muhammad Adnan | November 7, 2026
+Executive Summary
+We are building a cross-device clipboard manager for Mac, iPhone, and iPad — a direct competitor to Paste (pasteapp.io), which is the category leader with 10 years on the App Store, 16K+ ratings, and $29.99/year pricing.
+The market gap is real. Paste stores everything but organizes nothing automatically. Users with 161 and 125 votes on the public ideas board are asking for export/import and rule-based auto-sorting — features Paste has not built. We will launch with these two unique differentiators built in from day one.
+What we are building:
+A Mac menu-bar app + iPhone/iPad companion app
+Private iCloud sync — no AR Swift servers, zero server cost
+Unlimited clipboard history with smart auto-organization
+Text transformation tools built into the clipboard
+Free tier + paid IAP (monthly, annual, lifetime)
+Who it is for: Developers, designers, content creators, and agency teams — professionals who copy and paste constantly and need their clipboard to work smarter.
+Competitor Research — Paste App
+Paste (pasteapp.io) is the benchmark. Every design, feature priority, and pricing decision we make should be measured against it.
+Company: Paste Team ApS, Denmark. App Store since 2015. 4.5 stars, 16,000+ ratings. Apple Editors' Choice winner.
+Platforms: Mac, iPhone, iPad — Apple only.
+Core features Paste has today:
+Feature
+What it does
+Unlimited clipboard history
+No limit — a year-old copy is still there
+Private iCloud sync
+Never touches their servers
+Pinboards
+Manual collections — pin what you reuse
+Shared Pinboards
+Team sharing — update once, everyone gets latest
+Power Search
+Filter by type, app, date + OCR inside screenshots
+Paste Keyboard (iOS)
+Custom keyboard extension for history access
+Paste Stack
+Copy multiple items, paste in sequence
+Quick Paste (Mac)
+⌘1–⌘9 shortcuts for last 9 items
+Privacy Rules
+Auto-ignore passwords and sensitive apps
+Screen Share Hide
+Hide Paste during screen recordings
+Apple Intelligence
+Rewrite, proofread copied text
+Intelligent Clipboard
+AI predicts what you will paste next
+Paste MCP
+Connect clipboard to Claude, Codex, Cursor
+Action Extension
+Save to Paste from iOS Share Menu
+iPhone Duo
+Side-by-side mode on foldable iPhone
+Document Scanner
+Scan docs into clipboard via iPhone camera
+Paste pricing:
+Plan
+Price
+Monthly
+~$3.99/month
+Annual
+$29.99/year
+Lifetime
+$99.99 once
+Family (6 users)
+$59.99/year
+Teams
+$26.99/user/year
+Setapp
+Included
+Recent updates timeline:
+Date
+Update
+October 2026
+iPhone Duo (foldable phone support)
+September 2026
+Intelligent Clipboard — Apple Intelligence
+June 2026
+Paste MCP — AI tools integration
+April 2026
+Jump to History
+March 2026
+Pinboard Filters
+December 2025
+Power Search with OCR
+September 2025
+Paste 6 — Liquid Glass design
+September 2025
+Paste for Teams launch
+May 2025
+Shared Pinboards and collaboration
+Where Paste is weak — top user requests NOT yet built (from their public ideas board):
+Votes
+Requested feature
+Our opportunity
+161
+Export/Import clipboard history
+✅ Build it — corporate users need offline backup
+125
+Rule-based auto-sort into pinboards
+✅ Build it — this is our #1 differentiator
+96
+Windows version
+❌ Skip — stay Apple
+81
+Face ID lock
+✅ Build it
+75
+Trash bin / undo delete
+✅ Build it
+30
+Text transformations (uppercase, clean URLs)
+✅ Build it — our #2 differentiator
+15
+Strip tracking params from URLs (utm_ removal)
+✅ Part of text transformations
+11
+AI prompt macros with variables
+⏳ Phase 2
+7
+Dynamic Island widget
+✅ Build it
+Free competitors: Maccy (open source, Mac only), Raycast clipboard history (bundled in launcher), Alfred Powerpack. These are free but basic — no iPhone sync, no pinboards, no AI.
+macOS 26 Tahoe built-in clipboard: Apple added basic clipboard history to Spotlight (⌘Space → ⌘4). Keeps up to 7 days, Mac only, no sync to iPhone, no pinboards, no search. Covers the absolute basic case for free — but serious users still need a full solution.
+Our App Feature List
+All features below are planned for the initial launch (v1.0). Phase 2 features are listed separately.
+v1.0 — Launch Features:
+#
+Feature
+Platform
+Notes
+1
+Unlimited clipboard history
+Mac + iOS
+No cap — keep everything
+2
+Private iCloud sync
+Mac + iOS
+User's own iCloud, we store nothing
+3
+Pinboards (manual collections)
+Mac + iOS
+Pin what you reuse daily
+4
+Smart Auto-Sort (Unique)
+Mac + iOS
+Rules auto-route copies to pinboards
+5
+Text Transformer (Unique)
+Mac + iOS
+Uppercase, clean URLs, strip tracking, JSON
+6
+Clipboard keyboard extension
+iOS
+Paste from history while typing in any app
+7
+Paste Stack
+Mac
+Copy multiple, paste in sequence
+8
+Quick paste shortcuts
+Mac
+⌘1–⌘9 for last 9 items
+9
+Power search
+Mac + iOS
+Filter by type, app, date
+10
+Privacy rules
+Mac + iOS
+Auto-ignore passwords and sensitive apps
+11
+Face ID / Touch ID lock
+iOS
+Biometric protection
+12
+Trash bin
+Mac + iOS
+30-day deleted items recovery
+13
+Export / Import history
+Mac
+JSON backup — for corporate/offline users
+14
+Screen share hide
+Mac
+Hide clipboard during presentations
+15
+Action extension (Share Sheet)
+iOS
+Save directly from Safari, WhatsApp, etc.
+16
+Dynamic Island widget
+iOS
+Quick access from Dynamic Island
+17
+Home Screen widget
+iOS
+Last 3 copied items on home screen
+18
+Link preview thumbnails
+Mac + iOS
+Auto-fetch page title and thumbnail for URLs
+Phase 2 — Post-Launch (not in v1.0):
+Feature
+Why later
+AI clipboard suggestions (Intelligent Clipboard)
+Requires Apple Intelligence API maturity
+Team / shared pinboards
+Needs backend even if iCloud-based — test first
+MCP / AI tool integration
+Developer niche, small audience for v1
+REST API
+Power users only
+iPad-specific UI
+v1 uses iPhone layout scaled; optimize later
+Unique Differentiators
+These two features are what no major competitor — including Paste — has shipped. They are the core reason a user chooses our app over Paste.
+Differentiator 1: Smart Auto-Sort (Intelligent Pinboards)
+Paste stores everything manually. Users demanded this for years (125 votes on Paste's ideas board) — Paste never built it.
+How it works: Every time something is copied, the app analyzes it and routes it automatically:
+Content detected
+Auto-routed to
+Color code (#FF5733, rgb(255,87,51))
+Colors pinboard
+URL / link
+Links pinboard
+Email address
+Contacts pinboard
+Code snippet (detected by language)
+Code pinboard
+Image
+Images pinboard
+File path
+Files pinboard
+Custom regex rule set by user
+User-defined pinboard
+Users can also create their own rules: "Any copy from Figma → Design Assets." "Any copy from VS Code → Code Snippets."
+Marketing headline: "The clipboard that organizes itself."
+Differentiator 2: Text Transformer
+Paste stores text as copied — it cannot change it. We paste AND transform in one step. This is especially powerful for developers and marketers.
+How it works: Long press any clipboard item to get a Transform panel:
+Transform
+What it does
+UPPERCASE
+Converts text to ALL CAPS
+lowercase
+Converts to all lowercase
+Title Case
+Capitalizes First Letter Of Each Word
+Strip Tracking
+Removes utm_, fbclid, gclid from URLs
+JSON Prettify
+Formats minified JSON to readable indented form
+JSON Minify
+Collapses formatted JSON to one line
+Base64 Encode
+Encodes text to base64
+Base64 Decode
+Decodes base64 to plain text
+Remove Formatting
+Strips bold, italic, fonts — plain text only
+Word Count
+Shows character and word count
+URL Encode / Decode
+Percent-encodes or decodes a URL string
+Marketing headline: "Copy once. Paste anything."
+Technical Blueprint
+Important note on technology choice: A clipboard manager on Apple platforms requires deep OS-level access — clipboard monitoring, background execution, keyboard extensions, and iCloud sync via CloudKit. React Native does not support all of these natively. The recommended approach is a hybrid architecture: native Swift/SwiftUI for the platform-critical core, with React Native only for the UI screens if the developer strongly prefers it. However, we strongly recommend going fully native for this app category.
+Recommended Stack: Fully Native Apple
+Layer
+Technology
+Why
+Mac app
+Swift + SwiftUI + AppKit
+Native menu-bar app, clipboard monitoring
+iPhone / iPad app
+Swift + SwiftUI
+Native keyboard extension support
+Clipboard monitoring
+NSPasteboard (Mac)
+Only way to detect copies on Mac
+iOS Keyboard Extension
+UIInputViewController
+Required for in-keyboard clipboard panel
+Cloud sync
+CloudKit (private database)
+User's own iCloud — zero server cost
+Local storage
+SwiftData / Core Data
+Fast local history database
+Smart Auto-Sort
+NaturalLanguage + Regex
+Apple's on-device NLP for content detection
+Text Transformer
+Swift string processing
+All transforms run locally, no API
+Biometric lock
+LocalAuthentication framework
+Face ID / Touch ID
+Widget
+WidgetKit
+Home screen and Dynamic Island
+Share Extension
+NSExtension
+iOS Share Sheet integration
+If Developer Insists on React Native — Hybrid Approach
+Layer
+Technology
+Note
+Mac core (clipboard monitoring)
+Native Swift module
+Must be native — RN cannot do this
+iOS keyboard extension
+Native Swift target
+Must be native — RN cannot do this
+App UI screens
+React Native
+History list, settings, pinboards UI
+CloudKit sync
+react-native-cloud-store or native module
+Limited RN support — test carefully
+Local DB
+WatermelonDB or SQLite
+Works in RN
+Native bridge
+RN NativeModules
+Bridges Swift clipboard events to RN
+Warning: This hybrid adds significant complexity. The developer will write native Swift modules for all the critical pieces anyway. If they are comfortable with Swift, go fully native from the start.
+App Architecture (5 Targets)
+Mac Menu Bar App — always running in background, monitors NSPasteboard, saves new copies to local SwiftData, syncs to CloudKit, sits in menu bar with ⌘⇧V shortcut
+iPhone / iPad App — main clipboard viewer, pinboards, search, settings
+iOS Keyboard Extension — a separate app target that reads from CloudKit to show history while typing in any app
+iOS Share Extension — another separate target that saves shared items directly to clipboard history
+Widget Extension — WidgetKit target for home screen and Dynamic Island display
+All five targets share one CloudKit container (the user's private iCloud). No AR Swift server is ever touched.
+Key Technical Challenges
+These are the hard problems the developer must solve before writing a single UI screen. Address these first in a technical spike (2–3 days of testing before full development begins).
+Challenge 1: Mac Accessibility Permission
+To monitor the clipboard on Mac, the app needs Accessibility access from the user (System Settings → Privacy & Security → Accessibility). Without it, clipboard monitoring does not work. The app must:
+Request this permission on first launch with a clear explanation screen
+Handle the case where the user denies it (show a prompt to enable it)
+Survive the user revoking permission mid-use
+This is a user experience problem as much as a technical one. Paste handles it with an onboarding dialog and an in-app guide (we saw this in the screenshots).
+Challenge 2: iOS Has No Background Clipboard Access
+Apple does not allow any third-party app to read the clipboard in the background on iOS. This is a hard platform limitation. Every clipboard manager on iOS — including Paste — works around it the same way: a Keyboard Extension.
+The solution: Build a custom iOS keyboard extension. When the user wants to access clipboard history on iPhone, they switch to the app's keyboard (hold globe icon → select our keyboard). The extension can read the clipboard when active because the user triggered it. This is not a workaround we invented — it is the only Apple-approved method.
+The developer must build this as a separate Xcode target. It has a strict 12 MB memory limit.
+Challenge 3: iOS "Paste from Other Apps" Banner
+On iOS, every time an app reads the clipboard without the user explicitly pressing Paste, iOS shows a system banner: "[App] pasted from [Other App]." Users find this annoying.
+Solution: Request the "Allow Paste from Other Apps" entitlement during onboarding (the "Save Automatically" flow in Paste's screenshots). This suppresses the banner. The app must guide users through approving this in Settings.
+Challenge 4: CloudKit Sync Conflicts
+When a user copies something on iPhone and immediately looks on Mac, there can be a sync delay (1–3 seconds over iCloud). The app must handle:
+Optimistic local writes (show immediately, sync in background)
+Conflict resolution if the same item is modified on two devices simultaneously
+Offline mode — clipboard keeps working locally even without internet
+Challenge 5: Mac App Target — Not a Normal iOS App
+The Mac app is a menu-bar utility (like Paste, Raycast, 1Password). It runs in the background at all times with no Dock icon. Building this requires:
+Setting LSUIElement = YES in Info.plist to hide the Dock icon
+Creating an NSStatusItem (menu bar icon) in AppKit
+Running as a background agent
+Handling auto-launch on Mac startup (Login Items)
+If using React Native for Mac (via Mac Catalyst or react-native-macos), verify that menu-bar mode and background clipboard monitoring are achievable in that framework. If not, the Mac app must be pure native.
+Challenge 6: Smart Auto-Sort Detection Accuracy
+Our #1 differentiator requires detecting the type of content the user copied. The logic must be:
+Fast (runs in under 50ms — user should not notice any delay)
+Accurate (false positives are annoying — a hex color in code should not trigger the Colors pinboard unless the user wants it to)
+Configurable (user can enable/disable each rule and add custom ones)
+Use Apple's NaturalLanguage framework for general text classification and simple regex patterns for structured types (URLs, emails, color codes, JSON).
+Monetization Strategy
+Revenue model: Free download with In-App Purchase (IAP) via Apple App Store. No subscription is required to try the app — the free tier is genuinely usable, not crippled, so users experience the value before paying.
+Pricing Tiers
+Tier
+Price
+What it unlocks
+Free
+$0
+Last 50 items, 2 pinboards, no iCloud sync
+Pro Monthly
+$1.99/month
+Everything — unlimited history, all features, iCloud sync
+Pro Annual
+$14.99/year
+Same as monthly — saves 37% — push this as default
+Lifetime
+$49.99 once
+All features forever including future updates
+Family (Phase 2)
+$24.99/year
+Up to 6 people via Family Sharing
+Why these prices:
+Paste charges $29.99/year. We undercut by 50% at $14.99/year — same features plus our two unique differentiators.
+Lifetime at $49.99 is an impulse-buy for power users. Paste charges $99.99. We are half price.
+Monthly at $1.99 reduces friction for first-time IAP buyers.
+Free tier is generous by design: Paste gives a 7-day trial then locks everything. We give 50 items forever. Users keep coming back, hit the limit naturally, and upgrade. No expiry anxiety.
+How IAP Works Technically (Developer Note)
+Create 3 IAP products in App Store Connect: monthly subscription, annual subscription, non-consumable lifetime
+Use StoreKit 2 (Swift) for purchase flow — it handles receipts, restoration, and family sharing automatically
+On first launch, check entitlement status from StoreKit — if no active purchase, show free tier limits
+Store entitlement state locally + verify with App Store server on launch
+Provide a "Restore Purchase" button (required by App Store guidelines)
+Designer Brief & Website
+App Design (UI/UX)
+Reference: pasteapp.io — study every screen on their website and in their app. The goal is not to copy their design but to understand why it works, then design something cleaner and more modern.
+Design language:
+Native Apple feel — the app should look like Apple made it. Use SF Pro font, standard Apple control sizes, and system colors as the base.
+Dark mode first — clipboard managers are developer/power-user tools. Dark mode is the default; light mode must also be perfect.
+macOS 26 Liquid Glass aesthetic — Paste adopted this in September 2025. We adopt it too. Frosted glass panels, translucent menu bar shelf, smooth spring animations.
+iOS: follow Human Interface Guidelines strictly. No custom UI that fights the system.
+Key screens to design (iOS):
+Screen
+Notes
+Clipboard history (main)
+Horizontal card scroll like Paste, or vertical list — test both
+Pinboards view
+Grid of pinboard collections
+Smart Rules settings
+List of auto-sort rules, toggle on/off, add custom
+Text Transformer panel
+Long-press bottom sheet with transform options
+Keyboard extension UI
+Compact horizontal scroll — works in 200px height
+Search
+Full-screen search with filter chips (type, date, app)
+Onboarding flow
+5-screen setup: permissions, keyboard, iCloud, pinboards, done
+Paywall / pricing
+Clean pricing card — free vs pro comparison
+Settings
+Standard iOS settings list
+Key screens to design (Mac):
+Screen
+Notes
+Menu bar shelf
+Horizontal card strip at bottom of screen, triggered by ⌘⇧V
+Main window
+Larger browsable view with pinboard sidebar
+Smart Rules preferences pane
+Rule editor UI
+Text Transformer hover overlay
+Appears on hover over any card
+Onboarding window
+Accessibility permission guide
+Website Design (Marketing Landing Page)
+Reference: pasteapp.io is the direct model. Study its structure and do it better.
+URL: Use the app name domain (e.g., clipra.app or clipra.io)
+Website sections (in order):
+Section
+Content
+Hero
+Headline + app screenshot on Mac and iPhone. Headline: "The clipboard that organizes itself." CTA: "Download Free"
+Feature highlight 1
+Smart Auto-Sort — animated demo showing copies routing to pinboards automatically
+Feature highlight 2
+Text Transformer — demo showing URL being cleaned, JSON being prettified
+Feature highlight 3
+Cross-device sync — iPhone and Mac in sync via iCloud
+Feature highlight 4
+Privacy — "Your clipboard never touches our servers"
+Use cases
+Tabs: Developers / Designers / Marketers / Teams
+Comparison table
+Us vs Paste vs macOS built-in — honest, factual
+Pricing
+Three cards: Free / Pro Annual (14.99)/Lifetime(49.99)
+Testimonials
+Add after launch when reviews come in
+Download CTA
+App Store badge + direct Mac download link
+Footer
+Privacy policy, Terms, Contact, Social links
+Tech stack for website: Next.js + Tailwind CSS — same stack as pasteapp.io. Fast, static, easy to deploy on Vercel. The website developer builds this in parallel with the app.
+Design style for website:
+Dark background (#0A0A0A or true black)
+Accent color: pick one from electric blue (#0066FF), teal (#00C4B4), or violet (#7C3AED) — not Paste's orange
+Large crisp app screenshots — invest time in polished mockups
+Smooth scroll animations — Framer Motion or CSS transitions
+Mobile responsive — many App Store visitors come from iPhone
+Immediate Next Steps (Checklist)
+Finalize app name — confirm Clipra (or alternative) on App Store + trademark search + domain check
+Designer: study pasteapp.io in full, then create wireframes for iOS history screen, keyboard extension, and onboarding flow
+Developer: 3-day technical spike — confirm that Mac clipboard monitoring + iOS keyboard extension work in the chosen tech stack
+Developer: Set up Xcode project with all 5 targets (main app, keyboard extension, share extension, widget, Mac menu-bar app)
+Developer: Implement core clipboard monitoring on Mac (NSPasteboard) and confirm CloudKit writes work
+Developer: Implement Smart Auto-Sort detection (regex + NaturalLanguage) with 5 default rules
+Designer: Complete all iOS screens in Figma (see Designer Brief section for full list)
+Website developer: Set up Next.js project, design system, and hero section
+Developer: Implement Text Transformer panel (all 10 transforms, no backend needed)
+Muhammad Adnan: Create Apple Developer account app record, set up 3 IAP products in App Store Connect
+Developer: Integrate StoreKit 2 for IAP, implement free tier limits
+All: TestFlight internal build — test on real Mac, iPhone, and iPad
+Designer: Polish all screens based on TestFlight feedback
+Website developer: Complete all website sections, optimized for App Store SEO
+Muhammad Adnan: Write App Store listing — title, subtitle, description, keywords, screenshots
+Submit for App Store review
+Phase
+Duration
+Milestone

@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#05070D">
+  <title>Clipra — Product Roadmap & Engineering Journal</title>
+  <meta name="description" content="Follow the Clipra engineering journey: Smart Auto-Sort, Text Transformer, private CloudKit sync, and iOS keyboard extensions.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    :root {
+      --bg-deep: #05070D;
+      --bg-canvas: #080C16;
+      --bg-surface: #0E1526;
+      --bg-card: rgba(14, 21, 38, 0.72);
+      --glass-nav: rgba(8, 12, 22, 0.8);
+      
+      --accent-blue: #0066FF;
+      --accent-blue-bright: #2E82FF;
+      --accent-teal: #00E5BE;
+      --accent-green: #10F296;
+
+      --grad-primary: linear-gradient(135deg, #0066FF 0%, #00E5BE 50%, #10F296 100%);
+      --grad-teal-green: linear-gradient(135deg, #00E5BE 0%, #10F296 100%);
+      
+      --text-white: #FFFFFF;
+      --text-primary: #F1F5F9;
+      --text-secondary: #94A3B8;
+      --text-muted: #64748B;
+      --text-dim: #475569;
+
+      --border-glass: rgba(255, 255, 255, 0.08);
+      
+      --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --max-w: 1240px;
+      --radius-sm: 8px;
+      --radius-md: 14px;
+      --radius-lg: 22px;
+      --radius-pill: 9999px;
+    }
+
+    html {
+      font-family: var(--font-sans);
+      background-color: var(--bg-deep);
+      color: var(--text-primary);
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    body {
+      overflow-x: hidden;
+      background-color: var(--bg-deep);
+      background-image: 
+        radial-gradient(circle at 50% 0%, rgba(0, 102, 255, 0.16) 0%, transparent 60%),
+        radial-gradient(circle at 90% 30%, rgba(0, 229, 190, 0.08) 0%, transparent 45%),
+        radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      background-size: 100% 100%, 100% 100%, 36px 36px;
+      background-attachment: fixed;
+      line-height: 1.6;
+    }
+
+    ::selection {
+      background: var(--accent-teal);
+      color: #040810;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(var(--max-w), calc(100% - 48px));
+      margin-inline: auto;
+    }
+
+    .glass-nav {
+      background: var(--glass-nav);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border-glass);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-wrapper {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 74px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      font-size: 21px;
+      letter-spacing: -0.04em;
+    }
+
+    .brand-logo-gem {
+      width: 32px;
+      height: 32px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3px;
+      padding: 3px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 9px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 0 15px rgba(0, 229, 190, 0.25);
+    }
+    .brand-logo-gem span:nth-child(1) { background: var(--accent-blue); border-radius: 3px; }
+    .brand-logo-gem span:nth-child(2) { background: var(--accent-teal); border-radius: 3px; }
+    .brand-logo-gem span:nth-child(3) { background: #3B82F6; border-radius: 3px; }
+    .brand-logo-gem span:nth-child(4) { background: var(--accent-green); border-radius: 3px; }
+
+    .nav-menu {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .nav-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      transition: color 0.2s ease;
+    }
+    .nav-link:hover, .nav-link.active {
+      color: #FFF;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-electric {
+      background: var(--grad-teal-green);
+      color: #040913;
+      box-shadow: 0 0 25px rgba(0, 229, 190, 0.35);
+    }
+
+    .text-gradient {
+      background: var(--grad-primary);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+    }
+
+    /* UPDATES HERO */
+    .updates-hero {
+      padding: 70px 0 50px;
+      border-bottom: 1px solid var(--border-glass);
+    }
+
+    .hero-eyebrow {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent-teal);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-title {
+      font-size: clamp(38px, 5.5vw, 68px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin-bottom: 20px;
+    }
+
+    .filter-bar {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: var(--radius-pill);
+      font-size: 13px;
+      font-weight: 600;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-secondary);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .filter-btn.active, .filter-btn:hover {
+      background: rgba(0, 229, 190, 0.15);
+      border-color: var(--accent-teal);
+      color: #FFF;
+      box-shadow: 0 0 15px rgba(0, 229, 190, 0.2);
+    }
+
+    /* TIMELINE LAYOUT */
+    .timeline-section {
+      padding: 70px 0 100px;
+    }
+
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 50px;
+    }
+
+    @media (max-width: 900px) {
+      .timeline-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .aside-box {
+      position: sticky;
+      top: 100px;
+      background: rgba(14, 21, 38, 0.7);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 24px;
+      backdrop-filter: blur(16px);
+    }
+
+    .timeline-flow {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .timeline-card {
+      background: rgba(14, 21, 38, 0.7);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+      position: relative;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.5);
+    }
+
+    .timeline-card:hover {
+      border-color: rgba(0, 229, 190, 0.4);
+      transform: translateY(-3px);
+      box-shadow: 0 20px 45px -10px rgba(0, 102, 255, 0.25);
+    }
+
+    .tag-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    .tag-blue { background: rgba(0, 102, 255, 0.15); color: var(--accent-blue-bright); border: 1px solid rgba(0, 102, 255, 0.3); }
+    .tag-teal { background: rgba(0, 229, 190, 0.15); color: var(--accent-teal); border: 1px solid rgba(0, 229, 190, 0.3); }
+    .tag-green { background: rgba(16, 242, 150, 0.15); color: var(--accent-green); border: 1px solid rgba(16, 242, 150, 0.3); }
+
+    .card-title {
+      font-size: 22px;
+      font-weight: 700;
+      color: #FFF;
+      margin-bottom: 10px;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+      margin-bottom: 18px;
+    }
+
+    .phase2-box {
+      margin-top: 40px;
+      background: radial-gradient(circle at 50% 0%, rgba(0, 102, 255, 0.2) 0%, rgba(14, 21, 38, 0.9) 70%);
+      border: 1px solid rgba(0, 229, 190, 0.3);
+      border-radius: var(--radius-lg);
+      padding: 30px;
+    }
+
+    .phase2-tags {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 16px;
+    }
+
+    .phase2-tag {
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+
+    :root { --text-muted: #94A3B8; --text-dim: #94A3B8; }
+    :focus-visible { outline: 2px solid var(--accent-teal); outline-offset: 4px; }
+    .nav-link, .filter-btn { min-height: 44px; display: inline-flex; align-items: center; }
+    @media (max-width: 700px) {
+      .nav-wrapper { height: auto; min-height: 74px; flex-wrap: wrap; padding-block: 12px; gap: 12px; }
+      .nav-menu { display: flex; order: 3; width: 100%; justify-content: center; gap: 28px; }
+    }
+    @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } *, *::before, *::after { animation: none !important; transition: none !important; } }
+  </style>
+</head>
+<body>
+
+  <!-- HEADER -->
+  <header class="glass-nav">
+    <div class="container nav-wrapper">
+      <a href="index.html" class="brand">
+        <div class="brand-logo-gem">
+          <span></span><span></span><span></span><span></span>
+        </div>
+        <span>clipra</span>
+      </a>
+
+      <nav class="nav-menu" aria-label="Main navigation">
+        <a href="index.html#smart-sort" class="nav-link">Features</a>
+        <a href="index.html#pricing" class="nav-link">Pricing</a>
+        <a href="index.html#faq" class="nav-link">FAQ</a>
+      </nav>
+
+      <div>
+        <a href="index.html" class="btn btn-electric">Back to Clipra ↗</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <section class="updates-hero">
+    <div class="container">
+      <div class="hero-eyebrow">
+        <span>●</span>
+        <span>The Clipra roadmap</span>
+      </div>
+      <h1 class="hero-title">
+        Good things are <span class="text-gradient">in motion.</span>
+      </h1>
+      <p style="font-size: 18px; color: var(--text-secondary); max-width: 660px;">
+        Clipra is in development. Here is what we are planning for the first release and exploring for later. Features may change as we test.
+      </p>
+
+      <div class="filter-bar" id="timelineFilters">
+        <button class="filter-btn active" data-cat="all">All Roadmap Items</button>
+        <button class="filter-btn" data-cat="core">Core Architecture</button>
+        <button class="filter-btn" data-cat="tools">Power Tools</button>
+        <button class="filter-btn" data-cat="privacy">Privacy &amp; CloudKit</button>
+        <button class="filter-btn" data-cat="mobile">iPhone &amp; iPad</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROADMAP TIMELINE -->
+  <section class="timeline-section" id="architecture">
+    <div class="container">
+      <div class="timeline-grid">
+        <!-- Sticky Sidebar -->
+        <aside>
+          <div class="aside-box">
+            <div style="font-size: 11px; font-weight: 700; text-transform: uppercase; color: var(--accent-teal); margin-bottom: 8px;">INSIDE THE BUILD</div>
+            <h3 style="font-size: 20px; font-weight: 700; color: #FFF; margin-bottom: 12px;">Calm, intentional clipboard software.</h3>
+            <p style="font-size: 13px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 20px;">
+              We are building a clipboard manager for Mac, iPhone, and iPad, with automatic organization, text tools, and private iCloud sync.
+            </p>
+            <div style="border-top: 1px solid rgba(255,255,255,0.08); padding-top: 16px; font-size: 12px; color: var(--text-muted);">
+              <div>Current Phase: <strong style="color: var(--accent-green);">In development</strong></div>
+              <div style="margin-top: 4px;">SwiftUI + CloudKit Core</div>
+            </div>
+          </div>
+        </aside>
+
+        <!-- Timeline Cards Flow -->
+        <div class="timeline-flow" id="timelineCards">
+          <!-- Item 1: Smart Auto-Sort -->
+          <div class="timeline-card" data-cat="core">
+            <span class="tag-badge tag-teal">Planned for v1.0</span>
+            <h2 class="card-title">Smart Auto-Sort</h2>
+            <p class="card-desc">
+              Rules will sort copied links, color codes, and code snippets into pinboards. Custom rules will let you organize by content or source app.
+            </p>
+            <div style="font-size: 12px; color: var(--accent-teal); font-family: var(--font-mono);">
+              Target: macOS Menu Bar &bull; iOS Keyboard Companion
+            </div>
+          </div>
+
+          <!-- Item 2: Text Transformer -->
+          <div class="timeline-card" data-cat="tools">
+            <span class="tag-badge tag-blue">Planned for v1.0</span>
+            <h2 class="card-title">Text Transformer</h2>
+            <p class="card-desc">
+              Clean tracking parameters from links, format JSON, change letter case, encode or decode text, and remove formatting. Transformations are planned to run on your device.
+            </p>
+            <div style="font-size: 12px; color: var(--accent-blue-bright); font-family: var(--font-mono);">
+              Status: Planned for the first release
+            </div>
+          </div>
+
+          <!-- Item 3: Private iCloud -->
+          <div class="timeline-card" data-cat="privacy">
+            <span class="tag-badge tag-green">Privacy</span>
+            <h2 class="card-title">Private iCloud sync</h2>
+            <p class="card-desc">
+              The planned design stores history locally and syncs through your private iCloud database. Clipboard content will not be stored on AR Swift servers.
+            </p>
+            <div style="font-size: 12px; color: var(--accent-green); font-family: var(--font-mono);">
+              Planned for Pro and Lifetime
+            </div>
+          </div>
+
+          <!-- Item 4: iOS Keyboard -->
+          <div class="timeline-card" data-cat="mobile">
+            <span class="tag-badge tag-teal">Mobile Ecosystem</span>
+            <h2 class="card-title">iOS Custom Keyboard Extension &amp; Dynamic Island</h2>
+            <p class="card-desc">
+              A custom keyboard will provide access to saved history in supported apps. A Share Sheet extension will let you save items on iPhone and iPad. Background clipboard capture is not part of the iOS plan.
+            </p>
+            <div style="font-size: 12px; color: var(--accent-teal); font-family: var(--font-mono);">
+              Platform: iPhone &bull; iPad &bull; Dynamic Island Status
+            </div>
+          </div>
+
+          <!-- Item 5: Export / Import & Stealth -->
+          <div class="timeline-card" data-cat="tools">
+            <span class="tag-badge tag-blue">Backup &amp; presentation tools</span>
+            <h2 class="card-title">JSON backups &amp; Screen Share Hide</h2>
+            <p class="card-desc">
+              Export and import history as JSON on Mac. Screen Share Hide is planned to keep the clipboard panel out of view during presentations and recordings.
+            </p>
+            <div style="font-size: 12px; color: var(--accent-blue-bright); font-family: var(--font-mono);">
+              Status: Planned for Mac
+            </div>
+          </div>
+
+          <!-- Phase 2 Roadmap -->
+          <div class="phase2-box">
+            <div style="font-size: 12px; font-weight: 700; color: var(--accent-green); text-transform: uppercase;">Phase 2 &bull; Post-Launch Exploration</div>
+            <h3 style="font-size: 22px; font-weight: 800; color: #FFF; margin: 8px 0;">What comes after v1.0</h3>
+            <p style="font-size: 14px; color: var(--text-secondary);">
+              Ideas for later releases. These are not included in the v1.0 feature list:
+            </p>
+            <div class="phase2-tags">
+              <span class="phase2-tag">🤖 Apple Intelligence Predictions</span>
+              <span class="phase2-tag">👥 Team &amp; Shared Pinboards</span>
+              <span class="phase2-tag">⚡ MCP / AI Tool Integration</span>
+              <span class="phase2-tag">🔌 Local REST API</span>
+              <span class="phase2-tag">📱 iPad Split View Tailored Layout</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SCRIPT FOR FILTERING -->
+  <script>
+    const filterBtns = document.querySelectorAll('#timelineFilters .filter-btn');
+    const cards = document.querySelectorAll('#timelineCards .timeline-card');
+
+    filterBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const cat = btn.dataset.cat;
+
+        cards.forEach(card => {
+          if (cat === 'all' || card.dataset.cat === cat) {
+            card.style.display = 'block';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html>
