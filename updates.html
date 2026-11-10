@@ -356,6 +356,7 @@
         <a href="index.html#smart-sort" class="nav-link">Features</a>
         <a href="index.html#pricing" class="nav-link">Pricing</a>
         <a href="index.html#faq" class="nav-link">FAQ</a>
+        <a href="updates.html" class="nav-link active" aria-current="page">Updates</a>
       </nav>
 
       <div>
@@ -477,11 +478,11 @@
               Ideas for later releases. These are not included in the v1.0 feature list:
             </p>
             <div class="phase2-tags">
-              <span class="phase2-tag">🤖 Apple Intelligence Predictions</span>
-              <span class="phase2-tag">👥 Team &amp; Shared Pinboards</span>
-              <span class="phase2-tag">⚡ MCP / AI Tool Integration</span>
-              <span class="phase2-tag">🔌 Local REST API</span>
-              <span class="phase2-tag">📱 iPad Split View Tailored Layout</span>
+              <span class="phase2-tag">Apple Intelligence Predictions</span>
+              <span class="phase2-tag">Team &amp; Shared Pinboards</span>
+              <span class="phase2-tag">MCP / AI Tool Integration</span>
+              <span class="phase2-tag">Local REST API</span>
+              <span class="phase2-tag">iPad Split View Tailored Layout</span>
             </div>
           </div>
         </div>
@@ -495,9 +496,11 @@
     const cards = document.querySelectorAll('#timelineCards .timeline-card');
 
     filterBtns.forEach(btn => {
+      btn.setAttribute('aria-pressed', String(btn.classList.contains('active')));
       btn.addEventListener('click', () => {
-        filterBtns.forEach(b => b.classList.remove('active'));
+        filterBtns.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed', 'false'); });
         btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
         const cat = btn.dataset.cat;
 
         cards.forEach(card => {

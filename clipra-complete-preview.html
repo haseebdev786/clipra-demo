@@ -1567,8 +1567,16 @@
     .brand, .nav-cta-group { flex-shrink: 0; }
     .mobile-menu-btn { min-width: 44px; min-height: 44px; }
     :focus-visible { outline: 2px solid var(--accent-teal); outline-offset: 5px; }
-    .skip-link { position: fixed; top: -100px; left: 16px; padding: 12px 20px; background: #0E1526; z-index: 300; }
-    .skip-link:focus { top: 12px; }
+    .skip-link { position: fixed; top: -100px; left: 16px; padding: 12px 20px; background: #0E1526; z-index: 300; clip-path: inset(100%); }
+    .skip-link:focus { top: 12px; clip-path: none; }
+    .price-card.featured { overflow: visible; }
+    .price-featured-badge { white-space: nowrap; }
+    .mac-titlebar { gap: 16px; }
+    .traffic-lights { flex-shrink: 0; }
+    .mac-title-center { min-width: 0; }
+    .mac-title-center span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .mac-search-bar { flex-shrink: 0; }
+    .mac-search-bar > span:first-of-type { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .faq-item.open .faq-answer { max-height: none; }
     .modal-content { max-height: calc(100dvh - 40px); overflow-y: auto; }
     .hero-badge-wrap .glass-pill { flex-wrap: wrap; justify-content: center; }
@@ -1585,6 +1593,9 @@
       .nav-cta-group .btn { padding: 10px 12px; font-size: 12px; }
       .nav-cta-group .btn svg { display: none; }
       .brand { gap: 8px; }
+      .mac-search-bar { display: none; }
+      .mac-title-center { font-size: 11px; }
+      .mac-title-center svg { display: none; }
       .trans-action-bar { flex-wrap: wrap; gap: 12px; }
       .cta-card-epic { padding: 40px 20px; }
     }
@@ -1611,6 +1622,7 @@
         <a href="#smart-sort" class="nav-link">Features</a>
         <a href="#pricing" class="nav-link">Pricing</a>
         <a href="#faq" class="nav-link">FAQ</a>
+        <a href="updates.html" class="nav-link">Updates</a>
       </nav>
 
       <div class="nav-cta-group">
@@ -1650,7 +1662,6 @@
         <a href="#pricing" class="btn btn-electric" style="padding: 14px 28px; font-size: 15px;">
           <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.37c.63-.77 1.06-1.85.95-2.93-.93.04-2.03.62-2.69 1.39-.58.67-1.1 1.76-.96 2.82 1.04.08 2.07-.52 2.7-1.28z"/></svg>
           <span>Get Clipra for Mac Free</span>
-          <span class="kbd">⌘⇧V</span>
         </a>
 
         <a href="#smart-sort" class="btn btn-glass" style="padding: 14px 24px; font-size: 15px;">
@@ -1704,7 +1715,7 @@
             <!-- Interactive Pinboards Row -->
             <div class="mock-pinboards" id="heroFilterTabs">
               <button class="mock-tab active" data-filter="all">
-                <span>⚡ All History</span>
+                <span>All History</span>
                 <span class="mock-tab-badge">142</span>
               </button>
               <button class="mock-tab" data-filter="code">
@@ -1782,7 +1793,7 @@
                     <span class="clip-shortcut">⌘3</span>
                   </div>
                   <div class="clip-content-box">
-                    <div style="font-size: 11px; text-decoration: line-through; color: var(--text-dim); margin-bottom: 2px;">linear.app/?utm_source=slack&amp;ref=12</div>
+                    <div style="font-size: 11px; text-decoration: line-through; color: var(--text-dim); margin-bottom: 2px;">linear.app/projects?utm_source=slack</div>
                     <div style="font-size: 12px; font-weight: 600; color: var(--accent-green);">https://linear.app/projects</div>
                   </div>
                 </div>
@@ -1853,11 +1864,11 @@
           </div>
 
           <div class="sim-source-triggers" id="ruleTriggers">
-            <button class="trigger-btn active" data-sample="color">🎨 HEX / RGB Color</button>
-            <button class="trigger-btn" data-sample="url">🔗 Tracking URL</button>
-            <button class="trigger-btn" data-sample="code">⚡ Swift / JS Code</button>
-            <button class="trigger-btn" data-sample="email">✉️ Email Contact</button>
-            <button class="trigger-btn" data-sample="json">📦 JSON Payload</button>
+            <button class="trigger-btn active" data-sample="color">HEX / RGB Color</button>
+            <button class="trigger-btn" data-sample="url">Tracking URL</button>
+            <button class="trigger-btn" data-sample="code">Swift / JS Code</button>
+            <button class="trigger-btn" data-sample="email">Email Contact</button>
+            <button class="trigger-btn" data-sample="json">JSON Payload</button>
           </div>
         </div>
 
@@ -1890,7 +1901,7 @@
               <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
               <span id="simRuleTitle">Rule: Colors &amp; Assets Auto-Route</span>
             </div>
-            <div class="route-board-title" id="simBoardName">📁 Pinboard: Brand Colors</div>
+            <div class="route-board-title" id="simBoardName">Pinboard: Brand Colors</div>
             <p class="route-reason" id="simExplanation">
               This sample matches a color rule and is sent to the Brand Colors pinboard.
             </p>
@@ -1921,11 +1932,11 @@
       <!-- INTERACTIVE TEXT TRANSFORMER LAB -->
       <div class="transformer-lab">
         <div class="trans-tabs-bar" id="transTabs">
-          <button class="trans-tab active" data-trans="utm">🧹 Strip UTM &amp; Tracking</button>
-          <button class="trans-tab" data-trans="json">📦 JSON Prettify / Minify</button>
-          <button class="trans-tab" data-trans="case">🔤 Title Case / UPPERCASE</button>
-          <button class="trans-tab" data-trans="plain">📄 Remove Formatting (Plain Text)</button>
-          <button class="trans-tab" data-trans="base64">🔒 Base64 Encode / Decode</button>
+          <button class="trans-tab active" data-trans="utm">Strip UTM &amp; Tracking</button>
+          <button class="trans-tab" data-trans="json">JSON Prettify / Minify</button>
+          <button class="trans-tab" data-trans="case">Title Case / UPPERCASE</button>
+          <button class="trans-tab" data-trans="plain">Remove Formatting (Plain Text)</button>
+          <button class="trans-tab" data-trans="base64">Base64 Encode / Decode</button>
           <button class="trans-tab" data-trans="urlencode">URL Encode</button>
         </div>
 
@@ -1935,19 +1946,19 @@
             <div>
               <div class="trans-pane-title">
                 <span>Original Copied String</span>
-                <span style="color: #EF4444;">● Dirty Input</span>
+                <span style="color: #EF4444;">Before</span>
               </div>
               <div class="trans-text-output" id="transBefore">https://linear.app/features/roadmaps?utm_source=twitter&amp;utm_medium=cpc&amp;utm_campaign=launch2026&amp;fbclid=IwAR098XyZa</div>
             </div>
-            <div style="font-size: 12px; color: var(--text-muted);">Source: Safari (Browser Copy)</div>
+            <div style="font-size: 12px; color: var(--text-muted);">Sample link</div>
           </div>
 
           <!-- After Pane -->
           <div class="trans-pane" style="background: rgba(0, 102, 255, 0.05);">
             <div>
               <div class="trans-pane-title">
-                <span>Clipra Instant Transformation</span>
-                <span style="color: var(--accent-green);">● Clean Output</span>
+                <span>Transformation preview</span>
+                <span style="color: var(--accent-green);">After</span>
               </div>
               <div class="trans-text-output trans-result-highlight" id="transAfter">https://linear.app/features/roadmaps</div>
             </div>
@@ -1956,7 +1967,7 @@
               <span style="font-size: 12px; color: var(--text-muted);" id="transSavings">Tracking parameters removed</span>
               <button class="btn btn-electric" id="copyTransBtn" style="padding: 8px 16px; font-size: 12px;">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>
-                <span id="copyBtnText">Copy Clean Text</span>
+                <span id="copyBtnText" aria-live="polite">Copy Clean Text</span>
               </button>
             </div>
           </div>
@@ -1991,9 +2002,9 @@
             Save commands and code snippets to a development pinboard. Find a pattern you used earlier, or format a JSON response before pasting it into your editor.
           </p>
           <div style="display: flex; gap: 12px; flex-wrap: wrap;" id="ucBadges">
-            <span class="glass-pill" style="color: var(--accent-teal);">⚡ JSON Prettify/Minify</span>
-            <span class="glass-pill" style="color: var(--accent-blue-bright);">🔒 Base64 Decode</span>
-            <span class="glass-pill" style="color: var(--accent-green);">⌨️ Paste Stack ⌘⌥V</span>
+            <span class="glass-pill" style="color: var(--accent-teal);">JSON Prettify/Minify</span>
+            <span class="glass-pill" style="color: var(--accent-blue-bright);">Base64 Decode</span>
+            <span class="glass-pill" style="color: var(--accent-green);">Paste Stack on Mac</span>
           </div>
         </div>
 
@@ -2253,7 +2264,7 @@
 
         <!-- Tier 2: Pro Annual (Featured) -->
         <div class="glass-card price-card featured">
-          <div class="price-featured-badge">Unlimited history &amp; iCloud sync</div>
+          <div class="price-featured-badge">All launch features</div>
           <div>
             <div class="price-header">
               <div class="price-plan-name">Clipra Pro</div>
@@ -2498,14 +2509,14 @@
   </footer>
 
   <!-- KEYBOARD SHORTCUTS MODAL -->
-  <div class="modal-overlay" id="shortcutModal">
+  <div class="modal-overlay" id="shortcutModal" role="dialog" aria-modal="true" aria-labelledby="shortcutTitle">
     <div class="modal-content">
       <div class="modal-header">
         <div style="display: flex; align-items: center; gap: 10px;">
           <span style="font-size: 18px;">⚡</span>
-          <h3 style="font-size: 18px; font-weight: 700; color: #FFF;">Clipra Shortcuts Reference</h3>
+          <h3 id="shortcutTitle" style="font-size: 18px; font-weight: 700; color: #FFF;">Planned Mac shortcuts</h3>
         </div>
-        <button id="closeModalBtn" style="font-size: 20px; color: var(--text-muted); cursor: pointer;">&times;</button>
+        <button id="closeModalBtn" aria-label="Close shortcuts" style="font-size: 20px; color: var(--text-muted); cursor: pointer; min-width: 44px; min-height: 44px;">&times;</button>
       </div>
 
       <div>
@@ -2517,22 +2528,10 @@
           <span style="color: var(--text-secondary);">Paste Item from 1 to 9</span>
           <span class="kbd">⌘ + 1 ... 9</span>
         </div>
-        <div class="shortcut-row">
-          <span style="color: var(--text-secondary);">Open Text Transformer</span>
-          <span class="kbd">⌥ + Enter</span>
-        </div>
-        <div class="shortcut-row">
-          <span style="color: var(--text-secondary);">Power Search History</span>
-          <span class="kbd">⌘ + F</span>
-        </div>
-        <div class="shortcut-row">
-          <span style="color: var(--text-secondary);">Sequential Paste Stack</span>
-          <span class="kbd">⌘ + ⌥ + V</span>
-        </div>
-        <div class="shortcut-row">
-          <span style="color: var(--text-secondary);">Pin Item to Board</span>
-          <span class="kbd">⌘ + P</span>
-        </div>
+
+
+
+
         <div class="shortcut-row" style="border-bottom: none;">
           <span style="color: var(--text-secondary);">Close Shelf</span>
           <span class="kbd">Esc</span>
@@ -2595,35 +2594,35 @@
           source: '#00E5BE',
           detect: 'Detected: Hex 6-digit Color Code',
           rule: 'Rule: Design Tokens & Palette',
-          board: '📁 Pinboard: Brand Colors',
+          board: 'Pinboard: Brand Colors',
           desc: 'Regex matched /#([0-9a-f]{6})/i. Automatically extracted RGB values (0, 229, 190) and generated quick copy swatch.'
         },
         url: {
           source: 'https://linear.app/tasks?utm_source=twitter&utm_medium=cpc',
           detect: 'Detected: URL with UTM tracking parameters',
           rule: 'Rule: Clean Links Auto-Strip',
-          board: '📁 Pinboard: Clean URLs',
+          board: 'Pinboard: Clean URLs',
           desc: 'URL parser identified tracking parameters (utm_source, utm_medium). Routed to Clean URLs and prepared one-tap clean paste.'
         },
         code: {
           source: 'func syncClipra() async throws -> [ClipItem] { ... }',
           detect: 'Example: Swift code snippet',
           rule: 'Rule: Code Snippet Auto-Detect',
-          board: '📁 Pinboard: Code & Development',
+          board: 'Pinboard: Code & Development',
           desc: 'This sample shows how a code rule can send a snippet to your development pinboard.'
         },
         email: {
           source: 'adnan@arswift.com',
           detect: 'Example: email address',
           rule: 'Rule: Contact & Team Directory',
-          board: '📁 Pinboard: Contacts & People',
+          board: 'Pinboard: Contacts & People',
           desc: 'An email rule sends this sample to the Contacts pinboard.'
         },
         json: {
           source: '{"app": "Clipra", "version": "1.0", "sync": true}',
           detect: 'Detected: Valid JSON structured payload',
           rule: 'Rule: Data & API Payloads',
-          board: '📁 Pinboard: JSON & API Schemas',
+          board: 'Pinboard: JSON & API Schemas',
           desc: 'JSON parser validated structured object with 3 keys. Enabled instant prettify / minify action.'
         }
       };
@@ -2667,18 +2666,18 @@
           savings: 'Formatted into readable indented JSON (2 spaces)'
         },
         case: {
-          before: 'the clipboard that organizes itself with zero effort',
-          after: 'The Clipboard That Organizes Itself With Zero Effort',
+          before: 'keep your project notes together',
+          after: 'Keep Your Project Notes Together',
           savings: 'Capitalized each word (Title Case format)'
         },
         plain: {
-          before: '<b>Clipra</b> is built for <i>maximum</i> power and speed.',
-          after: 'Clipra is built for maximum power and speed.',
+          before: '<b>Project notes</b> for the <i>next</i> release.',
+          after: 'Project notes for the next release.',
           savings: 'Stripped all rich text & HTML formatting tags'
         },
         base64: {
-          before: 'clipra-private-icloud-token-2026',
-          after: 'Y2xpcHJhLXByaXZhdGUtaWNsb3VkLXRva2VuLTIwMjY=',
+          before: 'hello clipra',
+          after: 'aGVsbG8gY2xpcHJh',
           savings: 'Encoded UTF-8 string into RFC 4648 Base64'
         },
         urlencode: {
@@ -2728,7 +2727,7 @@
           eyebrow: 'DEVELOPER WORKFLOW',
           title: 'Keep useful commands and code close by.',
           desc: 'Save commands and code snippets to a development pinboard. Find a pattern you used earlier, or format a JSON response before pasting it into your editor.',
-          badges: '<span class="glass-pill" style="color: var(--accent-teal);">⚡ JSON Prettify/Minify</span><span class="glass-pill" style="color: var(--accent-blue-bright);">🔒 Base64 Decode</span><span class="glass-pill" style="color: var(--accent-green);">⌨️ Paste Stack ⌘⌥V</span>',
+          badges: '<span class="glass-pill" style="color: var(--accent-teal);">JSON Prettify/Minify</span><span class="glass-pill" style="color: var(--accent-blue-bright);">Base64 Decode</span><span class="glass-pill" style="color: var(--accent-green);">Paste Stack on Mac</span>',
           snippet: 'docker run -d -p 8080:80 --name clipra-api swift:6.0',
           footer: '✓ Auto-tagged: Shell Command • Stripped linebreaks'
         },
@@ -2736,7 +2735,7 @@
           eyebrow: 'DESIGNER WORKFLOW',
           title: 'Keep colors and design references together.',
           desc: 'Collect color codes and useful links in a design pinboard. Set a rule for copies from your design app so references stay together.',
-          badges: '<span class="glass-pill" style="color: var(--accent-teal);">🎨 Hex & RGB Swatching</span><span class="glass-pill" style="color: var(--accent-blue-bright);">📐 Design Pinboards</span><span class="glass-pill" style="color: var(--accent-green);">🖼️ History Search</span>',
+          badges: '<span class="glass-pill" style="color: var(--accent-teal);">Hex & RGB Swatching</span><span class="glass-pill" style="color: var(--accent-blue-bright);">Design Pinboards</span><span class="glass-pill" style="color: var(--accent-green);">History Search</span>',
           snippet: 'const primaryAccent = "#00E5BE";',
           footer: 'Example: saved to Design Assets'
         },
@@ -2744,7 +2743,7 @@
           eyebrow: 'GROWTH & MARKETING WORKFLOW',
           title: 'Share a link without the tracking tags.',
           desc: 'Remove tracking parameters before sharing a link in a client email or presentation. Keep the page address easy to read.',
-          badges: '<span class="glass-pill" style="color: var(--accent-teal);">🧹 Clean UTM Stripper</span><span class="glass-pill" style="color: var(--accent-blue-bright);">🔗 URL Encode / Decode</span><span class="glass-pill" style="color: var(--accent-green);">📄 Plain Text Mode</span>',
+          badges: '<span class="glass-pill" style="color: var(--accent-teal);">Clean UTM Stripper</span><span class="glass-pill" style="color: var(--accent-blue-bright);">URL Encode / Decode</span><span class="glass-pill" style="color: var(--accent-green);">Plain Text Mode</span>',
           snippet: 'https://arswift.com/products/clipra',
           footer: 'Example: tracking parameters removed'
         },
@@ -2752,7 +2751,7 @@
           eyebrow: 'CLIENT WORK',
           title: 'Bring your project notes into one place.',
           desc: 'Collect details from several documents and paste them in order with Paste Stack on Mac. Keep reusable client notes in your own pinboards. Shared team boards are planned for a later release.',
-          badges: '<span class="glass-pill" style="color: var(--accent-teal);">📚 Paste Stack Queue</span><span class="glass-pill" style="color: var(--accent-blue-bright);">📁 Custom Pinboards</span><span class="glass-pill" style="color: var(--accent-green);">🛡️ Screen Share Hide</span>',
+          badges: '<span class="glass-pill" style="color: var(--accent-teal);">Paste Stack Queue</span><span class="glass-pill" style="color: var(--accent-blue-bright);">Custom Pinboards</span><span class="glass-pill" style="color: var(--accent-green);">Screen Share Hide</span>',
           snippet: 'Client: Acme Corp | Deliverable: iOS Target v1.0 | Status: Signed',
           footer: '✓ Saved to Pinboard: Active Contracts'
         }
@@ -2824,8 +2823,22 @@
       const footerLink = document.getElementById('footerShortcutsLink');
       const closeBtn = document.getElementById('closeModalBtn');
 
-      const openModal = () => { modal.classList.add('active'); };
-      const closeModal = () => { modal.classList.remove('active'); };
+      let previousFocus;
+      const openModal = () => {
+        previousFocus = document.activeElement;
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+        closeBtn.focus();
+      };
+      const closeModal = () => {
+        if (!modal.classList.contains('active')) return;
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+        previousFocus?.focus();
+      };
+      modal.addEventListener('keydown', (event) => {
+        if (event.key === 'Tab') { event.preventDefault(); closeBtn.focus(); }
+      });
 
       openBtn?.addEventListener('click', openModal);
       footerLink?.addEventListener('click', (e) => { e.preventDefault(); openModal(); });
@@ -2838,6 +2851,17 @@
           modal.classList.contains('active') ? closeModal() : openModal();
         }
         if (e.key === 'Escape') closeModal();
+      });
+
+      // These are single-selection button groups, not ARIA tab panels.
+      ['heroFilterTabs', 'ruleTriggers', 'transTabs', 'usecaseTabs', 'billingToggle'].forEach(id => {
+        const buttons = document.querySelectorAll(`#${id} button`);
+        buttons.forEach(button => {
+          button.setAttribute('aria-pressed', String(button.classList.contains('active')));
+          button.addEventListener('click', () => buttons.forEach(item => {
+            item.setAttribute('aria-pressed', String(item === button));
+          }));
+        });
       });
 
       // Responsive navigation: close on selection, outside click, Escape, or resize.
