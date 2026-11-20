@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef } from "react";
-import { ArrowRight, Check, Copy, Search } from "lucide-react";
+import { Check, Copy, Search } from "lucide-react";
 
 interface ClipCardItem {
   id: string;
@@ -13,8 +13,6 @@ interface ClipCardItem {
   time: string;
 }
 
-const RULE = "bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/20";
-
 const INITIAL_CARDS: ClipCardItem[] = [
   {
     id: "card-1",
@@ -22,7 +20,7 @@ const INITIAL_CARDS: ClipCardItem[] = [
     source: "VS Code",
     shortcut: "⌘1",
     content: (
-      <div className="font-mono text-[11px] text-[#F1F5F9] leading-relaxed">
+      <div className="font-mono text-[12px] text-[#1D1D1F] leading-relaxed">
         <span className="text-[#0066FF]">const</span> dedupe = &lt;T&gt;(arr: T[]): T[] =&gt; [
         ...<span className="text-[#0066FF]">new Set</span>(arr)];
       </div>
@@ -39,8 +37,8 @@ const INITIAL_CARDS: ClipCardItem[] = [
       <div className="flex items-center gap-3">
         <div className="w-9 h-9 rounded-lg bg-[#0066FF] flex-shrink-0" />
         <div>
-          <div className="font-mono font-semibold text-[#F1F5F9] text-xs">#0066FF</div>
-          <div className="text-[11px] text-[#94A3B8]">rgb(0, 102, 255)</div>
+          <div className="font-mono font-semibold text-[#1D1D1F] text-xs">#0066FF</div>
+          <div className="text-[11px] text-[#6E6E73]">rgb(0, 102, 255)</div>
         </div>
       </div>
     ),
@@ -54,10 +52,10 @@ const INITIAL_CARDS: ClipCardItem[] = [
     shortcut: "⌘3",
     content: (
       <div>
-        <div className="text-[11px] line-through text-[#64748B] mb-0.5 truncate">
+        <div className="text-[11px] line-through text-[#86868B] mb-0.5 truncate">
           linear.app/?utm_source=slack&amp;ref=12
         </div>
-        <div className="text-xs font-semibold text-[#F1F5F9] truncate">
+        <div className="text-xs font-semibold text-[#1D1D1F] truncate">
           https://linear.app/projects
         </div>
       </div>
@@ -71,7 +69,7 @@ const INITIAL_CARDS: ClipCardItem[] = [
     source: "Slack",
     shortcut: "⌘4",
     content: (
-      <div className="text-xs text-[#CBD5E1] space-y-0.5">
+      <div className="text-xs text-[#424245] space-y-0.5">
         <div>• Review macOS 26 Swift build</div>
         <div>• Test StoreKit 2 Lifetime IAP</div>
         <div>• Finalize App Store video brief</div>
@@ -89,10 +87,10 @@ const STREAM_ITEMS: Omit<ClipCardItem, "id">[] = [
     shortcut: "⌘1",
     content: (
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-[#F1F5F9] flex-shrink-0" />
+        <div className="w-9 h-9 rounded-lg bg-[#1D1D1F] flex-shrink-0" />
         <div>
-          <div className="font-mono font-semibold text-[#F1F5F9] text-xs">#F1F5F9</div>
-          <div className="text-[11px] text-[#94A3B8]">rgb(29, 29, 31)</div>
+          <div className="font-mono font-semibold text-[#1D1D1F] text-xs">#1D1D1F</div>
+          <div className="text-[11px] text-[#6E6E73]">rgb(29, 29, 31)</div>
         </div>
       </div>
     ),
@@ -104,7 +102,7 @@ const STREAM_ITEMS: Omit<ClipCardItem, "id">[] = [
     source: "Xcode",
     shortcut: "⌘1",
     content: (
-      <div className="font-mono text-[11px] text-[#F1F5F9]">
+      <div className="font-mono text-[12px] text-[#1D1D1F]">
         <span className="text-[#0066FF]">let</span> container ={" "}
         <span className="text-[#0066FF]">CKContainer</span>.default()
       </div>
@@ -118,10 +116,10 @@ const STREAM_ITEMS: Omit<ClipCardItem, "id">[] = [
     shortcut: "⌘1",
     content: (
       <div>
-        <div className="text-[11px] line-through text-[#64748B] mb-0.5 truncate">
+        <div className="text-[11px] line-through text-[#86868B] mb-0.5 truncate">
           github.com/arswift/clipra?ref=producthunt
         </div>
-        <div className="text-xs font-semibold text-[#F1F5F9] truncate">
+        <div className="text-xs font-semibold text-[#1D1D1F] truncate">
           https://github.com/arswift/clipra
         </div>
       </div>
@@ -141,7 +139,6 @@ const FILTERS = [
 
 function miniLabel(card: ClipCardItem) {
   if (card.source === "Xcode") return "let container = ...";
-  if (card.source === "Arc Browser") return "github.com/arswift/clipra";
   if (card.type === "code") return "const dedupe = ...";
   if (card.type === "colors") return "#0066FF";
   if (card.type === "links") return "linear.app/projects";
@@ -167,207 +164,210 @@ export default function Hero() {
   );
 
   return (
-    <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
-      <div className="max-w-[1024px] mx-auto px-4 sm:px-6">
-        <div className="text-center max-w-3xl mx-auto">
-          <p className="glass-pill mb-6">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#00E5BE]" />
-            In development for Mac, iPhone &amp; iPad
+    <section className="relative bg-white pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+      <div className="wrap">
+        <div className="hero-enter text-center max-w-3xl mx-auto">
+          <p className="text-[15px] text-[#6E6E73] mb-6">
+            In development for Mac, iPhone and iPad
           </p>
-          <h1 className="text-[44px] sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.05] mb-5">
-            Everything you copy, <span className="text-[#2E82FF]">on every device.</span>
+          <h1 className="text-[44px] sm:text-6xl md:text-7xl font-bold text-[#1D1D1F] leading-[1.05] mb-5">
+            Everything you copy, on every device.
           </h1>
-          <p className="text-lg sm:text-xl text-[#94A3B8] max-w-2xl mx-auto leading-relaxed mb-8">
+          <p className="text-lg sm:text-xl text-[#6E6E73] max-w-2xl mx-auto leading-relaxed mb-8">
             Clipra is a clipboard manager for Mac, iPhone and iPad. Anything you copied, back in
             seconds — organised, searchable, and in sync.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-4 mb-4">
-            <a
-              href="/pricing"
-              className="inline-flex items-center gap-2 px-6 py-3 text-[15px] font-medium text-white bg-[#0066FF] hover:bg-[#2E82FF] rounded-full transition-all shadow-[0_12px_32px_rgba(0,102,255,0.4)] hover:-translate-y-0.5"
-            >
-              Download free
+          <div className="flex flex-wrap items-center justify-center gap-4 mb-5">
+            <a href="/pricing" className="btn btn-primary">
+              Try for free
             </a>
-            <a
-              href="/features#smart-sort"
-              className="inline-flex items-center gap-1.5 px-6 py-3 text-[15px] font-medium text-[#0066FF] hover:underline"
-            >
-              See how it works
-              <ArrowRight className="w-4 h-4" />
+            <a href="/pricing" className="btn btn-outline">
+              See plans
             </a>
           </div>
-          <p className="text-xs text-[#64748B] mb-10">
-            Planned pricing — the app is in development.
+          <p className="text-sm text-[#6E6E73] mb-16">
+            Free plan planned at launch, with private iCloud sync and Pro planned at $14.99 a
+            year.
           </p>
-
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] text-[#94A3B8] mb-14">
-            <span className="flex items-center gap-1.5">
-              <Check className="w-4 h-4 text-[#0066FF]" /> Free plan planned at launch
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Check className="w-4 h-4 text-[#0066FF]" /> Private iCloud sync — no Clipra servers
-            </span>
-            <span className="flex items-center gap-1.5">
-              <Check className="w-4 h-4 text-[#0066FF]" /> Pro planned at $14.99/yr
-            </span>
-          </div>
         </div>
 
-        {/* Devices: Mac window with the same clipboard cards as iPad and iPhone. */}
-        <div className="device-stage">
-          <div className="device-tablet" aria-hidden="true">
-            <div className="device-small-screen">
-              <div className="device-small-top">
+        {/* Devices: the same clipboard cards on Mac, iPad and iPhone. */}
+        <div className="hero-enter relative max-w-[1024px] mx-auto">
+          {/* iPad — left */}
+          <div
+            aria-hidden="true"
+            className="hidden lg:block absolute z-[1] left-0 bottom-[8%] w-[22%] rounded-[18px] bg-white border border-black/10 shadow-[0_24px_50px_rgba(0,0,0,0.18)] p-1.5"
+          >
+            <div className="rounded-[12px] bg-[#F5F5F7] p-3 h-full">
+              <div className="flex justify-between text-[9px] font-semibold text-[#1D1D1F]">
                 <span>9:41</span>
                 <span>Wi-Fi · 100%</span>
               </div>
-              <div className="device-small-heading">
-                Clipboard <span>All clips</span>
+              <div className="flex justify-between items-center text-[15px] font-semibold text-[#1D1D1F] mt-4 mb-3">
+                Clipboard <span className="text-[11px] font-normal text-[#6E6E73]">All clips</span>
               </div>
-              <div className="device-small-grid">
+              <div className="grid grid-cols-2 gap-1.5">
                 {cards.map((card) => (
-                  <div className={`mini-clip mini-${card.type}`} key={card.id}>
-                    <span>{card.source}</span>
-                    <strong>{miniLabel(card)}</strong>
-                    <small>{card.ruleTag}</small>
+                  <div
+                    key={card.id}
+                    className="min-h-[64px] p-2 rounded-lg bg-white border border-black/[0.07] flex flex-col"
+                  >
+                    <span className="text-[8px] text-[#6E6E73]">{card.source}</span>
+                    <strong className="mt-1.5 text-[9px] leading-snug font-semibold text-[#1D1D1F]">
+                      {miniLabel(card)}
+                    </strong>
+                    <small className="mt-auto pt-1 text-[7px] text-[#86868B]">{card.ruleTag}</small>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          <div className="device-phone" aria-hidden="true">
-            <div className="device-phone-screen">
-              <div className="device-notch" />
-              <div className="device-phone-time">
+          {/* iPhone — right */}
+          <div
+            aria-hidden="true"
+            className="hidden lg:block absolute z-[3] right-0 bottom-[5%] w-[15%] rounded-[26px] bg-white border border-black/10 shadow-[0_24px_50px_rgba(0,0,0,0.18)] p-1.5"
+          >
+            <div className="relative rounded-[20px] bg-[#F5F5F7] px-2 pt-4 pb-2.5 h-full">
+              <div className="absolute top-1.5 left-[30%] w-[40%] h-[10px] rounded-full bg-black" />
+              <div className="flex justify-between text-[9px] font-semibold text-[#1D1D1F] px-1">
                 <span>9:41</span>
                 <span>Wi-Fi</span>
               </div>
-              <div className="device-phone-title">
-                Clipboard <span>All clips</span>
+              <div className="flex justify-between items-center text-[14px] font-semibold text-[#1D1D1F] mt-3 mb-2 px-1">
+                Clipboard <span className="text-[10px] font-normal text-[#6E6E73]">All clips</span>
               </div>
-              <div className="device-phone-grid">
+              <div className="grid grid-cols-2 gap-1">
                 {cards.map((card) => (
-                  <div className={`mini-clip mini-${card.type}`} key={card.id}>
-                    <span>{card.source}</span>
-                    <strong>{miniLabel(card)}</strong>
-                    <small>{card.ruleTag}</small>
+                  <div
+                    key={card.id}
+                    className="min-h-[58px] p-1.5 rounded-lg bg-white border border-black/[0.07] flex flex-col"
+                  >
+                    <span className="text-[8px] text-[#6E6E73]">{card.source}</span>
+                    <strong className="mt-1 text-[8px] leading-snug font-semibold text-[#1D1D1F]">
+                      {miniLabel(card)}
+                    </strong>
+                    <small className="mt-auto pt-1 text-[7px] text-[#86868B]">{card.ruleTag}</small>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          <div className="device-laptop">
-            <div className="device-screen">
-              <div className="device-menu">
-                <span>Clipra&nbsp;&nbsp;File&nbsp;&nbsp;Edit&nbsp;&nbsp;View</span>
-                <span>9:41 AM</span>
+          {/* Mac window — the live demo */}
+          <div className="relative z-[2] mx-auto lg:mx-[11%]">
+            <div className="app-frame">
+              <div className="app-frame-bar">
+                <span className="traffic-lights" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+                <span className="flex items-center gap-2 font-semibold text-[#1D1D1F]">
+                  <Copy className="w-3.5 h-3.5 text-[#0066FF]" aria-hidden="true" />
+                  Clipra — Clipboard
+                  <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#0066FF]/10 text-[#0066FF]">
+                    Interactive demo
+                  </span>
+                </span>
+                <span className="hidden sm:flex items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={simulateCopy}
+                    className="min-h-[32px] px-3 text-xs font-medium rounded-lg bg-[#0066FF] hover:bg-[#2E82FF] text-white transition-colors"
+                  >
+                    Simulate ⌘C
+                  </button>
+                  <label className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 text-xs text-[#6E6E73] bg-white border border-black/10 rounded-lg">
+                    <Search className="w-3.5 h-3.5" aria-hidden="true" />
+                    <input
+                      value={search}
+                      onChange={(e) => setSearch(e.target.value)}
+                      placeholder="Search your clips"
+                      className="bg-transparent outline-none w-28 text-[#1D1D1F] placeholder:text-[#86868B]"
+                      aria-label="Search your clips"
+                    />
+                  </label>
+                </span>
               </div>
-              <div className="device-app">
-                <div className="flex items-center justify-between px-4 py-3 bg-white/[0.06] border-b border-white/10 gap-3 flex-wrap">
-                  <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-[#FF5F57] border border-white/10" />
-                    <span className="w-3 h-3 rounded-full bg-[#FEBC2E] border border-white/10" />
-                    <span className="w-3 h-3 rounded-full bg-[#28C840] border border-white/10" />
-                  </div>
-                  <div className="flex items-center gap-2 text-xs font-medium text-[#F1F5F9]">
-                    <Copy className="w-3.5 h-3.5 text-[#0066FF]" />
-                    <span>Clipra — Clipboard</span>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#0066FF]/10 text-[#0066FF]">
-                      Interactive demo
-                    </span>
-                  </div>
-                  <div className="flex items-center gap-2">
+
+              <div className="p-4 sm:p-5 bg-[#F5F5F7]">
+                <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-4">
+                  {FILTERS.map((f) => (
                     <button
+                      key={f.key}
                       type="button"
-                      onClick={simulateCopy}
-                      className="px-2.5 py-1 text-xs font-medium rounded-lg bg-[#0066FF] hover:bg-[#2E82FF] text-white transition-colors"
-                      title="Simulate copying an item"
+                      onClick={() => setActiveFilter(f.key)}
+                      aria-pressed={activeFilter === f.key}
+                      className={`min-h-[36px] px-3.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap ${
+                        activeFilter === f.key
+                          ? "bg-[#0066FF] text-white"
+                          : "bg-white hover:bg-black/[0.04] text-[#424245] border border-black/10"
+                      }`}
                     >
-                      Simulate ⌘C
+                      {f.label}
+                      {f.key === "all" && (
+                        <span className="ml-1.5 text-[10px] font-mono opacity-80">
+                          {cards.length}
+                        </span>
+                      )}
                     </button>
-                    <label className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 text-xs text-[#94A3B8] bg-white/[0.06] border border-white/10 rounded-lg">
-                      <Search className="w-3 h-3" />
-                      <input
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        placeholder="Search your clips"
-                        className="bg-transparent outline-none w-28 text-[#F1F5F9] placeholder:text-[#64748B]"
-                        aria-label="Search your clips"
-                      />
-                    </label>
-                  </div>
+                  ))}
                 </div>
 
-                <div className="p-4 sm:p-5 bg-white/[0.06]">
-                  <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-4">
-                    {FILTERS.map((f) => (
-                      <button
-                        key={f.key}
-                        type="button"
-                        onClick={() => setActiveFilter(f.key)}
-                        aria-pressed={activeFilter === f.key}
-                        className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap ${
-                          activeFilter === f.key
-                            ? "bg-[#0066FF] text-white"
-                            : "bg-white/[0.06] hover:bg-white/[0.10] text-[#CBD5E1] border border-white/10"
-                        }`}
-                      >
-                        {f.label}
-                        {f.key === "all" && (
-                          <span className="ml-1.5 text-[10px] font-mono opacity-80">
-                            {cards.length}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2.5">
+                  {filteredCards.map((card) => (
+                    <div
+                      key={card.id}
+                      className="relative p-4 rounded-2xl bg-white border border-black/[0.08] shadow-[0_4px_16px_rgba(0,0,0,0.05)] flex flex-col justify-between min-h-[160px]"
+                    >
+                      <div>
+                        <div className="flex items-center justify-between mb-3 text-[11px] text-[#6E6E73]">
+                          <span className="font-medium text-[#1D1D1F] flex items-center gap-1.5">
+                            <span className="w-1.5 h-1.5 rounded-full bg-[#0066FF]" />
+                            {card.source}
                           </span>
-                        )}
-                      </button>
-                    ))}
-                  </div>
-
-                  <div className="hero-clip-grid">
-                    {filteredCards.map((card) => (
-                      <div
-                        key={card.id}
-                        className="relative p-4 rounded-2xl bg-[#0A0A0F] border border-white/10 flex flex-col justify-between min-h-[160px]"
-                      >
-                        <div>
-                          <div className="flex items-center justify-between mb-3 text-[11px] text-[#94A3B8]">
-                            <span className="font-medium text-[#F1F5F9] flex items-center gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#0066FF]" />
-                              {card.source}
-                            </span>
-                            <span className="font-mono px-1.5 py-0.5 rounded bg-white/[0.06] border border-white/10">
-                              {card.shortcut}
-                            </span>
-                          </div>
-                          <div className="mb-3">{card.content}</div>
-                        </div>
-                        <div className="flex items-center justify-between pt-2 border-t border-white/10 text-[11px] text-[#94A3B8]">
-                          <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${RULE}`}>
-                            {card.ruleTag}
+                          <span className="font-mono px-1.5 py-0.5 rounded bg-black/[0.04] border border-black/[0.07]">
+                            {card.shortcut}
                           </span>
-                          <span>{card.time}</span>
                         </div>
+                        <div className="mb-3">{card.content}</div>
                       </div>
-                    ))}
-                    {filteredCards.length === 0 && (
-                      <p className="text-sm text-[#94A3B8] py-6">
-                        No demo items found. Try another search or category.
-                      </p>
-                    )}
-                  </div>
+                      <div className="flex items-center justify-between pt-2 border-t border-black/[0.07] text-[11px] text-[#6E6E73]">
+                        <span className="px-2 py-0.5 rounded-full text-[10px] font-medium bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/20">
+                          {card.ruleTag}
+                        </span>
+                        <span>{card.time}</span>
+                      </div>
+                    </div>
+                  ))}
+                  {filteredCards.length === 0 && (
+                    <p className="text-sm text-[#6E6E73] py-6">
+                      No demo items found. Try another search or category.
+                    </p>
+                  )}
                 </div>
               </div>
             </div>
-            <div className="device-base" aria-hidden="true">
-              <span />
-            </div>
+            <div
+              aria-hidden="true"
+              className="h-[14px] mx-[-4%] rounded-b-[50%] bg-gradient-to-b from-[#3F4756] to-[#232936]"
+            />
           </div>
         </div>
-        <p className="text-center text-xs text-[#64748B] mt-6">
+
+        <p className="text-center text-xs text-[#86868B] mt-8">
           Interactive concept — try the filters, search, or simulate a copy.
         </p>
+
+        <div className="flex items-center justify-center gap-2 mt-10 text-[13px] text-[#6E6E73]">
+          <Check className="w-4 h-4 text-[#0066FF]" aria-hidden="true" />
+          <span>
+            Paste is the benchmark: 4.5 stars, 16,000+ ratings. Clipra is being built to do the
+            organising Paste never did.
+          </span>
+        </div>
       </div>
     </section>
   );

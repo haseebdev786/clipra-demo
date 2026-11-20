@@ -9,8 +9,12 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "#05070D",
-        foreground: "#F1F5F9",
+        background: "#FFFFFF",
+        foreground: "#1D1D1F",
+        paper: "#FFFFFF",
+        mist: "#F5F5F7",
+        ink: "#1D1D1F",
+        "ink-2": "#6E6E73",
         "bg-deep": "#05070D",
         "bg-canvas": "#0B0D14",
         "bg-surface": "rgba(255,255,255,0.05)",
@@ -20,12 +24,8 @@ const config: Config = {
           bright: "#2E82FF",
         },
         "accent-teal": {
-          DEFAULT: "#00E5BE",
-          bright: "#38F8D4",
-        },
-        "accent-green": {
-          DEFAULT: "#00E5BE",
-          bright: "#38F8D4",
+          DEFAULT: "#00C4B4",
+          bright: "#00C4B4",
         },
       },
       fontFamily: {

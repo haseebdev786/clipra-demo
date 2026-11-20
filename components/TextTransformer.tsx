@@ -74,28 +74,14 @@ export default function TextTransformer() {
   };
 
   return (
-    <section
-      id="transformer"
-      className="relative py-24 z-10"
-    >
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
-        {/* Heading */}
+    <section id="transformer" className="section band-mist">
+      <div className="wrap">
         <div className="text-center max-w-3xl mx-auto mb-12 reveal-on-scroll">
-          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0066FF] mb-4">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <polyline points="4 7 4 4 20 4 20 7" />
-              <line x1="9" y1="20" x2="15" y2="20" />
-              <line x1="12" y1="4" x2="12" y2="20" />
-            </svg>
-            Text Transformer
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#F1F5F9] mb-5 leading-tight">
-            Copy once.{" "}
-            <span className="">
-              Paste anything.
-            </span>
+          <p className="kicker">Text Transformer</p>
+          <h2 className="text-4xl sm:text-5xl font-bold text-[#1D1D1F]">
+            Copy once. Paste anything.
           </h2>
-          <p className="text-base sm:text-lg text-[#94A3B8] leading-relaxed">
+          <p className="lede mx-auto mt-5">
             Paste keeps text as copied. With Clipra, a single shortcut (
             <kbd className="kbd">⌥Enter</kbd>) transforms your copied text before you paste it.
             Clean tracking params, prettify messy JSON, convert cases, or strip styling without
@@ -103,19 +89,23 @@ export default function TextTransformer() {
           </p>
         </div>
 
-        {/* Lab */}
-        <div className="bg-[#0B0D14] border border-white/10 rounded-3xl overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.5)] reveal-on-scroll stagger-2">
-          {/* Tabs */}
-          <div className="flex items-center gap-2 px-4 md:px-6 py-4 bg-[#0A0A0F] border-b border-white/10 overflow-x-auto">
+        <div className="light-card max-w-[1024px] mx-auto overflow-hidden reveal-on-scroll">
+          <div
+            className="flex items-center gap-2 px-4 md:px-6 py-4 bg-[#F5F5F7] border-b border-black/[0.07] overflow-x-auto"
+            role="tablist"
+            aria-label="Text transformations"
+          >
             {TRANSFORMS.map((t) => (
               <button
                 key={t.key}
                 type="button"
+                role="tab"
+                aria-selected={active === t.key}
                 onClick={() => setActive(t.key)}
-                className={`flex-shrink-0 px-4 py-2 rounded-lg text-sm font-semibold whitespace-nowrap transition-all ${
+                className={`flex-shrink-0 min-h-[44px] px-4 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                   active === t.key
-                    ? "bg-[#0066FF]/22 border border-[#0066FF] text-[#F1F5F9] shadow-sm -translate-y-0.5"
-                    : "bg-white/[0.06] border border-transparent text-[#94A3B8] hover:text-[#F1F5F9] hover:bg-white/[0.06]"
+                    ? "bg-[#0066FF] text-white"
+                    : "bg-white border border-black/10 text-[#6E6E73] hover:text-[#1D1D1F]"
                 }`}
               >
                 {t.label}
@@ -123,50 +113,41 @@ export default function TextTransformer() {
             ))}
           </div>
 
-          {/* Editor */}
-          <div className="grid grid-cols-1 md:grid-cols-2 divide-y md:divide-y-0 md:divide-x divide-black/10">
-            {/* Before */}
-            <div className="p-6 md:p-7 flex flex-col justify-between min-h-[220px]">
+          <div className="grid grid-cols-1 md:grid-cols-2">
+            <div className="p-6 md:p-7 flex flex-col justify-between min-h-[220px] border-b md:border-b-0 md:border-r border-black/[0.07]">
               <div>
-                <div className="flex items-center justify-between text-xs font-bold uppercase tracking-widest text-[#94A3B8] mb-3">
-                  <span>Original Copied String</span>
-                  <span>Original</span>
-                </div>
-                <pre className="font-mono text-sm text-[#CBD5E1] whitespace-pre-wrap break-all leading-relaxed">
+                <p className="text-xs font-semibold text-[#6E6E73] mb-3">Original copied string</p>
+                <pre className="font-mono text-sm text-[#424245] whitespace-pre-wrap break-all leading-relaxed">
                   {tab.before}
                 </pre>
               </div>
-              <div className="mt-4 text-xs text-[#94A3B8]">Source: Browser Copy</div>
+              <p className="mt-4 text-xs text-[#6E6E73]">Source: Browser Copy</p>
             </div>
 
-            {/* After */}
-            <div className="p-6 md:p-7 flex flex-col justify-between min-h-[220px] bg-[#0066FF]/5">
+            <div className="p-6 md:p-7 flex flex-col justify-between min-h-[220px] bg-[#0066FF]/[0.04]">
               <div>
-                <div className="flex items-center justify-between text-xs font-bold uppercase tracking-widest text-[#94A3B8] mb-3">
-                  <span>After transformation</span>
-                  <span>Transformed</span>
-                </div>
+                <p className="text-xs font-semibold text-[#6E6E73] mb-3">After transformation</p>
                 <pre className="font-mono text-sm text-[#0066FF] font-semibold whitespace-pre-wrap break-all leading-relaxed">
                   {tab.after}
                 </pre>
               </div>
 
-              <div className="flex items-center justify-between gap-3 flex-wrap mt-4 pt-4 border-t border-white/10">
-                <span className="text-xs text-[#94A3B8]">{tab.savings}</span>
+              <div className="flex items-center justify-between gap-3 flex-wrap mt-4 pt-4 border-t border-black/[0.07]">
+                <span className="text-xs text-[#6E6E73]">{tab.savings}</span>
                 <button
                   type="button"
                   onClick={handleCopy}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl text-xs font-medium text-white bg-[#0066FF] hover:bg-[#2E82FF] transition-all shadow-sm active:scale-95"
+                  className="btn btn-primary !min-h-[40px] !py-2.5 !px-4 !text-xs"
                 >
                   {copied ? (
                     <>
-                      <Check className="w-3.5 h-3.5" />
+                      <Check className="w-3.5 h-3.5" aria-hidden="true" />
                       <span>Copied!</span>
                     </>
                   ) : (
                     <>
-                      <Copy className="w-3.5 h-3.5" />
-                      <span>Copy Clean Text</span>
+                      <Copy className="w-3.5 h-3.5" aria-hidden="true" />
+                      <span>Copy clean text</span>
                     </>
                   )}
                 </button>
@@ -174,6 +155,10 @@ export default function TextTransformer() {
             </div>
           </div>
         </div>
+
+        <p className="text-center text-sm text-[#6E6E73] mt-8">
+          All 11 transforms run on your device. Planned for v1.0.
+        </p>
       </div>
     </section>
   );

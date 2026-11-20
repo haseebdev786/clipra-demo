@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { Plus } from "lucide-react";
 
 const FAQS = [
   { q: "When will Clipra be available?", a: "Clipra is currently in development. The roadmap shares what is planned for the first release and what may come later." },
@@ -14,47 +15,40 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative py-24 z-10">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
+    <section id="faq" className="section band-mist">
+      <div className="wrap">
         <div className="text-center max-w-2xl mx-auto mb-12 reveal-on-scroll">
-          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0066FF] mb-4">
-            Clear Answers
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#F1F5F9] mb-5">
-            Frequently Asked Questions
+          <p className="kicker">Clear answers</p>
+          <h2 className="text-4xl sm:text-5xl font-bold text-[#1D1D1F]">
+            Frequently asked questions
           </h2>
-          <p className="text-base sm:text-lg text-[#94A3B8] leading-relaxed">
-            Everything you need to know about Clipra&apos;s permissions, privacy, and architecture.
+          <p className="lede mx-auto mt-5">
+            Everything you need to know about Clipra&rsquo;s permissions, privacy, and architecture.
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto flex flex-col gap-3.5 reveal-on-scroll stagger-2">
+        <div className="max-w-3xl mx-auto flex flex-col gap-3 reveal-on-scroll">
           {FAQS.map((faq, i) => (
             <div
-              key={i}
-              className={`bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden transition-all duration-300 ${
-                open === i ? "border-white/10" : "border-white/10 hover:border-white/10"
-              }`}
+              key={faq.q}
+              className="bg-white border border-black/[0.08] rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.04)]"
             >
               <button
                 type="button"
-                className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 text-base font-bold text-[#F1F5F9]"
+                className="w-full min-h-[44px] text-left px-6 py-5 flex items-center justify-between gap-4 text-base font-semibold text-[#1D1D1F]"
                 onClick={() => setOpen(open === i ? null : i)}
                 aria-expanded={open === i}
               >
                 <span>{faq.q}</span>
-                <span
-                  className={`text-xl text-[#0066FF] flex-shrink-0 transition-transform duration-300 ${
-                    open === i ? "rotate-45 text-[#0066FF]" : ""
+                <Plus
+                  className={`w-5 h-5 text-[#0066FF] flex-shrink-0 transition-transform duration-300 ${
+                    open === i ? "rotate-45" : ""
                   }`}
-                >
-                  +
-                </span>
+                  aria-hidden="true"
+                />
               </button>
               {open === i && (
-                <div className="px-6 pb-5 text-sm text-[#94A3B8] leading-relaxed">
-                  {faq.a}
-                </div>
+                <p className="px-6 pb-5 text-[15px] text-[#6E6E73] leading-relaxed">{faq.a}</p>
               )}
             </div>
           ))}

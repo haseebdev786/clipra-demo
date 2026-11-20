@@ -56,42 +56,38 @@ export default function SmartAutoSort() {
   ];
 
   return (
-    <section id="smart-sort" className="relative py-24 z-10">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
-        {/* Heading */}
+    <section id="smart-sort" className="section bg-white">
+      <div className="wrap">
         <div className="text-center max-w-3xl mx-auto mb-12 reveal-on-scroll">
-          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0066FF] mb-4">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
-            </svg>
-            Smart Auto-Sort
-          </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#F1F5F9] mb-5 leading-tight">
+          <p className="kicker">Smart Auto-Sort</p>
+          <h2 className="text-4xl sm:text-5xl font-bold text-[#1D1D1F]">
             The clipboard that organises itself.
           </h2>
-          <p className="text-base sm:text-lg text-[#94A3B8] leading-relaxed">
-            Clipra is designed to recognise links, colours, snippets and more, then file them in the right pinboard. You will also be able to create your own rules.
+          <p className="lede mx-auto mt-5">
+            Clipra is designed to recognise links, colours, snippets and more, then file them in
+            the right pinboard. You will also be able to create your own rules.
           </p>
         </div>
 
-        {/* Simulator */}
-        <div className="bg-[#0B0D14] border border-white/10 rounded-3xl p-6 md:p-9 shadow-[0_20px_50px_rgba(0,0,0,0.5)] reveal-on-scroll stagger-2">
-          {/* Sim Header */}
-          <div className="flex items-start justify-between flex-wrap gap-4 pb-5 mb-6 border-b border-white/10">
+        <div className="light-card max-w-[1024px] mx-auto p-6 md:p-9 reveal-on-scroll">
+          <div className="flex items-start justify-between flex-wrap gap-4 pb-5 mb-6 border-b border-black/[0.07]">
             <div>
-              <div className="text-base font-bold text-[#F1F5F9] mb-1">Try it — pick a sample copy</div>
-              <div className="text-sm text-[#94A3B8]">Pick a sample to see where it would be filed.</div>
+              <p className="text-base font-semibold text-[#1D1D1F] mb-1">
+                Try it — pick a sample copy
+              </p>
+              <p className="text-sm text-[#6E6E73]">Pick a sample to see where it would be filed.</p>
             </div>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-2" role="group" aria-label="Sample copies">
               {triggers.map((t) => (
                 <button
                   key={t.key}
                   type="button"
                   onClick={() => setActive(t.key)}
-                  className={`px-4 py-2 rounded-full text-sm font-semibold transition-all ${
+                  aria-pressed={active === t.key}
+                  className={`min-h-[44px] px-4 rounded-full text-sm font-medium transition-colors ${
                     active === t.key
-                      ? "bg-[#0066FF]/20 border border-[#0066FF] text-[#F1F5F9] shadow-sm -translate-y-0.5"
-                      : "bg-white/[0.06] border border-white/10 text-[#CBD5E1] hover:bg-[#0066FF]/10 hover:border-[#0066FF]/30 hover:text-[#F1F5F9]"
+                      ? "bg-[#0066FF] text-white"
+                      : "bg-black/[0.04] border border-black/10 text-[#424245] hover:bg-[#0066FF]/10 hover:border-[#0066FF]/40 hover:text-[#1D1D1F]"
                   }`}
                 >
                   {t.label}
@@ -100,41 +96,37 @@ export default function SmartAutoSort() {
             </div>
           </div>
 
-          {/* Sim Grid */}
           <div className="grid grid-cols-1 md:grid-cols-[1fr_60px_1.2fr] items-center gap-5">
-            {/* Input */}
-            <div className="bg-[#0A0A0F] border border-white/10 rounded-xl p-6 min-h-[200px] flex flex-col justify-between">
+            <div className="bg-[#F5F5F7] border border-black/[0.07] rounded-2xl p-6 min-h-[200px] flex flex-col justify-between">
               <div>
-                <div className="flex items-center justify-between text-xs uppercase tracking-widest text-[#94A3B8] mb-3">
-                  <span>Step 1: Copied to System Clipboard</span>
+                <div className="flex items-center justify-between text-xs font-medium text-[#6E6E73] mb-3">
+                  <span>Step 1: Copied to system clipboard</span>
                   <span className="kbd">⌘C</span>
                 </div>
-                <div className="font-mono text-sm text-[#F1F5F9] bg-white/[0.06] rounded-lg p-4 border border-white/10 min-h-[80px] flex items-center break-all">
+                <div className="font-mono text-sm text-[#1D1D1F] bg-white rounded-xl p-4 border border-black/[0.07] min-h-[80px] flex items-center break-all">
                   {data.source}
                 </div>
               </div>
-              <div className="flex items-center gap-2 mt-3 text-xs text-[#94A3B8]">
-                <span className="w-1.5 h-1.5 rounded-full bg-[#0066FF]" />
+              <div className="flex items-center gap-2 mt-3 text-xs text-[#6E6E73]">
+                <span className="w-1.5 h-1.5 rounded-full bg-[#0066FF]" aria-hidden="true" />
                 <span>{data.detect}</span>
               </div>
             </div>
-            <div className="hidden md:flex items-center justify-center text-[#0066FF] text-xl" aria-hidden="true">→</div>
+            <div className="hidden md:flex items-center justify-center text-[#0066FF] text-xl" aria-hidden="true">
+              →
+            </div>
 
-            {/* Result */}
-            <div className="bg-white/[0.06] border border-white/10 rounded-xl p-6 shadow-sm">
-              <div className="inline-flex items-center gap-1.5 bg-[#0066FF]/10 text-[#0066FF] text-xs font-bold px-2.5 py-1 rounded-md mb-3">
-                <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor">
-                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
-                </svg>
+            <div className="bg-white border border-black/[0.07] rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+              <span className="inline-flex items-center gap-1.5 bg-[#0066FF]/10 text-[#0066FF] text-xs font-semibold px-2.5 py-1 rounded-md mb-3">
                 {data.rule}
-              </div>
-              <div className="text-lg font-bold text-[#F1F5F9] mb-2">{data.board}</div>
+              </span>
+              <p className="text-lg font-semibold text-[#1D1D1F] mb-2">{data.board}</p>
               <p
-                className="text-sm text-[#94A3B8] leading-relaxed"
+                className="text-sm text-[#6E6E73] leading-relaxed"
                 dangerouslySetInnerHTML={{ __html: data.desc }}
               />
-              <div className="flex items-center justify-between mt-4 pt-3 border-t border-white/10 text-xs">
-                <span className="text-[#94A3B8]">Status:</span>
+              <div className="flex items-center justify-between mt-4 pt-3 border-t border-black/[0.07] text-xs">
+                <span className="text-[#6E6E73]">Status:</span>
                 <span className="text-[#0066FF] font-medium">Planned for v1.0 — runs on your device</span>
               </div>
             </div>

@@ -1,94 +1,88 @@
-﻿"use client";
+import { Bookmark, Layers, HardDrive, Search } from "lucide-react";
 
-import ScrollStack, { ScrollStackItem } from "@/components/ScrollStack";
+/*
+  Use Cases — Part 1: For Everyone.
+  Four benefits, each with a small live fragment. Copy maps only to brief features:
+  pinboards, unlimited history (Pro), Power Search.
+*/
 
-const CASES = [
+const BENEFITS = [
   {
-    key: "dev",
-    label: "For Developers",
-    eyebrow: "DEVELOPER WORKFLOW",
-    title: "Syntax-aware code snippets & terminal tokens.",
-    desc: "Keep SSH keys, Docker commands, and regex patterns in your Dev pinboard. Prettify nested JSON with a single keystroke.",
-    badges: [
-      { label: "JSON Prettify / Minify", color: "text-[#0066FF]" },
-      { label: "Base64 Decode", color: "text-[#0066FF]" },
-      { label: "Paste Stack ⌘⌥V", color: "text-[#0066FF]" },
-    ],
-    snippet: "docker run -d -p 8080:80 --name clipra-api swift:6.0",
-    footer: "Auto-tagged: Shell Command",
+    icon: Bookmark,
+    title: "Save your favourite sites, photos, and messages",
+    text: "Keep the links, images, and messages you come back to, instead of hunting through chats and tabs for them again.",
+    fragment: (
+      <div className="mt-4 rounded-xl border border-black/[0.07] bg-[#F5F5F7] p-4">
+        <p className="text-xs font-medium text-[#0066FF]">Pinned · Favourites</p>
+        <p className="text-sm font-medium text-[#1D1D1F] mt-1.5">Photos from Lisbon — album link</p>
+        <p className="text-xs text-[#6E6E73] mt-1">Saved from Messages</p>
+      </div>
+    ),
   },
   {
-    key: "design",
-    label: "For UI/UX Designers",
-    eyebrow: "DESIGNER WORKFLOW",
-    title: "Color tokens, component names & asset links.",
-    desc: "Copied hex codes are filed in your Brand Colors board. Paste multiple values in sequence using Paste Stack.",
-    badges: [
-      { label: "Auto Hex Swatches", color: "text-[#0066FF]" },
-      { label: "Figma Asset Routing", color: "text-[#0066FF]" },
-      { label: "Paste Stack Workflow", color: "text-[#0066FF]" },
-    ],
-    snippet: "#0066FF — #F1F5F9 — #64748B",
-    footer: "Filed in: Brand Colors Pinboard",
+    icon: Layers,
+    title: "Stay organised with collections",
+    text: "Pinboards group your clips by project, client, or topic, so the piece you need is never buried under the last fifty copies.",
+    fragment: (
+      <div className="mt-4 rounded-xl border border-black/[0.07] bg-[#F5F5F7] p-4">
+        {["Holiday planning", "Gift ideas", "Flat search"].map((b, i) => (
+          <p key={b} className="flex items-center justify-between text-sm text-[#1D1D1F] py-1.5 border-b border-black/[0.06] last:border-b-0">
+            <span>{b}</span>
+            <span className="text-xs text-[#6E6E73]">{[12, 8, 21][i]} clips</span>
+          </p>
+        ))}
+      </div>
+    ),
   },
   {
-    key: "market",
-    label: "For Growth & Marketers",
-    eyebrow: "GROWTH WORKFLOW",
-    title: "Clean UTM links and campaign copy.",
-    desc: "Strip tracking noise from every link before pasting into your CMS. Build a pinboard of approved ad copy. Encode campaign parameters to Base64 for email clients that break URLs.",
-    badges: [
-      { label: "Auto Strip UTMs", color: "text-[#0066FF]" },
-      { label: "Campaign Copy Board", color: "text-[#0066FF]" },
-      { label: "Clean URL History", color: "text-[#0066FF]" },
-    ],
-    snippet: "https://product.app/launch (cleaned from 5 tracking params)",
-    footer: "Stripped: utm_source, utm_campaign, fbclid, gclid",
+    icon: HardDrive,
+    title: "Limitless storage for your clipboard",
+    text: "Pro keeps your full history, with no limit. An hour ago or a year ago, the copy is still there when you need it.",
+    fragment: (
+      <div className="mt-4 rounded-xl border border-black/[0.07] bg-[#F5F5F7] p-4">
+        <p className="text-sm text-[#1D1D1F]">
+          <span className="font-semibold">2,418</span> <span className="text-[#6E6E73]">items kept</span>
+        </p>
+        <p className="text-xs text-[#6E6E73] mt-1">Free keeps your last 50 items.</p>
+      </div>
+    ),
   },
   {
-    key: "agency",
-    label: "For Agency & Teams",
-    eyebrow: "AGENCY WORKFLOW",
-    title: "Client references, project notes & reusable copy.",
-    desc: "Keep project references and reusable copy organized. JSON backups and Screen Share Hide are planned for the Mac app.",
-    badges: [
-      { label: "Biometric Pinboards", color: "text-[#0066FF]" },
-      { label: "JSON Backup Export", color: "text-[#0066FF]" },
-      { label: "Screen Share Hide", color: "text-[#0066FF]" },
-    ],
-    snippet: "Project handoff: links, notes and next steps",
-    footer: "Planned: Biometric lock, Screen Share Hide",
+    icon: Search,
+    title: "Quick search in an instant",
+    text: "Find a copy again by type, source app, or date — no scrolling through everything you copied this week.",
+    fragment: (
+      <div className="mt-4 rounded-xl border border-black/[0.07] bg-[#F5F5F7] p-4">
+        <p className="text-sm font-mono text-[#1D1D1F]">⌘F · type: link app: Safari</p>
+        <p className="text-xs text-[#6E6E73] mt-1.5">3 results · sorted by date</p>
+      </div>
+    ),
   },
 ];
 
 export default function UseCases() {
   return (
-    <section id="usecases" className="relative py-24 z-10">
-      <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
-        <div className="text-center max-w-3xl mx-auto mb-14">
-          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0066FF] mb-4">Made for your workflow</span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-semibold tracking-tight text-[#F1F5F9] mb-5 leading-tight">Built for the way you work.</h2>
-          <p className="text-base sm:text-lg text-[#94A3B8] leading-relaxed">Explore how Clipra is being designed for the things you copy every day.</p>
+    <section id="usecases" className="section band-mist" aria-label="Clipra for everyone">
+      <div className="wrap">
+        <div className="max-w-3xl mb-12">
+          <p className="kicker">For everyone</p>
+          <h2 className="text-4xl sm:text-5xl font-bold text-[#1D1D1F]">
+            Do what you love. Do it faster with Clipra.
+          </h2>
         </div>
-        <ScrollStack useWindowScroll smoothScroll={false} itemDistance={160} itemStackDistance={16} stackPosition="120px" holdDistance={200} className="workflow-stack">
-          {CASES.map((uc, index) => (
-            <ScrollStackItem key={uc.key} itemClassName="workflow-stack-item" style={undefined}><article className="workflow-card">
-              <div className="workflow-copy">
-                <div className="workflow-label">{uc.label}</div>
-                <h3>{uc.title}</h3>
-                <p>{uc.desc}</p>
-                <div className="workflow-badges">{uc.badges.map((badge) => <span key={badge.label} className={badge.color}>{badge.label}</span>)}</div>
-              </div>
-              <div className="workflow-preview" aria-label={`${uc.label} example`}>
-                <div className="workflow-preview-bar"><span>{["Code snippet", "Color palette", "Campaign link", "Saved note"][index]}</span><span>Clipra</span></div>
-                <div className="workflow-preview-content">{uc.snippet}</div>
-                <div className="workflow-preview-footer">{uc.footer}</div>
-              </div>
-            </article></ScrollStackItem>
+        <div className="grid gap-5 sm:grid-cols-2">
+          {BENEFITS.map((b) => (
+            <article key={b.title} className="light-card p-7">
+              <span className="grid place-items-center w-11 h-11 rounded-xl bg-[#0066FF]/10 text-[#0066FF] mb-4">
+                <b.icon className="w-5 h-5" aria-hidden="true" />
+              </span>
+              <h3 className="text-[17px] font-semibold text-[#1D1D1F]">{b.title}</h3>
+              <p className="text-sm leading-relaxed text-[#6E6E73] mt-2">{b.text}</p>
+              {b.fragment}
+            </article>
           ))}
-        </ScrollStack>
+        </div>
       </div>
     </section>
   );
 }
-

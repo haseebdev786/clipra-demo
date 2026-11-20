@@ -1,7 +1,6 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useState } from "react";
-import AmbientCanvas from "@/components/AmbientCanvas";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ShortcutsModal from "@/components/ShortcutsModal";
@@ -17,8 +16,7 @@ export default function PageShell({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("keydown", handleKey);
   }, []);
   return <>
-    <a href="#main" className="fixed top-[-100px] left-4 z-[300] px-5 py-3 bg-[#0B0D14] border border-[#0066FF] rounded-lg focus:top-3 text-[#F1F5F9]">Skip to content</a>
-    <AmbientCanvas />
+    <a href="#main" className="fixed top-[-100px] left-4 z-[300] px-5 py-3 bg-white border border-black/10 rounded-lg focus:top-3 text-[#1D1D1F] shadow-lg">Skip to content</a>
     <Navbar onOpenShortcuts={() => setOpen(true)} />
     <main id="main" className="inner-page">{children}</main>
     <Footer onOpenShortcuts={() => setOpen(true)} />
