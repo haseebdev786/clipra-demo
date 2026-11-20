@@ -66,7 +66,7 @@ export default function MoreThanClipboard() {
               <button
                 type="button"
                 onClick={() => setPage((page - 1 + pages) % pages)}
-                className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white border border-black/10 text-[#1D1D1F] hover:bg-black/[0.04] transition-colors"
+                className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white/60 backdrop-blur-md border border-white/60 text-[#1D1D1F] hover:bg-white/80 transition-colors"
                 aria-label="Show previous clips"
               >
                 <ArrowLeft className="w-4 h-4" aria-hidden="true" />
@@ -74,17 +74,17 @@ export default function MoreThanClipboard() {
               <button
                 type="button"
                 onClick={() => setPage((page + 1) % pages)}
-                className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white border border-black/10 text-[#1D1D1F] hover:bg-black/[0.04] transition-colors"
+                className="inline-flex items-center justify-center w-11 h-11 rounded-full bg-white/60 backdrop-blur-md border border-white/60 text-[#1D1D1F] hover:bg-white/80 transition-colors"
                 aria-label="Show more clips"
               >
                 <ArrowRight className="w-4 h-4" aria-hidden="true" />
               </button>
             </span>
           </div>
-          <div className="p-5 sm:p-6 bg-white">
+          <div className="p-5 sm:p-6 bg-white/40 backdrop-blur-md">
             <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
               {visible.map((clip) => (
-                <article key={clip.title} className="rounded-2xl border border-black/[0.07] overflow-hidden bg-white">
+                <article key={clip.title} className="rounded-[20px] border border-white/60 overflow-hidden glass-1 !shadow-[0_8px_28px_rgba(13,38,76,0.08)]">
                   <div
                     className={`h-[104px] grid place-items-center text-[22px] font-semibold ${clip.bg}`}
                     style={{ color: clip.accent }}

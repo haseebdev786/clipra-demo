@@ -12,7 +12,7 @@ const BENEFITS = [
     title: "Save your favourite sites, photos, and messages",
     text: "Keep the links, images, and messages you come back to, instead of hunting through chats and tabs for them again.",
     fragment: (
-      <div className="mt-4 rounded-xl border border-black/[0.07] bg-[#F5F5F7] p-4">
+      <div className="mt-4 rounded-xl border border-white/60 bg-white/45 backdrop-blur-md p-4">
         <p className="text-xs font-medium text-[#0066FF]">Pinned · Favourites</p>
         <p className="text-sm font-medium text-[#1D1D1F] mt-1.5">Photos from Lisbon — album link</p>
         <p className="text-xs text-[#6E6E73] mt-1">Saved from Messages</p>
@@ -24,7 +24,7 @@ const BENEFITS = [
     title: "Stay organised with collections",
     text: "Pinboards group your clips by project, client, or topic, so the piece you need is never buried under the last fifty copies.",
     fragment: (
-      <div className="mt-4 rounded-xl border border-black/[0.07] bg-[#F5F5F7] p-4">
+      <div className="mt-4 rounded-xl border border-white/60 bg-white/45 backdrop-blur-md p-4">
         {["Holiday planning", "Gift ideas", "Flat search"].map((b, i) => (
           <p key={b} className="flex items-center justify-between text-sm text-[#1D1D1F] py-1.5 border-b border-black/[0.06] last:border-b-0">
             <span>{b}</span>
@@ -39,7 +39,7 @@ const BENEFITS = [
     title: "Limitless storage for your clipboard",
     text: "Pro keeps your full history, with no limit. An hour ago or a year ago, the copy is still there when you need it.",
     fragment: (
-      <div className="mt-4 rounded-xl border border-black/[0.07] bg-[#F5F5F7] p-4">
+      <div className="mt-4 rounded-xl border border-white/60 bg-white/45 backdrop-blur-md p-4">
         <p className="text-sm text-[#1D1D1F]">
           <span className="font-semibold">2,418</span> <span className="text-[#6E6E73]">items kept</span>
         </p>
@@ -52,7 +52,7 @@ const BENEFITS = [
     title: "Quick search in an instant",
     text: "Find a copy again by type, source app, or date — no scrolling through everything you copied this week.",
     fragment: (
-      <div className="mt-4 rounded-xl border border-black/[0.07] bg-[#F5F5F7] p-4">
+      <div className="mt-4 rounded-xl border border-white/60 bg-white/45 backdrop-blur-md p-4">
         <p className="text-sm font-mono text-[#1D1D1F]">⌘F · type: link app: Safari</p>
         <p className="text-xs text-[#6E6E73] mt-1.5">3 results · sorted by date</p>
       </div>

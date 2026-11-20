@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import "./globals.css";
+import AmbientCanvas from "@/components/AmbientCanvas";
 
 export const metadata: Metadata = {
   title: "Clipra — Everything you copy, on every device | Mac, iPhone & iPad",
@@ -12,7 +13,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#FFFFFF",
+  themeColor: "#F5F7FA",
 };
 
 export default function RootLayout({
@@ -22,7 +23,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="scroll-smooth">
-      <body className="font-sans antialiased">{children}</body>
+      <body className="font-sans antialiased">
+        <AmbientCanvas />
+        {children}
+      </body>
     </html>
   );
 }

@@ -31,7 +31,7 @@ export default function FAQ() {
           {FAQS.map((faq, i) => (
             <div
               key={faq.q}
-              className="bg-white border border-black/[0.08] rounded-2xl overflow-hidden shadow-[0_4px_16px_rgba(0,0,0,0.04)]"
+              className="glass-2 overflow-hidden"
             >
               <button
                 type="button"

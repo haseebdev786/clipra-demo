@@ -68,7 +68,7 @@ export default function ForTeamsPage() {
         </div>
       </section>
 
-      <section className="section bg-white">
+      <section className="section">
         <div className="wrap grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
           <div>
             <p className="kicker">Why it waits for Phase 2</p>

@@ -164,7 +164,7 @@ export default function Hero() {
   );
 
   return (
-    <section className="relative bg-white pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
+    <section className="relative pt-32 pb-20 md:pt-40 md:pb-28 overflow-hidden">
       <div className="wrap">
         <div className="hero-enter text-center max-w-3xl mx-auto">
           <p className="text-[15px] text-[#6E6E73] mb-6">
@@ -194,12 +194,15 @@ export default function Hero() {
 
         {/* Devices: the same clipboard cards on Mac, iPad and iPhone. */}
         <div className="hero-enter relative max-w-[1024px] mx-auto">
+          {/* Ambient glows the glass refracts */}
+          <div aria-hidden="true" className="halo w-[420px] h-[420px] bg-[#0066FF]/15 -top-16 left-[6%]" />
+          <div aria-hidden="true" className="halo w-[360px] h-[360px] bg-[#00C4B4]/15 bottom-0 right-[2%]" />
           {/* iPad — left */}
           <div
             aria-hidden="true"
-            className="hidden lg:block absolute z-[1] left-0 bottom-[8%] w-[22%] rounded-[18px] bg-white border border-black/10 shadow-[0_24px_50px_rgba(0,0,0,0.18)] p-1.5"
+            className="hidden lg:block absolute z-[1] left-0 bottom-[8%] w-[22%] glass-3 float-slow p-1.5"
           >
-            <div className="rounded-[12px] bg-[#F5F5F7] p-3 h-full">
+            <div className="rounded-[20px] bg-white/45 backdrop-blur-md p-3 h-full">
               <div className="flex justify-between text-[9px] font-semibold text-[#1D1D1F]">
                 <span>9:41</span>
                 <span>Wi-Fi · 100%</span>
@@ -211,7 +214,7 @@ export default function Hero() {
                 {cards.map((card) => (
                   <div
                     key={card.id}
-                    className="min-h-[64px] p-2 rounded-lg bg-white border border-black/[0.07] flex flex-col"
+                    className="min-h-[64px] p-2 rounded-lg bg-white/70 backdrop-blur border border-white/60 flex flex-col"
                   >
                     <span className="text-[8px] text-[#6E6E73]">{card.source}</span>
                     <strong className="mt-1.5 text-[9px] leading-snug font-semibold text-[#1D1D1F]">
@@ -227,9 +230,9 @@ export default function Hero() {
           {/* iPhone — right */}
           <div
             aria-hidden="true"
-            className="hidden lg:block absolute z-[3] right-0 bottom-[5%] w-[15%] rounded-[26px] bg-white border border-black/10 shadow-[0_24px_50px_rgba(0,0,0,0.18)] p-1.5"
+            className="hidden lg:block absolute z-[3] right-0 bottom-[5%] w-[15%] glass-3 float-slower p-1.5"
           >
-            <div className="relative rounded-[20px] bg-[#F5F5F7] px-2 pt-4 pb-2.5 h-full">
+            <div className="relative rounded-[20px] bg-white/45 backdrop-blur-md px-2 pt-4 pb-2.5 h-full">
               <div className="absolute top-1.5 left-[30%] w-[40%] h-[10px] rounded-full bg-black" />
               <div className="flex justify-between text-[9px] font-semibold text-[#1D1D1F] px-1">
                 <span>9:41</span>
@@ -242,7 +245,7 @@ export default function Hero() {
                 {cards.map((card) => (
                   <div
                     key={card.id}
-                    className="min-h-[58px] p-1.5 rounded-lg bg-white border border-black/[0.07] flex flex-col"
+                    className="min-h-[58px] p-1.5 rounded-lg bg-white/70 backdrop-blur border border-white/60 flex flex-col"
                   >
                     <span className="text-[8px] text-[#6E6E73]">{card.source}</span>
                     <strong className="mt-1 text-[8px] leading-snug font-semibold text-[#1D1D1F]">
@@ -279,7 +282,7 @@ export default function Hero() {
                   >
                     Simulate ⌘C
                   </button>
-                  <label className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 text-xs text-[#6E6E73] bg-white border border-black/10 rounded-lg">
+                  <label className="hidden md:flex items-center gap-1.5 px-2.5 py-1.5 text-xs text-[#6E6E73] bg-white/60 backdrop-blur-md border border-white/60 rounded-lg">
                     <Search className="w-3.5 h-3.5" aria-hidden="true" />
                     <input
                       value={search}
@@ -292,7 +295,7 @@ export default function Hero() {
                 </span>
               </div>
 
-              <div className="p-4 sm:p-5 bg-[#F5F5F7]">
+              <div className="p-4 sm:p-5 bg-white/40 backdrop-blur-md">
                 <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-4">
                   {FILTERS.map((f) => (
                     <button
@@ -303,7 +306,7 @@ export default function Hero() {
                       className={`min-h-[36px] px-3.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap ${
                         activeFilter === f.key
                           ? "bg-[#0066FF] text-white"
-                          : "bg-white hover:bg-black/[0.04] text-[#424245] border border-black/10"
+                          : "bg-white/60 backdrop-blur-md hover:bg-white/80 text-[#424245] border border-white/60"
                       }`}
                     >
                       {f.label}
@@ -320,7 +323,7 @@ export default function Hero() {
                   {filteredCards.map((card) => (
                     <div
                       key={card.id}
-                      className="relative p-4 rounded-2xl bg-white border border-black/[0.08] shadow-[0_4px_16px_rgba(0,0,0,0.05)] flex flex-col justify-between min-h-[160px]"
+                      className="relative p-4 glass-1 flex flex-col justify-between min-h-[160px]"
                     >
                       <div>
                         <div className="flex items-center justify-between mb-3 text-[11px] text-[#6E6E73]">

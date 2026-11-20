@@ -15,7 +15,7 @@ const clips = [
 
 export default function Ecosystem() {
   return (
-    <section className="section bg-white" aria-label="Clipra on your devices">
+    <section className="section" aria-label="Clipra on your devices">
       <div className="wrap grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <div>
           <p className="kicker">Made for your devices</p>
@@ -41,7 +41,9 @@ export default function Ecosystem() {
           </div>
         </div>
 
-        <div className="light-card !rounded-[28px] relative min-h-[540px] flex flex-col justify-center items-center overflow-hidden bg-[#F5F5F7] p-6">
+        <div className="glass-3 !rounded-[28px] relative min-h-[540px] flex flex-col justify-center items-center overflow-hidden p-6">
+          <div aria-hidden="true" className="halo w-[300px] h-[300px] bg-[#0066FF]/15 -top-10 -right-10" />
+          <div aria-hidden="true" className="halo w-[260px] h-[260px] bg-[#00C4B4]/12 bottom-0 -left-8" />
           <div
             className="relative w-[245px] h-[500px] p-2 rounded-[43px] bg-[#0B0D14] border border-black/20 shadow-[0_24px_60px_rgba(0,0,0,0.35)]"
             role="img"

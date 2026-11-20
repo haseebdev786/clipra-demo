@@ -58,8 +58,8 @@ export default function HistorySearch() {
             <span className="font-semibold text-[#1D1D1F]">Clipra — History</span>
             <span className="text-[#6E6E73]">⌘F</span>
           </div>
-          <div className="p-5 bg-white">
-            <label className="flex items-center gap-2 px-3.5 py-3 rounded-xl bg-[#F5F5F7] border border-black/[0.07] text-sm">
+          <div className="p-5 bg-white/40 backdrop-blur-md">
+            <label className="flex items-center gap-2 px-3.5 py-3 rounded-xl bg-white/55 backdrop-blur border border-white/60 text-sm">
               <Search className="w-4 h-4 text-[#6E6E73] flex-shrink-0" aria-hidden="true" />
               <input
                 value={query}
@@ -79,7 +79,7 @@ export default function HistorySearch() {
                   className={`min-h-[36px] px-3.5 rounded-full text-xs font-medium transition-colors ${
                     filter === f
                       ? "bg-[#0066FF] text-white"
-                      : "bg-black/[0.04] border border-black/10 text-[#424245] hover:bg-black/[0.07]"
+                      : "bg-white/55 backdrop-blur border border-white/60 text-[#424245] hover:bg-white/80"
                   }`}
                 >
                   {f}

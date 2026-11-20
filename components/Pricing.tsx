@@ -33,7 +33,7 @@ export default function Pricing() {
   const proPeriod = billing === "annual" ? "/ year" : "/ month";
 
   return (
-    <section id="pricing" className="section bg-white">
+    <section id="pricing" className="section">
       <div className="wrap">
         <div className="text-center max-w-3xl mx-auto mb-12 reveal-on-scroll">
           <p className="kicker">Simple, fair pricing</p>
@@ -46,7 +46,7 @@ export default function Pricing() {
           </p>
 
           <div className="flex items-center justify-center mt-10">
-            <div className="bg-black/[0.04] p-1 rounded-full border border-black/[0.07] flex" role="group" aria-label="Billing period">
+            <div className="glass-1 !rounded-full p-1 flex" role="group" aria-label="Billing period">
               <button
                 type="button"
                 onClick={() => setBilling("monthly")}

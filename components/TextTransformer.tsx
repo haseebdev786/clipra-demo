@@ -91,7 +91,7 @@ export default function TextTransformer() {
 
         <div className="light-card max-w-[1024px] mx-auto overflow-hidden reveal-on-scroll">
           <div
-            className="flex items-center gap-2 px-4 md:px-6 py-4 bg-[#F5F5F7] border-b border-black/[0.07] overflow-x-auto"
+            className="flex items-center gap-2 px-4 md:px-6 py-4 bg-white/40 backdrop-blur-md border-b border-white/60 overflow-x-auto"
             role="tablist"
             aria-label="Text transformations"
           >
@@ -105,7 +105,7 @@ export default function TextTransformer() {
                 className={`flex-shrink-0 min-h-[44px] px-4 rounded-full text-sm font-medium whitespace-nowrap transition-colors ${
                   active === t.key
                     ? "bg-[#0066FF] text-white"
-                    : "bg-white border border-black/10 text-[#6E6E73] hover:text-[#1D1D1F]"
+                    : "bg-white/60 backdrop-blur border border-white/60 text-[#6E6E73] hover:text-[#1D1D1F] hover:bg-white/80"
                 }`}
               >
                 {t.label}

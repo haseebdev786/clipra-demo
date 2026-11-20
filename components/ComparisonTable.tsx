@@ -90,20 +90,20 @@ export default function ComparisonTable() {
           </p>
         </div>
 
-        <div className="reveal-on-scroll rounded-3xl bg-white border border-black/[0.08] overflow-hidden shadow-[0_8px_30px_rgba(0,0,0,0.06)] max-w-[1024px] mx-auto">
+        <div className="reveal-on-scroll rounded-[28px] glass-2 overflow-hidden max-w-[1024px] mx-auto">
           <table className="w-full border-collapse text-left">
             <thead className="hidden md:table-header-group">
               <tr>
-                <th className="px-6 py-4 text-sm font-semibold text-[#6E6E73] bg-[#F5F5F7] w-[32%]">
+                <th className="px-6 py-4 text-sm font-semibold text-[#6E6E73] bg-white/40 w-[32%]">
                   Feature
                 </th>
                 <th className="px-6 py-4 text-sm font-semibold text-[#1D1D1F] bg-[#0066FF]/[0.06] border-t-2 border-[#0066FF] w-[26%]">
                   Clipra
                 </th>
-                <th className="px-6 py-4 text-sm font-semibold text-[#6E6E73] bg-[#F5F5F7] w-[21%]">
+                <th className="px-6 py-4 text-sm font-semibold text-[#6E6E73] bg-white/40 w-[21%]">
                   Paste
                 </th>
-                <th className="px-6 py-4 text-sm font-semibold text-[#6E6E73] bg-[#F5F5F7] w-[21%]">
+                <th className="px-6 py-4 text-sm font-semibold text-[#6E6E73] bg-white/40 w-[21%]">
                   macOS Tahoe Spotlight
                 </th>
               </tr>

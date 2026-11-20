@@ -9,17 +9,17 @@ import { Lock, ShieldCheck } from "lucide-react";
 const CARDS = [
   { kind: "Link", title: "Project inspiration", detail: "linear.app/projects", bg: "bg-[#EAF2FF]", locked: false },
   { kind: "Colour", title: "Primary blue", detail: "#0066FF", bg: "bg-[#0066FF] text-white", locked: false },
-  { kind: "Password", title: "App Store password", detail: "Hidden by privacy rules", bg: "bg-[#F5F5F7]", locked: true },
+  { kind: "Password", title: "App Store password", detail: "Hidden by privacy rules", bg: "bg-white/60", locked: true },
   { kind: "Code", title: "Deploy script", detail: "npm run build", bg: "bg-[#1D1D1F] text-white", locked: false },
   { kind: "Note", title: "Meeting notes", detail: "Ideas for the next launch", bg: "bg-[#FFF4D6]", locked: false },
-  { kind: "Password", title: "Bank login", detail: "Hidden by privacy rules", bg: "bg-[#F5F5F7]", locked: true },
+  { kind: "Password", title: "Bank login", detail: "Hidden by privacy rules", bg: "bg-white/60", locked: true },
   { kind: "Image", title: "Mood board", detail: "Saved from Safari", bg: "bg-[#E6F7F4]", locked: false },
   { kind: "Link", title: "Invoice link", detail: "receipts.example.com", bg: "bg-[#FDECEA]", locked: false },
 ];
 
 export default function PrivacyFan() {
   return (
-    <section className="section bg-white" aria-label="Private by design">
+    <section className="section" aria-label="Private by design">
       <div className="wrap">
         <div className="text-center max-w-2xl mx-auto">
           <span
@@ -39,7 +39,7 @@ export default function PrivacyFan() {
           {CARDS.map((card) => (
             <article
               key={card.title}
-              className={`rounded-2xl border border-black/[0.07] p-4 min-h-[132px] flex flex-col ${card.bg}`}
+              className={`rounded-[20px] border border-white/70 p-4 min-h-[132px] flex flex-col shadow-[0_8px_28px_rgba(13,38,76,0.08)] backdrop-blur-sm ${card.bg}`}
             >
               <div className="flex items-center justify-between text-[11px] font-medium">
                 <span className={card.bg.includes("text-white") ? "text-white/80" : "text-[#6E6E73]"}>

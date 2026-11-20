@@ -28,7 +28,7 @@ export default function ShortcutsModal({ open, onClose }: ShortcutsModalProps) {
         if (e.target === e.currentTarget) onClose();
       }}
     >
-      <div className="bg-[#0B0D14] border border-[#0066FF]/30 rounded-2xl max-w-[520px] w-full p-7 shadow-[0_20px_50px_rgba(0,0,0,0.5)] max-h-[calc(100dvh-40px)] overflow-y-auto">
+      <div className="bg-[#0B0D14]/85 backdrop-blur-2xl border border-white/10 rounded-[28px] max-w-[520px] w-full p-7 shadow-[0_20px_50px_rgba(0,0,0,0.5)] max-h-[calc(100dvh-40px)] overflow-y-auto">
         {/* Header */}
         <div className="flex items-center justify-between mb-5">
           <div className="flex items-center gap-2.5">

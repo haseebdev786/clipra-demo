@@ -43,22 +43,22 @@ export default function FeaturesPage() {
               Private first, then in sync.
             </h2>
           </div>
-          <div className="grid gap-10 md:grid-cols-3 mt-12">
-            <div>
+          <div className="grid gap-5 md:grid-cols-3 mt-12">
+            <div className="glass-1 p-7">
               <h3 className="text-lg font-semibold text-[#1D1D1F] mb-2">Privacy rules</h3>
               <p className="text-[15px] leading-relaxed text-[#6E6E73]">
                 Clipra is planned to ignore passwords and sensitive apps automatically, so a copy
                 you never meant to keep never enters your history.
               </p>
             </div>
-            <div>
+            <div className="glass-2 p-7">
               <h3 className="text-lg font-semibold text-[#1D1D1F] mb-2">Face ID and Touch ID</h3>
               <p className="text-[15px] leading-relaxed text-[#6E6E73]">
                 Lock pinboards and history behind biometrics on iPhone and iPad. Your clipboard
                 stays yours when someone else holds your phone.
               </p>
             </div>
-            <div>
+            <div className="glass-3 p-7">
               <h3 className="text-lg font-semibold text-[#1D1D1F] mb-2">30-day trash</h3>
               <p className="text-[15px] leading-relaxed text-[#6E6E73]">
                 Deleted items are kept for 30 days before permanent purging, so an important API

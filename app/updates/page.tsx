@@ -87,7 +87,7 @@ export default function UpdatesPage() {
               className={`min-h-[44px] px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 activeFilter === btn.key
                   ? "bg-[#0066FF] text-white"
-                  : "bg-white border border-black/10 text-[#6E6E73] hover:text-[#1D1D1F]"
+                  : "bg-white/60 backdrop-blur border border-white/60 text-[#6E6E73] hover:text-[#1D1D1F] hover:bg-white/80"
               }`}
             >
               {btn.label}
@@ -100,7 +100,7 @@ export default function UpdatesPage() {
         <div className="wrap">
           <div className="grid grid-cols-1 lg:grid-cols-[280px_1fr] gap-12">
             <aside className="hidden lg:block">
-              <div className="sticky top-24 bg-white border border-black/[0.08] rounded-2xl p-6 shadow-[0_4px_16px_rgba(0,0,0,0.04)]">
+              <div className="sticky top-24 glass-3 p-6">
                 <p className="kicker">Inside the build</p>
                 <h3 className="text-xl font-bold text-[#1D1D1F] mb-3">
                   Calm, intentional clipboard software.
@@ -122,7 +122,7 @@ export default function UpdatesPage() {
               {visible.map((item) => (
                 <article
                   key={item.title}
-                  className="bg-white border border-black/[0.08] rounded-2xl p-7 shadow-[0_4px_16px_rgba(0,0,0,0.04)]"
+                  className="glass-2 p-7"
                 >
                   <span className="inline-block text-xs font-semibold text-[#0066FF] bg-[#0066FF]/10 px-2.5 py-1 rounded-md mb-3">
                     {item.badge}
@@ -134,7 +134,7 @@ export default function UpdatesPage() {
               ))}
 
               {(activeFilter === "all" || activeFilter === "core") && (
-                <div className="band-dark rounded-3xl p-8">
+                <div className="glass-card p-8">
                   <p className="kicker">Phase 2 · post-launch exploration</p>
                   <h3 className="text-2xl font-bold text-white mb-2">What comes after v1.0</h3>
                   <p className="text-sm leading-relaxed mb-5" style={{ color: "#94A3B8" }}>

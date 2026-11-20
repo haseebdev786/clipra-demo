@@ -54,7 +54,7 @@ const WORKFLOWS = [
 function WorkflowVisual({ kind }: { kind: "code" | "colours" | "email" | "pinboards" }) {
   if (kind === "code") {
     return (
-      <div className="rounded-2xl bg-[#0B0D14] border border-white/10 p-5 font-mono text-[13px] leading-relaxed text-[#F1F5F9]">
+      <div className="rounded-2xl bg-[#0B0D14]/85 backdrop-blur-xl border border-white/10 p-5 font-mono text-[13px] leading-relaxed text-[#F1F5F9] shadow-[0_24px_60px_rgba(0,0,0,0.5)]">
         <p><span className="text-[#2E82FF]">const</span> dedupe = (arr) =&gt; [...<span className="text-[#2E82FF]">new Set</span>(arr)];</p>
         <p className="text-[#94A3B8]">{"// sorted, tagged Swift, filed in Code Snippets"}</p>
         <p>npm run build <span className="text-[#94A3B8]"># 2m ago · Terminal</span></p>
@@ -64,12 +64,12 @@ function WorkflowVisual({ kind }: { kind: "code" | "colours" | "email" | "pinboa
   }
   if (kind === "colours") {
     return (
-      <div className="rounded-2xl bg-white/[0.05] border border-white/10 p-5">
+      <div className="rounded-2xl bg-white/[0.05] backdrop-blur-xl border border-white/10 p-5">
         <div className="grid grid-cols-4 gap-2">
           {["#0066FF", "#1D1D1F", "#00C4B4", "#F5F5F7"].map((c) => (
             <div key={c} className="rounded-xl overflow-hidden border border-white/10">
               <div className="h-16" style={{ background: c }} />
-              <p className="text-[11px] font-mono text-center py-2 text-white bg-[#0B0D14]">{c}</p>
+              <p className="text-[11px] font-mono text-center py-2 text-white bg-[#0B0D14]/70 backdrop-blur">{c}</p>
             </div>
           ))}
         </div>
@@ -79,7 +79,7 @@ function WorkflowVisual({ kind }: { kind: "code" | "colours" | "email" | "pinboa
   }
   if (kind === "email") {
     return (
-      <div className="rounded-2xl bg-white text-left p-5 border border-black/10 shadow-[0_16px_40px_rgba(0,0,0,0.35)]">
+      <div className="glass-3 text-left p-5">
         <p className="text-xs text-[#6E6E73]">To: Team</p>
         <p className="text-sm font-semibold text-[#1D1D1F] mt-1">Subject: Launch update</p>
         <p className="text-sm text-[#424245] leading-relaxed mt-3">
@@ -91,7 +91,7 @@ function WorkflowVisual({ kind }: { kind: "code" | "colours" | "email" | "pinboa
     );
   }
   return (
-    <div className="rounded-2xl bg-white/[0.05] border border-white/10 p-5">
+    <div className="rounded-2xl bg-white/[0.05] backdrop-blur-xl border border-white/10 p-5">
       {["Client launch", "Brand colors", "Campaign copy"].map((board, i) => (
         <div key={board} className="flex items-center justify-between py-3 border-b border-white/10 last:border-b-0">
           <span className="text-sm font-medium text-white">{board}</span>
@@ -125,7 +125,7 @@ function WorkflowTabs() {
               onClick={() => setActive(w.id)}
               className={`min-h-[44px] px-5 rounded-full text-sm font-medium transition-colors ${
                 active === w.id
-                  ? "bg-white text-[#1D1D1F]"
+                  ? "bg-white/85 backdrop-blur text-[#1D1D1F]"
                   : "bg-white/[0.07] text-[#CBD5E1] hover:bg-white/[0.12] border border-white/10"
               }`}
             >

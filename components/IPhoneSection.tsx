@@ -38,7 +38,7 @@ export default function IPhoneSection() {
       <div className="wrap grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
         <div className="order-2 lg:order-1">
           <div className="mx-auto w-[280px] rounded-[44px] bg-[#0B0D14] border border-black/20 shadow-[0_24px_60px_rgba(0,0,0,0.3)] p-2.5">
-            <div className="relative rounded-[36px] bg-white overflow-hidden">
+            <div className="relative rounded-[36px] bg-white/90 backdrop-blur overflow-hidden">
               <div className="absolute top-2 left-1/2 -translate-x-1/2 w-[72px] h-[20px] rounded-full bg-black z-10" aria-hidden="true" />
               <div className="pt-10 px-4 pb-4">
                 <p className="text-[13px] font-semibold text-[#1D1D1F]">Notes</p>
@@ -46,13 +46,13 @@ export default function IPhoneSection() {
                   The launch notes are ready. The clipboard that organises itself is coming to
                   Mac, iPhone and iPad.
                 </p>
-                <div className="mt-4 rounded-2xl bg-[#F5F5F7] border border-black/[0.07] p-3">
+                <div className="mt-4 rounded-2xl bg-white/50 backdrop-blur border border-white/60 p-3">
                   <p className="text-[10px] font-semibold tracking-wider text-[#0066FF]">CLIPRA KEYBOARD</p>
                   <div className="flex gap-1.5 mt-2 overflow-x-auto">
                     {KEYS.map((k) => (
                       <span
                         key={k}
-                        className="flex-shrink-0 px-2.5 py-2 rounded-lg bg-white border border-black/[0.08] text-[11px] font-medium text-[#1D1D1F] whitespace-nowrap"
+                        className="flex-shrink-0 px-2.5 py-2 rounded-lg bg-white/70 backdrop-blur border border-white/60 text-[11px] font-medium text-[#1D1D1F] whitespace-nowrap"
                       >
                         {k}
                       </span>
@@ -62,7 +62,7 @@ export default function IPhoneSection() {
                 </div>
                 <div className="grid grid-cols-10 gap-1 mt-3" aria-hidden="true">
                   {"QWERTYUIOP".split("").map((l) => (
-                    <span key={l} className="h-8 grid place-items-center rounded-md bg-[#F5F5F7] text-[11px] text-[#1D1D1F]">
+                    <span key={l} className="h-8 grid place-items-center rounded-md bg-white/55 backdrop-blur text-[11px] text-[#1D1D1F]">
                       {l}
                     </span>
                   ))}

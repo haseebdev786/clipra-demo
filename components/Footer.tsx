@@ -38,8 +38,9 @@ const COLUMNS: { title: string; links: { label: string; href: string }[] }[] = [
 
 export default function Footer({ onOpenShortcuts }: FooterProps) {
   return (
-    <footer className="band-dark relative pt-16 pb-10">
-      <div className="wrap">
+    <footer className="band-dark relative pt-16 pb-10 overflow-hidden">
+      <div aria-hidden="true" className="halo w-[480px] h-[240px] bg-[#0066FF]/15 -top-24 left-1/2 -translate-x-1/2" />
+      <div className="wrap relative">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-14">
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">

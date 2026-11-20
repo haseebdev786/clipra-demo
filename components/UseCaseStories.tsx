@@ -7,7 +7,7 @@ import { Braces, Zap, ListOrdered, Palette, Presentation, Compass, FolderHeart, 
 
 function CodeFrame() {
   return (
-    <div className="rounded-2xl bg-[#0B0D14] border border-white/10 p-5 font-mono text-[13px] leading-relaxed text-[#F1F5F9]">
+    <div className="rounded-2xl bg-[#0B0D14]/85 backdrop-blur-xl border border-white/10 p-5 font-mono text-[13px] leading-relaxed text-[#F1F5F9] shadow-[0_24px_60px_rgba(0,0,0,0.5)]">
       <div className="flex justify-between text-[11px] text-[#94A3B8] mb-4">
         <span>Code Snippets pinboard</span>
         <span>⌘F</span>
@@ -22,16 +22,16 @@ function CodeFrame() {
 
 function ColourFrame() {
   return (
-    <div className="rounded-2xl border border-black/[0.08] bg-white p-5 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+    <div className="glass-2 p-5">
       <div className="flex justify-between text-xs text-[#6E6E73] mb-4">
         <span className="font-medium text-[#1D1D1F]">Brand Colors pinboard</span>
         <span>⌘F</span>
       </div>
       <div className="grid grid-cols-4 gap-2">
         {["#0066FF", "#1D1D1F", "#00C4B4", "#F5F5F7"].map((c) => (
-          <div key={c} className="rounded-xl overflow-hidden border border-black/[0.08]">
+          <div key={c} className="rounded-xl overflow-hidden border border-white/60">
             <div className="h-16" style={{ background: c }} />
-            <p className="text-[10px] font-mono text-center py-2 text-[#1D1D1F] bg-[#F5F5F7]">{c}</p>
+            <p className="text-[10px] font-mono text-center py-2 text-[#1D1D1F] bg-white/60 backdrop-blur">{c}</p>
           </div>
         ))}
       </div>
@@ -42,7 +42,7 @@ function ColourFrame() {
 
 function EmailFrame() {
   return (
-    <div className="rounded-2xl border border-black/[0.08] bg-white p-5 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+    <div className="glass-2 p-5">
       <div className="flex justify-between text-xs text-[#6E6E73] mb-3">
         <span className="font-medium text-[#1D1D1F]">Email Templates pinboard</span>
         <span>⌘F</span>
@@ -160,7 +160,7 @@ export default function UseCaseStories() {
       </section>
 
       {/* Designers */}
-      <section className="section bg-white" aria-label="Clipra for designers">
+      <section className="section" aria-label="Clipra for designers">
         <div className="wrap">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-center">
             <ColourFrame />

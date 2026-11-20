@@ -56,7 +56,7 @@ export default function SmartAutoSort() {
   ];
 
   return (
-    <section id="smart-sort" className="section bg-white">
+    <section id="smart-sort" className="section">
       <div className="wrap">
         <div className="text-center max-w-3xl mx-auto mb-12 reveal-on-scroll">
           <p className="kicker">Smart Auto-Sort</p>
@@ -87,7 +87,7 @@ export default function SmartAutoSort() {
                   className={`min-h-[44px] px-4 rounded-full text-sm font-medium transition-colors ${
                     active === t.key
                       ? "bg-[#0066FF] text-white"
-                      : "bg-black/[0.04] border border-black/10 text-[#424245] hover:bg-[#0066FF]/10 hover:border-[#0066FF]/40 hover:text-[#1D1D1F]"
+                      : "bg-white/55 backdrop-blur border border-white/60 text-[#424245] hover:bg-white/80 hover:border-white/80 hover:text-[#1D1D1F]"
                   }`}
                 >
                   {t.label}
@@ -97,13 +97,13 @@ export default function SmartAutoSort() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-[1fr_60px_1.2fr] items-center gap-5">
-            <div className="bg-[#F5F5F7] border border-black/[0.07] rounded-2xl p-6 min-h-[200px] flex flex-col justify-between">
+            <div className="glass-1 p-6 min-h-[200px] flex flex-col justify-between">
               <div>
                 <div className="flex items-center justify-between text-xs font-medium text-[#6E6E73] mb-3">
                   <span>Step 1: Copied to system clipboard</span>
                   <span className="kbd">⌘C</span>
                 </div>
-                <div className="font-mono text-sm text-[#1D1D1F] bg-white rounded-xl p-4 border border-black/[0.07] min-h-[80px] flex items-center break-all">
+                <div className="font-mono text-sm text-[#1D1D1F] bg-white/70 backdrop-blur rounded-xl p-4 border border-white/60 min-h-[80px] flex items-center break-all">
                   {data.source}
                 </div>
               </div>
@@ -116,7 +116,7 @@ export default function SmartAutoSort() {
               →
             </div>
 
-            <div className="bg-white border border-black/[0.07] rounded-2xl p-6 shadow-[0_8px_30px_rgba(0,0,0,0.05)]">
+            <div className="glass-1 p-6">
               <span className="inline-flex items-center gap-1.5 bg-[#0066FF]/10 text-[#0066FF] text-xs font-semibold px-2.5 py-1 rounded-md mb-3">
                 {data.rule}
               </span>
