@@ -14,16 +14,16 @@ export default function FAQ() {
   const [open, setOpen] = useState<number | null>(0);
 
   return (
-    <section id="faq" className="relative py-24 bg-[#F5F5F7] z-10">
+    <section id="faq" className="relative py-24 z-10">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
         <div className="text-center max-w-2xl mx-auto mb-12 reveal-on-scroll">
-          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0071E3] mb-4">
+          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0066FF] mb-4">
             Clear Answers
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#1D1D1F] mb-5">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#F1F5F9] mb-5">
             Frequently Asked Questions
           </h2>
-          <p className="text-base sm:text-lg text-[#6E6E73] leading-relaxed">
+          <p className="text-base sm:text-lg text-[#94A3B8] leading-relaxed">
             Everything you need to know about Clipra&apos;s permissions, privacy, and architecture.
           </p>
         </div>
@@ -32,27 +32,27 @@ export default function FAQ() {
           {FAQS.map((faq, i) => (
             <div
               key={i}
-              className={`bg-[#F5F5F7] border rounded-xl overflow-hidden transition-all duration-300 ${
-                open === i ? "border-black/10" : "border-black/10 hover:border-black/10"
+              className={`bg-white/[0.05] backdrop-blur-xl border border-white/10 rounded-xl overflow-hidden transition-all duration-300 ${
+                open === i ? "border-white/10" : "border-white/10 hover:border-white/10"
               }`}
             >
               <button
                 type="button"
-                className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 text-base font-bold text-[#1D1D1F]"
+                className="w-full text-left px-6 py-5 flex items-center justify-between gap-4 text-base font-bold text-[#F1F5F9]"
                 onClick={() => setOpen(open === i ? null : i)}
                 aria-expanded={open === i}
               >
                 <span>{faq.q}</span>
                 <span
-                  className={`text-xl text-[#0071E3] flex-shrink-0 transition-transform duration-300 ${
-                    open === i ? "rotate-45 text-[#0071E3]" : ""
+                  className={`text-xl text-[#0066FF] flex-shrink-0 transition-transform duration-300 ${
+                    open === i ? "rotate-45 text-[#0066FF]" : ""
                   }`}
                 >
                   +
                 </span>
               </button>
               {open === i && (
-                <div className="px-6 pb-5 text-sm text-[#6E6E73] leading-relaxed">
+                <div className="px-6 pb-5 text-sm text-[#94A3B8] leading-relaxed">
                   {faq.a}
                 </div>
               )}

@@ -17,7 +17,7 @@ export default function PageShell({ children }: { children: React.ReactNode }) {
     return () => window.removeEventListener("keydown", handleKey);
   }, []);
   return <>
-    <a href="#main" className="fixed top-[-100px] left-4 z-[300] px-5 py-3 bg-[#FFFFFF] border border-[#0071E3] rounded-lg focus:top-3 text-[#1D1D1F]">Skip to content</a>
+    <a href="#main" className="fixed top-[-100px] left-4 z-[300] px-5 py-3 bg-[#0B0D14] border border-[#0066FF] rounded-lg focus:top-3 text-[#F1F5F9]">Skip to content</a>
     <AmbientCanvas />
     <Navbar onOpenShortcuts={() => setOpen(true)} />
     <main id="main" className="inner-page">{children}</main>

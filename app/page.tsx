@@ -13,6 +13,7 @@ import FAQ from "@/components/FAQ";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 import ShortcutsModal from "@/components/ShortcutsModal";
+import AmbientCanvas from "@/components/AmbientCanvas";
 
 const WORKFLOWS = [
   {
@@ -49,11 +50,11 @@ function WorkflowTabs() {
   const [active, setActive] = useState("dev");
   const current = WORKFLOWS.find((w) => w.id === active)!;
   return (
-    <section aria-label="Clipra for different workflows" className="py-20 bg-white">
+    <section aria-label="Clipra for different workflows" className="py-20">
       <div className="max-w-[1024px] mx-auto px-4 sm:px-6">
         <div className="text-center max-w-2xl mx-auto mb-10">
-          <p className="text-sm font-medium text-[#0071E3] mb-3">Made for your workflow</p>
-          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#1D1D1F]">
+          <p className="text-sm font-medium text-[#0066FF] mb-3">Made for your workflow</p>
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#F1F5F9]">
             A clipboard for the way you work.
           </h2>
         </div>
@@ -67,24 +68,24 @@ function WorkflowTabs() {
               onClick={() => setActive(w.id)}
               className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
                 active === w.id
-                  ? "bg-[#0071E3] text-white"
-                  : "bg-black/[0.04] text-[#424245] hover:bg-black/[0.07]"
+                  ? "bg-[#0066FF] text-white"
+                  : "bg-white/[0.06] text-[#CBD5E1] hover:bg-white/[0.10]"
               }`}
             >
               {w.label}
             </button>
           ))}
         </div>
-        <div className="max-w-2xl mx-auto bg-[#F5F5F7] border border-black/10 rounded-3xl p-8 sm:p-10 text-center">
-          <h3 className="text-2xl font-semibold tracking-tight text-[#1D1D1F] mb-3">
+        <div className="glass-card max-w-2xl mx-auto p-8 sm:p-10 text-center">
+          <h3 className="text-2xl font-semibold tracking-tight text-[#F1F5F9] mb-3">
             {current.title}
           </h3>
-          <p className="text-[#6E6E73] leading-relaxed mb-6">{current.text}</p>
+          <p className="text-[#94A3B8] leading-relaxed mb-6">{current.text}</p>
           <ul className="flex flex-wrap justify-center gap-2">
             {current.points.map((p) => (
               <li
                 key={p}
-                className="px-3 py-1.5 rounded-full text-xs font-medium bg-white border border-black/10 text-[#424245]"
+                className="px-3 py-1.5 rounded-full text-xs font-medium bg-white/[0.06] border border-white/10 text-[#CBD5E1]"
               >
                 {p}
               </li>
@@ -137,15 +138,16 @@ export default function Home() {
   return (
     <>
       <a
-        className="fixed top-[-100px] left-4 z-[300] px-5 py-3 bg-white border border-black/10 rounded-lg focus:top-3 text-[#1D1D1F] text-sm font-medium transition-all"
+        className="fixed top-[-100px] left-4 z-[300] px-5 py-3 bg-[#0B0D14]/90 backdrop-blur-xl border border-white/10 rounded-lg focus:top-3 text-[#F1F5F9] text-sm font-medium transition-all"
         href="#main"
       >
         Skip to content
       </a>
 
+      <AmbientCanvas />
       <Navbar onOpenShortcuts={() => setShortcutsOpen(true)} />
 
-      <main id="main">
+      <main id="main" className="relative z-10">
         <Hero />
         <SmartAutoSort />
         <TextTransformer />
@@ -155,22 +157,22 @@ export default function Home() {
         <ComparisonTable />
         <Pricing />
         <FAQ />
-        <section className="py-16 bg-white">
+        <section className="py-16">
           <div className="max-w-[1024px] mx-auto px-4 sm:px-6 flex flex-wrap justify-center gap-4">
             <a
-              className="inline-flex items-center px-6 py-3 text-[15px] font-medium text-white bg-[#0071E3] hover:bg-[#0077ED] rounded-full transition-colors"
+              className="inline-flex items-center px-6 py-3 text-[15px] font-medium text-white bg-[#0066FF] hover:bg-[#2E82FF] rounded-full transition-colors"
               href="/features"
             >
               Explore all features
             </a>
             <a
-              className="inline-flex items-center px-6 py-3 text-[15px] font-medium text-[#0071E3] bg-black/[0.04] hover:bg-black/[0.07] rounded-full transition-colors"
+              className="inline-flex items-center px-6 py-3 text-[15px] font-medium text-[#0066FF] bg-white/[0.06] hover:bg-white/[0.10] rounded-full transition-colors"
               href="/pricing"
             >
               See planned pricing
             </a>
             <a
-              className="inline-flex items-center px-6 py-3 text-[15px] font-medium text-[#0071E3] bg-black/[0.04] hover:bg-black/[0.07] rounded-full transition-colors"
+              className="inline-flex items-center px-6 py-3 text-[15px] font-medium text-[#0066FF] bg-white/[0.06] hover:bg-white/[0.10] rounded-full transition-colors"
               href="/use-cases"
             >
               See use cases

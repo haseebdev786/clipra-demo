@@ -13,7 +13,7 @@ interface ClipCardItem {
   time: string;
 }
 
-const RULE = "bg-[#0071E3]/10 text-[#0071E3] border border-[#0071E3]/20";
+const RULE = "bg-[#0066FF]/10 text-[#0066FF] border border-[#0066FF]/20";
 
 const INITIAL_CARDS: ClipCardItem[] = [
   {
@@ -22,9 +22,9 @@ const INITIAL_CARDS: ClipCardItem[] = [
     source: "VS Code",
     shortcut: "⌘1",
     content: (
-      <div className="font-mono text-[11px] text-[#1D1D1F] leading-relaxed">
-        <span className="text-[#0071E3]">const</span> dedupe = &lt;T&gt;(arr: T[]): T[] =&gt; [
-        ...<span className="text-[#0071E3]">new Set</span>(arr)];
+      <div className="font-mono text-[11px] text-[#F1F5F9] leading-relaxed">
+        <span className="text-[#0066FF]">const</span> dedupe = &lt;T&gt;(arr: T[]): T[] =&gt; [
+        ...<span className="text-[#0066FF]">new Set</span>(arr)];
       </div>
     ),
     ruleTag: "Rule: Code Language",
@@ -37,10 +37,10 @@ const INITIAL_CARDS: ClipCardItem[] = [
     shortcut: "⌘2",
     content: (
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-[#0071E3] flex-shrink-0" />
+        <div className="w-9 h-9 rounded-lg bg-[#0066FF] flex-shrink-0" />
         <div>
-          <div className="font-mono font-semibold text-[#1D1D1F] text-xs">#0071E3</div>
-          <div className="text-[11px] text-[#6E6E73]">rgb(0, 113, 227)</div>
+          <div className="font-mono font-semibold text-[#F1F5F9] text-xs">#0066FF</div>
+          <div className="text-[11px] text-[#94A3B8]">rgb(0, 102, 255)</div>
         </div>
       </div>
     ),
@@ -54,10 +54,10 @@ const INITIAL_CARDS: ClipCardItem[] = [
     shortcut: "⌘3",
     content: (
       <div>
-        <div className="text-[11px] line-through text-[#86868B] mb-0.5 truncate">
+        <div className="text-[11px] line-through text-[#64748B] mb-0.5 truncate">
           linear.app/?utm_source=slack&amp;ref=12
         </div>
-        <div className="text-xs font-semibold text-[#1D1D1F] truncate">
+        <div className="text-xs font-semibold text-[#F1F5F9] truncate">
           https://linear.app/projects
         </div>
       </div>
@@ -71,7 +71,7 @@ const INITIAL_CARDS: ClipCardItem[] = [
     source: "Slack",
     shortcut: "⌘4",
     content: (
-      <div className="text-xs text-[#424245] space-y-0.5">
+      <div className="text-xs text-[#CBD5E1] space-y-0.5">
         <div>• Review macOS 26 Swift build</div>
         <div>• Test StoreKit 2 Lifetime IAP</div>
         <div>• Finalize App Store video brief</div>
@@ -89,10 +89,10 @@ const STREAM_ITEMS: Omit<ClipCardItem, "id">[] = [
     shortcut: "⌘1",
     content: (
       <div className="flex items-center gap-3">
-        <div className="w-9 h-9 rounded-lg bg-[#1D1D1F] flex-shrink-0" />
+        <div className="w-9 h-9 rounded-lg bg-[#F1F5F9] flex-shrink-0" />
         <div>
-          <div className="font-mono font-semibold text-[#1D1D1F] text-xs">#1D1D1F</div>
-          <div className="text-[11px] text-[#6E6E73]">rgb(29, 29, 31)</div>
+          <div className="font-mono font-semibold text-[#F1F5F9] text-xs">#F1F5F9</div>
+          <div className="text-[11px] text-[#94A3B8]">rgb(29, 29, 31)</div>
         </div>
       </div>
     ),
@@ -104,9 +104,9 @@ const STREAM_ITEMS: Omit<ClipCardItem, "id">[] = [
     source: "Xcode",
     shortcut: "⌘1",
     content: (
-      <div className="font-mono text-[11px] text-[#1D1D1F]">
-        <span className="text-[#0071E3]">let</span> container ={" "}
-        <span className="text-[#0071E3]">CKContainer</span>.default()
+      <div className="font-mono text-[11px] text-[#F1F5F9]">
+        <span className="text-[#0066FF]">let</span> container ={" "}
+        <span className="text-[#0066FF]">CKContainer</span>.default()
       </div>
     ),
     ruleTag: "Rule: Swift CloudKit",
@@ -118,10 +118,10 @@ const STREAM_ITEMS: Omit<ClipCardItem, "id">[] = [
     shortcut: "⌘1",
     content: (
       <div>
-        <div className="text-[11px] line-through text-[#86868B] mb-0.5 truncate">
+        <div className="text-[11px] line-through text-[#64748B] mb-0.5 truncate">
           github.com/arswift/clipra?ref=producthunt
         </div>
-        <div className="text-xs font-semibold text-[#1D1D1F] truncate">
+        <div className="text-xs font-semibold text-[#F1F5F9] truncate">
           https://github.com/arswift/clipra
         </div>
       </div>
@@ -143,7 +143,7 @@ function miniLabel(card: ClipCardItem) {
   if (card.source === "Xcode") return "let container = ...";
   if (card.source === "Arc Browser") return "github.com/arswift/clipra";
   if (card.type === "code") return "const dedupe = ...";
-  if (card.type === "colors") return "#0071E3";
+  if (card.type === "colors") return "#0066FF";
   if (card.type === "links") return "linear.app/projects";
   return "Review macOS build";
 }
@@ -167,16 +167,17 @@ export default function Hero() {
   );
 
   return (
-    <section className="relative pt-28 pb-16 md:pt-36 md:pb-24 bg-[#F5F5F7] overflow-hidden">
+    <section className="relative pt-32 pb-16 md:pt-40 md:pb-24 overflow-hidden">
       <div className="max-w-[1024px] mx-auto px-4 sm:px-6">
         <div className="text-center max-w-3xl mx-auto">
-          <p className="inline-block text-xs font-medium text-[#6E6E73] bg-white border border-black/10 rounded-full px-3.5 py-1.5 mb-6">
+          <p className="glass-pill mb-6">
+            <span className="w-1.5 h-1.5 rounded-full bg-[#00E5BE]" />
             In development for Mac, iPhone &amp; iPad
           </p>
-          <h1 className="text-[40px] sm:text-6xl font-semibold tracking-tight text-[#1D1D1F] leading-[1.08] mb-5">
-            Everything you copy, on every device.
+          <h1 className="text-[44px] sm:text-6xl md:text-7xl font-extrabold tracking-tight text-white leading-[1.05] mb-5">
+            Everything you copy, <span className="text-[#2E82FF]">on every device.</span>
           </h1>
-          <p className="text-lg sm:text-xl text-[#6E6E73] max-w-2xl mx-auto leading-relaxed mb-8">
+          <p className="text-lg sm:text-xl text-[#94A3B8] max-w-2xl mx-auto leading-relaxed mb-8">
             Clipra is a clipboard manager for Mac, iPhone and iPad. Anything you copied, back in
             seconds — organised, searchable, and in sync.
           </p>
@@ -184,31 +185,31 @@ export default function Hero() {
           <div className="flex flex-wrap items-center justify-center gap-4 mb-4">
             <a
               href="/pricing"
-              className="inline-flex items-center gap-2 px-6 py-3 text-[15px] font-medium text-white bg-[#0071E3] hover:bg-[#0077ED] rounded-full transition-colors"
+              className="inline-flex items-center gap-2 px-6 py-3 text-[15px] font-medium text-white bg-[#0066FF] hover:bg-[#2E82FF] rounded-full transition-all shadow-[0_12px_32px_rgba(0,102,255,0.4)] hover:-translate-y-0.5"
             >
               Download free
             </a>
             <a
               href="/features#smart-sort"
-              className="inline-flex items-center gap-1.5 px-6 py-3 text-[15px] font-medium text-[#0071E3] hover:underline"
+              className="inline-flex items-center gap-1.5 px-6 py-3 text-[15px] font-medium text-[#0066FF] hover:underline"
             >
               See how it works
               <ArrowRight className="w-4 h-4" />
             </a>
           </div>
-          <p className="text-xs text-[#86868B] mb-10">
+          <p className="text-xs text-[#64748B] mb-10">
             Planned pricing — the app is in development.
           </p>
 
-          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] text-[#6E6E73] mb-14">
+          <div className="flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[13px] text-[#94A3B8] mb-14">
             <span className="flex items-center gap-1.5">
-              <Check className="w-4 h-4 text-[#0071E3]" /> Free plan planned at launch
+              <Check className="w-4 h-4 text-[#0066FF]" /> Free plan planned at launch
             </span>
             <span className="flex items-center gap-1.5">
-              <Check className="w-4 h-4 text-[#0071E3]" /> Private iCloud sync — no Clipra servers
+              <Check className="w-4 h-4 text-[#0066FF]" /> Private iCloud sync — no Clipra servers
             </span>
             <span className="flex items-center gap-1.5">
-              <Check className="w-4 h-4 text-[#0071E3]" /> Pro planned at $14.99/yr
+              <Check className="w-4 h-4 text-[#0066FF]" /> Pro planned at $14.99/yr
             </span>
           </div>
         </div>
@@ -265,16 +266,16 @@ export default function Hero() {
                 <span>9:41 AM</span>
               </div>
               <div className="device-app">
-                <div className="flex items-center justify-between px-4 py-3 bg-white border-b border-black/10 gap-3 flex-wrap">
+                <div className="flex items-center justify-between px-4 py-3 bg-white/[0.06] border-b border-white/10 gap-3 flex-wrap">
                   <div className="flex items-center gap-2">
-                    <span className="w-3 h-3 rounded-full bg-[#FF5F57] border border-black/10" />
-                    <span className="w-3 h-3 rounded-full bg-[#FEBC2E] border border-black/10" />
-                    <span className="w-3 h-3 rounded-full bg-[#28C840] border border-black/10" />
+                    <span className="w-3 h-3 rounded-full bg-[#FF5F57] border border-white/10" />
+                    <span className="w-3 h-3 rounded-full bg-[#FEBC2E] border border-white/10" />
+                    <span className="w-3 h-3 rounded-full bg-[#28C840] border border-white/10" />
                   </div>
-                  <div className="flex items-center gap-2 text-xs font-medium text-[#1D1D1F]">
-                    <Copy className="w-3.5 h-3.5 text-[#0071E3]" />
+                  <div className="flex items-center gap-2 text-xs font-medium text-[#F1F5F9]">
+                    <Copy className="w-3.5 h-3.5 text-[#0066FF]" />
                     <span>Clipra — Clipboard</span>
-                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#0071E3]/10 text-[#0071E3]">
+                    <span className="px-2 py-0.5 rounded-full text-[10px] font-mono bg-[#0066FF]/10 text-[#0066FF]">
                       Interactive demo
                     </span>
                   </div>
@@ -282,25 +283,25 @@ export default function Hero() {
                     <button
                       type="button"
                       onClick={simulateCopy}
-                      className="px-2.5 py-1 text-xs font-medium rounded-lg bg-[#0071E3] hover:bg-[#0077ED] text-white transition-colors"
+                      className="px-2.5 py-1 text-xs font-medium rounded-lg bg-[#0066FF] hover:bg-[#2E82FF] text-white transition-colors"
                       title="Simulate copying an item"
                     >
                       Simulate ⌘C
                     </button>
-                    <label className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 text-xs text-[#6E6E73] bg-black/[0.04] border border-black/10 rounded-lg">
+                    <label className="hidden sm:flex items-center gap-1.5 px-2.5 py-1 text-xs text-[#94A3B8] bg-white/[0.06] border border-white/10 rounded-lg">
                       <Search className="w-3 h-3" />
                       <input
                         value={search}
                         onChange={(e) => setSearch(e.target.value)}
                         placeholder="Search your clips"
-                        className="bg-transparent outline-none w-28 text-[#1D1D1F] placeholder:text-[#86868B]"
+                        className="bg-transparent outline-none w-28 text-[#F1F5F9] placeholder:text-[#64748B]"
                         aria-label="Search your clips"
                       />
                     </label>
                   </div>
                 </div>
 
-                <div className="p-4 sm:p-5 bg-white">
+                <div className="p-4 sm:p-5 bg-white/[0.06]">
                   <div className="flex items-center gap-2 overflow-x-auto pb-3 mb-4">
                     {FILTERS.map((f) => (
                       <button
@@ -310,8 +311,8 @@ export default function Hero() {
                         aria-pressed={activeFilter === f.key}
                         className={`px-3.5 py-1.5 rounded-full text-xs font-medium transition-colors whitespace-nowrap ${
                           activeFilter === f.key
-                            ? "bg-[#0071E3] text-white"
-                            : "bg-black/[0.04] hover:bg-black/[0.07] text-[#424245] border border-black/10"
+                            ? "bg-[#0066FF] text-white"
+                            : "bg-white/[0.06] hover:bg-white/[0.10] text-[#CBD5E1] border border-white/10"
                         }`}
                       >
                         {f.label}
@@ -328,21 +329,21 @@ export default function Hero() {
                     {filteredCards.map((card) => (
                       <div
                         key={card.id}
-                        className="relative p-4 rounded-2xl bg-[#F5F5F7] border border-black/10 flex flex-col justify-between min-h-[160px]"
+                        className="relative p-4 rounded-2xl bg-[#0A0A0F] border border-white/10 flex flex-col justify-between min-h-[160px]"
                       >
                         <div>
-                          <div className="flex items-center justify-between mb-3 text-[11px] text-[#6E6E73]">
-                            <span className="font-medium text-[#1D1D1F] flex items-center gap-1.5">
-                              <span className="w-1.5 h-1.5 rounded-full bg-[#0071E3]" />
+                          <div className="flex items-center justify-between mb-3 text-[11px] text-[#94A3B8]">
+                            <span className="font-medium text-[#F1F5F9] flex items-center gap-1.5">
+                              <span className="w-1.5 h-1.5 rounded-full bg-[#0066FF]" />
                               {card.source}
                             </span>
-                            <span className="font-mono px-1.5 py-0.5 rounded bg-white border border-black/10">
+                            <span className="font-mono px-1.5 py-0.5 rounded bg-white/[0.06] border border-white/10">
                               {card.shortcut}
                             </span>
                           </div>
                           <div className="mb-3">{card.content}</div>
                         </div>
-                        <div className="flex items-center justify-between pt-2 border-t border-black/10 text-[11px] text-[#6E6E73]">
+                        <div className="flex items-center justify-between pt-2 border-t border-white/10 text-[11px] text-[#94A3B8]">
                           <span className={`px-2 py-0.5 rounded-full text-[10px] font-medium ${RULE}`}>
                             {card.ruleTag}
                           </span>
@@ -351,7 +352,7 @@ export default function Hero() {
                       </div>
                     ))}
                     {filteredCards.length === 0 && (
-                      <p className="text-sm text-[#6E6E73] py-6">
+                      <p className="text-sm text-[#94A3B8] py-6">
                         No demo items found. Try another search or category.
                       </p>
                     )}
@@ -364,7 +365,7 @@ export default function Hero() {
             </div>
           </div>
         </div>
-        <p className="text-center text-xs text-[#86868B] mt-6">
+        <p className="text-center text-xs text-[#64748B] mt-6">
           Interactive concept — try the filters, search, or simulate a copy.
         </p>
       </div>

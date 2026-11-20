@@ -19,7 +19,7 @@ const FEATURES = [
       </>
     ),
     footer: "Available on Mac • Sequential Queue",
-    footerColor: "text-[#0071E3]",
+    footerColor: "text-[#0066FF]",
     stagger: "stagger-1",
   },
   {
@@ -34,7 +34,7 @@ const FEATURES = [
     title: "Offline Export & Import",
     desc: "The #1 request on Paste's public board with 161 votes. Export your entire clipboard history to structured JSON for corporate backup, compliance, or local migration.",
     footer: "Offline JSON export",
-    footerColor: "text-[#0071E3]",
+    footerColor: "text-[#0066FF]",
     stagger: "stagger-2",
   },
   {
@@ -48,7 +48,7 @@ const FEATURES = [
     title: "Screen Share Stealth",
     desc: "Hide the clipboard panel while you present or record. Planned for Mac.",
     footer: "Hidden during screen share",
-    footerColor: "text-[#0071E3]",
+    footerColor: "text-[#0066FF]",
     stagger: "stagger-3",
   },
   {
@@ -62,7 +62,7 @@ const FEATURES = [
     title: "Power Search",
     desc: "Filter your history by type, source app, or date, and find a copy again without scrolling through everything.",
     footer: "Search by type, app, or date",
-    footerColor: "text-[#0071E3]",
+    footerColor: "text-[#0066FF]",
     stagger: "stagger-4",
   },
   {
@@ -76,7 +76,7 @@ const FEATURES = [
     title: "Biometric Protection",
     desc: "Lock pinboards and history behind Face ID or Touch ID on iPhone and iPad.",
     footer: "Face ID and Touch ID on iPhone and iPad",
-    footerColor: "text-[#0071E3]",
+    footerColor: "text-[#0066FF]",
     stagger: "stagger-5",
   },
   {
@@ -90,7 +90,7 @@ const FEATURES = [
     title: "30-Day Trash Recovery",
     desc: "Accidentally removed an important API token or contract address? Clipra keeps deleted items safe for 30 days before permanent purging.",
     footer: "Undo Protection Built-in",
-    footerColor: "text-[#0071E3]",
+    footerColor: "text-[#0066FF]",
     stagger: "stagger-6",
   },
 ];
@@ -100,13 +100,13 @@ export default function BentoFeatures() {
     <section id="features" className="relative py-24 z-10">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
         <div className="text-center max-w-3xl mx-auto mb-14 reveal-on-scroll">
-          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0071E3] mb-4">
+          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0066FF] mb-4">
             Planned for v1.0
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#1D1D1F] mb-5 leading-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#F1F5F9] mb-5 leading-tight">
             The tools for the copies you make every day.
           </h2>
-          <p className="text-base sm:text-lg text-[#6E6E73] leading-relaxed">
+          <p className="text-base sm:text-lg text-[#94A3B8] leading-relaxed">
             For developers, designers, and teams who copy and paste all day.
           </p>
         </div>

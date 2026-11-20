@@ -17,7 +17,7 @@ const groups = [
     id: "designers", label: "For designers", title: "Keep your creative building blocks close.",
     intro: "Colors, references and the small details that make a design feel consistent deserve a place you can find again.",
     icon: Palette, panelTitle: "Brand colors", panelSubtitle: "A little collection of visual details", accent: "teal",
-    items: [{ label: "Primary", text: "#0071E3" }, { label: "Accent", text: "#0071E3" }, { label: "Canvas", text: "#F5F5F7" }],
+    items: [{ label: "Primary", text: "#0066FF" }, { label: "Accent", text: "#0066FF" }, { label: "Canvas", text: "#0A0A0F" }],
     benefits: [
       { icon: Palette, title: "Collect your colors", text: "Keep copied hex and RGB values close as you move between design files and tools." },
       { icon: FolderHeart, title: "Organize by project", text: "Planned pinboards give your references, links and reusable details a home of their own." },
