@@ -1,14 +1,10 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
-import AmbientCanvas from "@/components/AmbientCanvas";
+import { useState, useEffect } from "react";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import ProductShowcase from "@/components/ProductShowcase";
-import Stats from "@/components/Stats";
 import SmartAutoSort from "@/components/SmartAutoSort";
 import TextTransformer from "@/components/TextTransformer";
-import CircularSplitRoll from "@/components/ui/circular-split-roll";
 import Ecosystem from "@/components/Ecosystem";
 import BentoFeatures from "@/components/BentoFeatures";
 import ComparisonTable from "@/components/ComparisonTable";
@@ -17,6 +13,88 @@ import FAQ from "@/components/FAQ";
 import FinalCTA from "@/components/FinalCTA";
 import Footer from "@/components/Footer";
 import ShortcutsModal from "@/components/ShortcutsModal";
+
+const WORKFLOWS = [
+  {
+    id: "dev",
+    label: "Developers",
+    title: "Code, commands, and the pieces you reuse.",
+    text: "Snippets, terminal commands, and JSON you have already formatted. Keep them in a pinboard and find them by source app or date.",
+    points: ["JSON prettify and minify", "Base64 encode and decode", "Paste Stack for Mac"],
+  },
+  {
+    id: "design",
+    label: "Designers",
+    title: "Colours, links, and references in one place.",
+    text: "Hex values copied from Figma, component names, and asset links. Pinboards keep each project separate.",
+    points: ["Colour values auto-sorted", "Links with tracking removed", "Pinboards per project"],
+  },
+  {
+    id: "marketing",
+    label: "Marketers",
+    title: "Clean links and copy you can reuse.",
+    text: "Strip tracking parameters from a link before you share it. Keep approved copy and campaign notes where you can find them again.",
+    points: ["Tracking removed from links", "Approved copy pinned", "History searchable by date"],
+  },
+  {
+    id: "teams",
+    label: "Agencies",
+    title: "Project notes and handover details.",
+    text: "References, links, and reusable copy for each client. Export history as JSON on Mac, and hide the clipboard during presentations.",
+    points: ["JSON export on Mac", "Screen Share Hide planned", "30-day trash recovery"],
+  },
+];
+
+function WorkflowTabs() {
+  const [active, setActive] = useState("dev");
+  const current = WORKFLOWS.find((w) => w.id === active)!;
+  return (
+    <section aria-label="Clipra for different workflows" className="py-20 bg-white">
+      <div className="max-w-[1024px] mx-auto px-4 sm:px-6">
+        <div className="text-center max-w-2xl mx-auto mb-10">
+          <p className="text-sm font-medium text-[#0071E3] mb-3">Made for your workflow</p>
+          <h2 className="text-3xl sm:text-4xl font-semibold tracking-tight text-[#1D1D1F]">
+            A clipboard for the way you work.
+          </h2>
+        </div>
+        <div className="flex flex-wrap justify-center gap-2 mb-8" role="tablist" aria-label="Workflows">
+          {WORKFLOWS.map((w) => (
+            <button
+              key={w.id}
+              type="button"
+              role="tab"
+              aria-selected={active === w.id}
+              onClick={() => setActive(w.id)}
+              className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
+                active === w.id
+                  ? "bg-[#0071E3] text-white"
+                  : "bg-black/[0.04] text-[#424245] hover:bg-black/[0.07]"
+              }`}
+            >
+              {w.label}
+            </button>
+          ))}
+        </div>
+        <div className="max-w-2xl mx-auto bg-[#F5F5F7] border border-black/10 rounded-3xl p-8 sm:p-10 text-center">
+          <h3 className="text-2xl font-semibold tracking-tight text-[#1D1D1F] mb-3">
+            {current.title}
+          </h3>
+          <p className="text-[#6E6E73] leading-relaxed mb-6">{current.text}</p>
+          <ul className="flex flex-wrap justify-center gap-2">
+            {current.points.map((p) => (
+              <li
+                key={p}
+                className="px-3 py-1.5 rounded-full text-xs font-medium bg-white border border-black/10 text-[#424245]"
+              >
+                {p}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
 
 export default function Home() {
   const [shortcutsOpen, setShortcutsOpen] = useState(false);
@@ -34,7 +112,7 @@ export default function Home() {
     return () => window.removeEventListener("keydown", handler);
   }, []);
 
-  // Scroll-reveal observer
+  // Scroll-reveal observer (fade only)
   useEffect(() => {
     const els = document.querySelectorAll(".reveal-on-scroll");
     if (!("IntersectionObserver" in window)) {
@@ -56,55 +134,54 @@ export default function Home() {
     return () => obs.disconnect();
   }, []);
 
-  // Card mouse-spotlight
-  useEffect(() => {
-    const cards = document.querySelectorAll<HTMLElement>(
-      ".glass-card, .price-card, .bento-card, .usecase-display-box"
-    );
-    const handlers = Array.from(cards).map((card) => {
-      const fn = (e: Event) => {
-        const me = e as MouseEvent;
-        const rect = card.getBoundingClientRect();
-        card.style.setProperty("--mouse-x", `${me.clientX - rect.left}px`);
-        card.style.setProperty("--mouse-y", `${me.clientY - rect.top}px`);
-      };
-      card.addEventListener("mousemove", fn);
-      return { card, fn };
-    });
-    return () => handlers.forEach(({ card, fn }) => card.removeEventListener("mousemove", fn));
-  }, []);
-
   return (
     <>
       <a
-        className="fixed top-[-100px] left-4 z-[300] px-5 py-3 bg-[#0E1526] border border-[#00E5BE] rounded-lg focus:top-3 focus:clip-auto text-white text-sm font-semibold transition-all"
+        className="fixed top-[-100px] left-4 z-[300] px-5 py-3 bg-white border border-black/10 rounded-lg focus:top-3 text-[#1D1D1F] text-sm font-medium transition-all"
         href="#main"
       >
         Skip to content
       </a>
 
-      <AmbientCanvas />
       <Navbar onOpenShortcuts={() => setShortcutsOpen(true)} />
 
       <main id="main">
         <Hero />
-        <ProductShowcase />
         <SmartAutoSort />
         <TextTransformer />
-        <section aria-label="Clipra for different workflows">
-          <div className="text-center px-6 pt-16"><p className="text-sm font-bold text-[#75e7d5] mb-3">Made for your workflow</p><h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight text-white">A clipboard for the way you work.</h2></div>
-          <CircularSplitRoll items={[{id:"dev",title:"For developers",image:"/workflows/developers.svg"},{id:"design",title:"For designers",image:"/workflows/designers.svg"},{id:"marketing",title:"For marketers",image:"/workflows/marketers.svg"},{id:"teams",title:"For agencies",image:"/workflows/agencies.svg"}]} background="#080f1b" titleColor="#edf7fa" radius={270} cardSize={240} sectionHeight={40} columnOffsetPx={260} focusPhase={0} className="workflow-roll" />
-        </section>
         <Ecosystem />
-        <section className="relative z-10 py-20 text-center px-6"><p className="text-slate-400 mb-5">Explore Clipra in more detail</p><div className="flex flex-wrap justify-center gap-4"><a className="btn btn-glass" href="/features">Explore all features</a><a className="btn btn-glass" href="/pricing">See planned pricing</a><a className="btn btn-glass" href="/use-cases">See use cases</a></div></section>
+        <WorkflowTabs />
+        <BentoFeatures />
+        <ComparisonTable />
+        <Pricing />
+        <FAQ />
+        <section className="py-16 bg-white">
+          <div className="max-w-[1024px] mx-auto px-4 sm:px-6 flex flex-wrap justify-center gap-4">
+            <a
+              className="inline-flex items-center px-6 py-3 text-[15px] font-medium text-white bg-[#0071E3] hover:bg-[#0077ED] rounded-full transition-colors"
+              href="/features"
+            >
+              Explore all features
+            </a>
+            <a
+              className="inline-flex items-center px-6 py-3 text-[15px] font-medium text-[#0071E3] bg-black/[0.04] hover:bg-black/[0.07] rounded-full transition-colors"
+              href="/pricing"
+            >
+              See planned pricing
+            </a>
+            <a
+              className="inline-flex items-center px-6 py-3 text-[15px] font-medium text-[#0071E3] bg-black/[0.04] hover:bg-black/[0.07] rounded-full transition-colors"
+              href="/use-cases"
+            >
+              See use cases
+            </a>
+          </div>
+        </section>
         <FinalCTA />
       </main>
 
       <Footer onOpenShortcuts={() => setShortcutsOpen(true)} />
-      <ShortcutsModal
-        open={shortcutsOpen}
-        onClose={() => setShortcutsOpen(false)}
-      />
+      <ShortcutsModal open={shortcutsOpen} onClose={() => setShortcutsOpen(false)} />
     </>
   );
 }

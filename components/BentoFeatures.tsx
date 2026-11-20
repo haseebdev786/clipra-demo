@@ -15,11 +15,11 @@ const FEATURES = [
       <>
         Copy multiple items in sequence with <kbd className="kbd">⌘C</kbd> <kbd className="kbd">⌘C</kbd>{" "}
         <kbd className="kbd">⌘C</kbd>, then paste them in exact order one by one with{" "}
-        <kbd className="kbd">⌘V</kbd>. Zero context switching.
+        <kbd className="kbd">⌘V</kbd>.
       </>
     ),
     footer: "Available on Mac • Sequential Queue",
-    footerColor: "text-[#2E82FF]",
+    footerColor: "text-[#0071E3]",
     stagger: "stagger-1",
   },
   {
@@ -33,8 +33,8 @@ const FEATURES = [
     iconClass: "icon-teal",
     title: "Offline Export & Import",
     desc: "The #1 request on Paste's public board with 161 votes. Export your entire clipboard history to structured JSON for corporate backup, compliance, or local migration.",
-    footer: "Enterprise-Ready • 100% Offline",
-    footerColor: "text-[#00E5BE]",
+    footer: "Offline JSON export",
+    footerColor: "text-[#0071E3]",
     stagger: "stagger-2",
   },
   {
@@ -46,9 +46,9 @@ const FEATURES = [
     ),
     iconClass: "icon-green",
     title: "Screen Share Stealth",
-    desc: "Present with confidence. Clipra automatically detects screen sharing across Zoom, Google Meet, and Teams to hide sensitive snippets and credentials.",
-    footer: "Privacy Protection • Zero Leaks",
-    footerColor: "text-[#10F296]",
+    desc: "Hide the clipboard panel while you present or record. Planned for Mac.",
+    footer: "Hidden during screen share",
+    footerColor: "text-[#0071E3]",
     stagger: "stagger-3",
   },
   {
@@ -59,10 +59,10 @@ const FEATURES = [
       </svg>
     ),
     iconClass: "icon-teal",
-    title: "OCR Power Search",
-    desc: "Search text located inside screenshots, filter by source app (Figma, Terminal, Safari), and find copies by exact timestamp or regex query.",
-    footer: "Instant Query Engine",
-    footerColor: "text-[#00E5BE]",
+    title: "Power Search",
+    desc: "Filter your history by type, source app, or date, and find a copy again without scrolling through everything.",
+    footer: "Search by type, app, or date",
+    footerColor: "text-[#0071E3]",
     stagger: "stagger-4",
   },
   {
@@ -74,9 +74,9 @@ const FEATURES = [
     ),
     iconClass: "icon-blue",
     title: "Biometric Protection",
-    desc: "Lock your sensitive pinboards and complete history behind Touch ID on Mac and Face ID on iPhone & iPad.",
-    footer: "Hardware-Level Secure Enclave",
-    footerColor: "text-[#2E82FF]",
+    desc: "Lock pinboards and history behind Face ID or Touch ID on iPhone and iPad.",
+    footer: "Face ID and Touch ID on iPhone and iPad",
+    footerColor: "text-[#0071E3]",
     stagger: "stagger-5",
   },
   {
@@ -90,7 +90,7 @@ const FEATURES = [
     title: "30-Day Trash Recovery",
     desc: "Accidentally removed an important API token or contract address? Clipra keeps deleted items safe for 30 days before permanent purging.",
     footer: "Undo Protection Built-in",
-    footerColor: "text-[#10F296]",
+    footerColor: "text-[#0071E3]",
     stagger: "stagger-6",
   },
 ];
@@ -100,18 +100,14 @@ export default function BentoFeatures() {
     <section id="features" className="relative py-24 z-10">
       <div className="max-w-[1240px] mx-auto px-4 sm:px-6">
         <div className="text-center max-w-3xl mx-auto mb-14 reveal-on-scroll">
-          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#00E5BE] mb-4">
-            v1.0 Launch Architecture
+          <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#0071E3] mb-4">
+            Planned for v1.0
           </span>
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-5 leading-tight">
-            Everything power users need.{" "}
-            <span className="bg-gradient-to-r from-[#0066FF] via-[#00E5BE] to-[#10F296] bg-clip-text text-transparent">
-              Nothing they don&apos;t.
-            </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight text-[#1D1D1F] mb-5 leading-tight">
+            The tools for the copies you make every day.
           </h2>
-          <p className="text-base sm:text-lg text-slate-400 leading-relaxed">
-            Crafted specifically for developers, designers, and high-velocity teams who copy hundreds
-            of times each day.
+          <p className="text-base sm:text-lg text-[#6E6E73] leading-relaxed">
+            For developers, designers, and teams who copy and paste all day.
           </p>
         </div>
 

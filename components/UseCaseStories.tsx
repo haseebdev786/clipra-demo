@@ -1,4 +1,4 @@
-﻿import { Braces, ClipboardList, Code2, FileJson, FolderHeart, Link2, ListFilter, LockKeyhole, Palette, Pin, Search, ShieldCheck, Sparkles, TextCursorInput, WandSparkles } from "lucide-react";
+﻿import { Braces, ClipboardList, Code2, FileJson, FolderHeart, Link2, ListFilter, LockKeyhole, Palette, Pin, Search, ShieldCheck, TextCursorInput } from "lucide-react";
 
 const groups = [
   {
@@ -17,11 +17,11 @@ const groups = [
     id: "designers", label: "For designers", title: "Keep your creative building blocks close.",
     intro: "Colors, references and the small details that make a design feel consistent deserve a place you can find again.",
     icon: Palette, panelTitle: "Brand colors", panelSubtitle: "A little collection of visual details", accent: "teal",
-    items: [{ label: "Primary", text: "#0066FF" }, { label: "Accent", text: "#00E5BE" }, { label: "Canvas", text: "#0E1526" }],
+    items: [{ label: "Primary", text: "#0071E3" }, { label: "Accent", text: "#0071E3" }, { label: "Canvas", text: "#F5F5F7" }],
     benefits: [
       { icon: Palette, title: "Collect your colors", text: "Keep copied hex and RGB values close as you move between design files and tools." },
       { icon: FolderHeart, title: "Organize by project", text: "Planned pinboards give your references, links and reusable details a home of their own." },
-      { icon: Sparkles, title: "Let rules do some sorting", text: "Smart Auto-Sort is planned to recognize color values and route them to a pinboard." },
+      { icon: ListFilter, title: "Let rules do some sorting", text: "Smart Auto-Sort is planned to recognize color values and route them to a pinboard." },
       { icon: Search, title: "Pick up where you left off", text: "Search your history for a reference or value instead of hunting through old files." },
     ],
   },
@@ -33,7 +33,7 @@ const groups = [
     benefits: [
       { icon: Link2, title: "Clean up a link", text: "A planned transformation can remove common tracking parameters before you share a URL." },
       { icon: Pin, title: "Keep approved copy handy", text: "Pin reusable descriptions, replies and campaign snippets for your next draft." },
-      { icon: WandSparkles, title: "Change text in a moment", text: "Planned text tools include changing case and removing formatting without leaving your workflow." },
+      { icon: TextCursorInput, title: "Change text in a moment", text: "Planned text tools include changing case and removing formatting without leaving your workflow." },
       { icon: LockKeyhole, title: "Keep your work yours", text: "Clipboard content is planned to stay on your device and in your private iCloud database." },
     ],
   },
